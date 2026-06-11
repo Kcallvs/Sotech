@@ -1,0 +1,121 @@
+:root {
+    --primary: #2C3E50;
+    --secondary: #3498DB;
+    --bg: #ECF0F1;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --border: #DCE4E6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rajdhani', Rajdhani-serif;
+}
+
+body {
+    height: 100vh;
+    background: var(--bg);
+}
+
+/* Layout dividido */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* LADO ESQUERDO */
+.left {
+    flex: 1;
+    background: linear-gradient(135deg, var(--primary), #1a252f);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+}
+
+.left h1 {
+    font-size: 5.0rem;
+}
+
+.left p {
+    font-size: 2.0rem;
+    opacity: 0.8;
+}
+
+/* LADO DIREITO */
+.right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 10px;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+form h2 {
+    margin-bottom: 20px;
+    color: var(--primary);
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--secondary);
+}
+
+/* Botão */
+button {
+    width: 100%;
+    padding: 12px;
+    background: var(--secondary);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: var(--primary);
+}
+
+.Criar {
+  padding-top: 8px;
+  font-size: small;
+  padding-bottom: 7px;
+  color: #00284d;
+}
+
+.Criar a {
+  color: #00284d;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}

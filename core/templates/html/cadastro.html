@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Tela Login</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'style/global.css' %}?{% now 'U' %}">
+
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'style/style_login_cadastro.css' %}?{% now 'U' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>SOTECH</h1>
+            <p>Soluções Tecnológicas</p>
+        </div>
+
+        <div class="right">
+            <form method="POST">
+                {% csrf_token %}
+
+                <h2>Registrar Novo Funcionário</h2>
+                <p>Preencha os dados abaixo para criar a conta do colaborador.</p>
+
+                <div class="input-group">
+                    <label for="full_name">Nome Completo</label>
+                    <input type="text" id="full_name" name="full_name"  required>
+                </div>
+
+                <div class="input-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" name="cpf"  maxlength="14" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="role">Cargo / Função</label>
+                    <input type="text" id="role" name="role" required>
+                </div>
+
+                <button type="submit" class="btn-save">Salvar Cadastro</button>
+
+                     <div class="voltar">
+                     <a href="{% url 'inicio' %}">Voltar para login</a>
+                     </div>
+            </form>
+        </div>
+    </div>
+
+    </div>
+</body>
+
+<script>
+
+</script>
+
+</html>

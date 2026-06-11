@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Histórico de Vendas{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/style_historico.css' %}?{% now 'U' %}">
+{% endblock %}
+{% block selecao %}historico{% endblock %}
+{% block conteudo %}
+   <main class="main-content orders-page-layout">
+        <header class="list-header">
+            <h1>Histórico de Vendas</h1>
+            <a href="{% url 'pedido' %}" class="btn-new-order">+ Abrir PDV</a>
+        </header>
+
+        <div class="table-card">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>ID Pedido</th>
+                        <th>Data/Hora</th>
+                        <th>Cliente</th>
+                        <th>Valor Total</th>
+                        <th>Status Atendimento</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>#1050</td>
+                        <td>13/01 10:30</td>
+                        <td>João Silva</td>
+                        <td>R$ 45,50</td>
+                        <td><span class="badge-status">Concluído</span></td>
+                        <td>
+                            <button class="btn-view" onclick="abrirModal(
+                                '#1050',
+                                'João Silva',
+                                '13/01 10:30',
+                                'R$ 45,50',
+                                'João',
+                                '13/01 10:40',
+                                '⭐⭐⭐⭐',
+                                'Atendimento rápido e muito bom!'
+                            )">
+                                <i class="fas fa-eye"></i>
+                            </button>
+
+                            <button class="btn-print">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>#1051</td>
+                        <td>13/01 11:10</td>
+                        <td>Maria Souza</td>
+                        <td>R$ 32,00</td>
+                        <td><span class="badge-status">Concluído</span></td>
+                        <td>
+                            <button class="btn-view" onclick="abrirModal(
+                                '#1051',
+                                'Maria Souza',
+                                '13/01 11:10',
+                                'R$ 32,00',
+                                'Carlos',
+                                '13/01 11:20',
+                                '⭐⭐⭐',
+                                'Demorou um pouco, mas foi bom.')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+
+                            <button class="btn-print">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+{% endblock %}
+
+{% block extra %}
+<!-- MODAL -->
+<div id="modalDetalhes" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <h2>Detalhes do Pedido</h2>
+
+        <p><strong>Pedido:</strong> <span id="mPedido"></span></p>
+        <p><strong>Cliente:</strong> <span id="mCliente"></span></p>
+        <p><strong>Data:</strong> <span id="mData"></span></p>
+        <p><strong>Valor:</strong> <span id="mValor"></span></p>
+
+        <hr>
+
+        <h3>Atendimento</h3>
+        <p><strong>Funcionário:</strong> <span id="mFuncionario"></span></p>
+        <p><strong>Data do atendimento:</strong> <span id="mDataAtendimento"></span></p>
+        <p><strong>Avaliação:</strong> <span id="mAvaliacao"></span></p>
+        <p><strong>Observação:</strong> <span id="mObservacao"></span></p>
+    </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+const modal = document.getElementById("modalDetalhes");
+const closeBtn = document.querySelector(".close");
+
+// abrir modal com dados dinâmicos
+function abrirModal(pedido, cliente, data, valor, funcionario, dataAtendimento, avaliacao, observacao) {
+
+    document.getElementById("mPedido").innerText = pedido;
+    document.getElementById("mCliente").innerText = cliente;
+    document.getElementById("mData").innerText = data;
+    document.getElementById("mValor").innerText = valor;
+    document.getElementById("mFuncionario").innerText = funcionario;
+    document.getElementById("mDataAtendimento").innerText = dataAtendimento;
+    document.getElementById("mAvaliacao").innerText = avaliacao;
+    document.getElementById("mObservacao").innerText = observacao;
+
+    modal.style.display = "block";
+}
+
+// fechar modal
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+}
+
+// fechar clicando fora
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+{% endblock %}

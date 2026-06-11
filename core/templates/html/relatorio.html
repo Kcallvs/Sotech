@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Relatório{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/style_relatorio.css' %}?{% now 'U' %}">
+{% endblock %}
+{% block selecao %}relatorio{% endblock %}
+{% block conteudo %}
+ <main class="main-content">
+            <header class="main-header">
+                <h1>Relatórios Gerais</h1>
+            </header>
+
+            <div class="filter-card">
+                <label>De:</label>
+                <input type="date">
+                <label>Até:</label>
+                <input type="date">
+                <button class="btn-filter"><i class="fas fa-filter"></i> Filtrar</button>
+            </div>
+
+            <h2 class="section-title">Financeiro</h2>
+            <div class="cards">
+                <div class="card" style="border-top-color: var(--secondary);">
+                    <h3>Receita Bruta</h3>
+                    <p>R$ 5.200,00</p>
+                </div>
+                <div class="card" style="border-top-color: var(--success);">
+                    <h3>Lucro Estimado</h3>
+                    <p>R$ 2.100,00</p>
+                </div>
+                <div class="card" style="border-top-color: var(--danger);">
+                    <h3>Custos Operacionais</h3>
+                    <p>R$ 3.100,00</p>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <table class="sigl-table">
+                    <thead>
+                        <tr>
+                            <th>Meio de Pagamento</th>
+                            <th>Total Movimentado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dinheiro</td>
+                            <td>R$ 1.000,00</td>
+                        </tr>
+                        <tr>
+                            <td>PIX</td>
+                            <td>R$ 2.500,00</td>
+                        </tr>
+                        <tr>
+                            <td>Cartão de Crédito/Débito</td>
+                            <td>R$ 1.700,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="section-title">Vendas e Operação</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Total de Pedidos</h3>
+                    <p>120</p>
+                </div>
+                <div class="card">
+                    <h3>Ticket Médio</h3>
+                    <p>R$ 43,33</p>
+                </div>
+                <div class="card">
+                    <h3>Horário de Pico</h3>
+                    <p>19h às 21h</p>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <table class="sigl-table">
+                    <thead>
+                        <tr>
+                            <th>Produto Mais Vendido</th>
+                            <th>Quantidade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>X-Burguer Especial</td>
+                            <td>80</td>
+                        </tr>
+                        <tr>
+                            <td>Refrigerante Lata</td>
+                            <td>65</td>
+                        </tr>
+                        <tr>
+                            <td>Batata Frita G</td>
+                            <td>42</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="section-title">Estoque</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Patrimônio em Estoque</h3>
+                    <p>R$ 3.000,00</p>
+                </div>
+                <div class="card">
+                    <h3>Alertas de Ruptura</h3>
+                    <p style="color: var(--danger);">5 Itens</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">Fidelidade de Clientes</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Novos Clientes (Mês)</h3>
+                    <p>24</p>
+                </div>
+                <div class="card">
+                    <h3>Clientes Ativos</h3>
+                    <p>158</p>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <table class="sigl-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Total de Pedidos</th>
+                            <th>Total Gasto (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Marcos Oliveira</td>
+                            <td>15</td>
+                            <td>R$ 645,00</td>
+                        </tr>
+                        <tr>
+                            <td>Maria Pereira</td>
+                            <td>10</td>
+                            <td>R$ 420,50</td>
+                        </tr>
+                        <tr>
+                            <td>João Silva</td>
+                            <td>8</td>
+                            <td>R$ 310,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+{% endblock %}

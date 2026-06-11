@@ -1,0 +1,322 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   font-family: 'Rajdhani', Rajdhani-serif;
+}
+
+body {
+    display: flex;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+.sidebar nav ul {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.sidebar nav ul li a {
+    display: block;
+    padding: 15px 25px;
+    text-decoration: none;
+    color: #BDC3C7;
+    /* Cor cinza suave para os itens */
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.sidebar nav ul li a i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.sidebar nav ul li.active a,
+.sidebar nav ul li a:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+    padding-left: 30px;
+    /* Efeito de deslize no hover */
+}
+
+/* Conteúdo Principal */
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 30px;
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.top-header h2 {
+    color: var(--primary);
+    font-size: 1.4rem;
+}
+
+.btn-logout {
+    background-color: var(--danger);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #C0392B;
+    transform: translateY(-1px);
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-red {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+.card-yellow {
+    background-color: var(--warning);
+    color: #4A4A4A;
+    /* Texto escuro para melhor leitura no amarelo */
+}
+
+.card-white {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.card h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.card p {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Seção de Dados e Tabelas */
+.data-section {
+    margin-top: 40px;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--bg);
+    padding-bottom: 15px;
+}
+
+.section-header h3 {
+    color: var(--primary);
+}
+
+.btn-add {
+    background-color: var(--success);
+    color: var(--white);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.btn-add:hover {
+    background-color: #27AE60;
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.styled-table th {
+    background-color: #F8F9FA;
+    color: var(--primary);
+    padding: 15px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 2px solid var(--bg);
+}
+
+.styled-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--bg);
+    color: #34495E;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.status-badge.yellow {
+    background-color: #FEF9E7;
+    color: #D4AC0D;
+    border: 1px solid #F7DC6F;
+}
+
+.status-badge.green {
+    background-color: #EAF9F1;
+    color: #27AE60;
+    border: 1px solid #ABEBC6;
+}
+
+.btn-edit {
+    background-color: var(--secondary);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-edit:hover {
+    background-color: #2980B9;
+}
+
+/* Área de Login (Modal) */
+.modal-login {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(44, 62, 80, 0.8);
+    /* Azul escuro com transparência */
+}
+
+.modal-login-content {
+    background-color: var(--white);
+    margin: 10% auto;
+    width: 380px;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    border-top: 8px solid var(--primary);
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 20px;
+    background: #F8F9FA;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+#formLogin {
+    padding: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--primary);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background-color: #FBFCFC;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--secondary);
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+.btn-confirmar {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    background: var(--primary);
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-confirmar:hover {
+    background-color: #1A252F;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal {
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--primary);
+    opacity: 0.5;
+}
+
+.close-modal:hover {
+    opacity: 1;
+}

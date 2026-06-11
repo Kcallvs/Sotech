@@ -1,0 +1,348 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+     font-family: 'Rajdhani', Rajdhani-serif;
+}
+
+/* BODY */
+body {
+    display: flex;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar nav ul {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.sidebar nav ul li a {
+    display: block;
+    padding: 15px 25px;
+    text-decoration: none;
+    color: #BDC3C7;
+    /* Cor cinza suave para os itens */
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.sidebar nav ul li a i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.sidebar nav ul li.active a,
+.sidebar nav ul li a:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+    padding-left: 30px;
+    /* Efeito de deslize no hover */
+}
+
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* HEADER */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header h2 {
+    color: var(--primary);
+    font-size: 1.6rem;
+}
+
+/* BOTÕES */
+.btn-red {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-red:hover { background: #C0392B; }
+
+.btn-yellow {
+    background: var(--warning);
+    color: #4A4A4A;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-yellow:hover { background: #D4AC0D; }
+
+/* CARDS DE RESUMO DO INVENTÁRIO */
+.inventory-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.summary-card {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid transparent;
+}
+
+.summary-card i { font-size: 2.2rem; }
+
+.summary-card.alert { border-left-color: var(--danger); }
+.summary-card.expire { border-left-color: var(--warning); }
+.summary-card.ok { border-left-color: var(--success); }
+
+.icon-alert { color: var(--danger); }
+.icon-expire { color: var(--warning); }
+.icon-ok { color: var(--success); }
+
+.summary-card div h3 {
+    font-size: 0.85rem;
+    color: var(--text);
+    opacity: 0.7;
+    text-transform: uppercase;
+}
+
+.summary-card div p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* ============================================================
+   TABELA DE INVENTÁRIO
+   ============================================================ */
+.table-container {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    flex: 1;
+    overflow: auto;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.table-header h3 { color: var(--primary); }
+
+/* BARRA DE BUSCA */
+.search-input {
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    width: 280px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.search-input:focus { border-color: var(--secondary); }
+
+/* TABELA */
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.inventory-table th {
+    background: var(--gray-light);
+    padding: 15px;
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 700;
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+}
+
+/* LINHAS */
+.inventory-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inventory-table tbody tr:hover {
+    background: #F0F7FD;
+}
+
+/* BADGES DE STATUS NO ESTOQUE */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.badge.red {
+    background: #FDEDEC;
+    color: var(--danger);
+    border: 1px solid #FADBD8;
+}
+
+.badge.green {
+    background: #EAF9F1;
+    color: var(--success);
+    border: 1px solid #ABEBC6;
+}
+
+.badge.yellow {
+    background: #FEF9E7;
+    color: #D4AC0D;
+    border: 1px solid #F9E79F;
+}
+
+/* AÇÕES (Botões de ícone) */
+.action-icon {
+    border: 1px solid var(--border);
+    background: var(--white);
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 0 3px;
+    transition: 0.3s;
+    color: var(--text);
+}
+
+.action-icon:hover {
+    background: var(--secondary);
+    color: white;
+    border-color: var(--secondary);
+}
+
+/* FUNDO ESCURO */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+/* CAIXA DO MODAL */
+.modal-content {
+    background: #dcdcdc;
+    width: 400px;
+    padding: 30px 25px;
+    border-radius: 12px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* TÍTULO */
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+/* INPUTS */
+.modal-content input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+
+    border: 1px solid #bbb;
+    border-radius: 6px;
+
+    background: #eee;
+    outline: none;
+
+    font-size: 14px;
+}
+
+/* BOTÕES */
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* BOTÃO SALVAR */
+.btn-save {
+    flex: 1;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* BOTÃO CANCELAR */
+.btn-cancel {
+    flex: 1;
+    background: #777;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
+@media (max-width: 900px) {
+    .sidebar { width: 200px; }
+    .main-content { margin-left: 200px; width: calc(100% - 200px); }
+    .inventory-summary { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+    .sidebar { display: none; }
+    .main-content { margin-left: 0; width: 100%; }
+    .inventory-summary { grid-template-columns: 1fr; }
+    .table-header { flex-direction: column; gap: 15px; align-items: flex-start; }
+    .search-input { width: 100%; }
+}

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Sistema de Gestão e controle operacional{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/style_inicio.css' %}?{% now 'U' %}">
+{% endblock %}
+{% block selecao %}inicio{% endblock %}
+{# block conteudo #}
+
+
+
+{% block extra %}
+ <main class="main-content">
+        <header class="top-header">
+            <h2 id="tituloPainel">Dashboard Principal</h2>
+            <div class="user-info">
+                <span id="boasVindas" style="margin-right: 15px; font-weight: 500;"></span>
+                <button class="btn-logout" id="btnLogar">Entrar</button>
+            </div>
+        </header>
+
+        <!-- Dashboard Cards -->
+        <section class="dashboard-cards">
+            <div class="card card-red">
+                <h3>Vendas Hoje</h3>
+                <p>R$ 1.250,00</p>
+            </div>
+            <div class="card card-yellow">
+                <h3>Pedidos Pendentes</h3>
+                <p>08</p>
+            </div>
+            <div class="card card-white">
+                <h3>Itens em Falta</h3>
+                <p>03</p>
+            </div>
+        </section>
+        
+        <!-- As tabelas dos ultimos pedidos, que vem redirecionada de outra pagina. -->
+        <section class="data-section">
+            <div class="section-header">
+                <h3>Últimos Pedidos</h3>
+
+
+                <button class="btn-add" onclick="window.location.href=`{% url 'pedido' %}`">+ Novo Pedido</button>
+
+            </div>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data/Hora</th>
+                        <th>Cliente</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#1024</td>
+                        <td>12/12 - 22:15</td>
+                        <td>Carlos Andrade</td>
+                        <td>R$ 45,90</td>
+                        <td><span class="status-badge yellow">Preparando</span></td>
+                        <td><button class="btn-edit">Ver</button></td>
+                    </tr>
+                    <tr>
+                        <td>#1023</td>
+                        <td>12/12 - 21:50</td>
+                        <td>Ana Maria</td>
+                        <td>R$ 22,00</td>
+                        <td><span class="status-badge green">Concluído</span></td>
+                        <td><button class="btn-edit">Ver</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Parte do login -->
+    <div id="loginModal" class="modal-login">
+        <div class="modal-login-content">
+            <div class="modal-header">
+                <h3>Acesso ao SIGL</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="formLogin">
+                <div class="input-group">
+                    <label>Nome do Funcionário (ID Nome):</label>
+                    <input type="text" id="loginNome" placeholder="Ex: João Silva" required>
+                </div>
+                <div class="input-group">
+                    <label>CPF (Senha):</label>
+                    <input type="password" id="loginCPF" placeholder="Digite seu CPF" required>
+                </div>
+                <button type="submit" class="btn-confirmar">Acessar Sistema</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'js/js_inicio.js' %}?{% now 'U' %}"></script>
+
+{% endblock %}

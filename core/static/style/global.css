@@ -1,0 +1,40 @@
+:root {
+    --primary: #2C3E50;    /* Azul Escuro (Sidebar e Títulos) */
+    --secondary: #3498DB;  /* Azul Claro (Destaques e Botões) */
+    --success: #2ECC71;    /* Verde (Adicionar / Salvar) */
+    --warning: #F1C40F;    /* Amarelo (Ações de atenção) */
+    --danger: #E74C3C;     /* Vermelho (Excluir / Sair) */
+    --bg: #ECF0F1;         /* Cinza Gelo (Fundo da Página) */
+    --white: #FFFFFF;
+    --text: #2C3E50;       /* Texto Principal */
+    --border: #DCE4E6;     /* Cor de Bordas Sutis */
+}
+
+.logo {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo img {
+    width: 25px;
+    height: auto;
+    filter:
+        drop-shadow(0 0 4px rgba(255,255,255,0.2))
+        drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.logo span {
+    color: #ffffff;
+    font-family: 'Rajdhani', Rajdhani-serif;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.tech {
+   color: #60a5fa;
+}

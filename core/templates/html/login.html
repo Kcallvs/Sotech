@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Tela Login</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'style/global.css' %}?{% now 'U' %}">
+
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'style/style_login_cadastro.css' %}?{% now 'U' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>SOTECH</h1>
+            <p>Soluções Tecnológicas</p>
+        </div>
+
+        <div class="right">
+            <form method="post">
+                {% csrf_token %}
+                <h2>Entrar</h2>
+
+                <div class="input-group">
+                    <label>Usúario</label>
+                    <input type="text" id="user" name="user" placeholder="Usuário" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required>
+                </div>
+                
+                <button type="submit"  class="btn-save" >Acessar</button>
+
+                <div class="Criar">
+                   <a href="{% url 'cadastro' %}">Registrar novo Funcionário</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+<script>
+
+</script>
+</body>
+</html>

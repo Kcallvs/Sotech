@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Funcionários{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/style_funcionarios.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block selecao %}funcionarios{% endblock %}
+
+{% block conteudo %}
+<main class="main-content">
+    <header class="main-header">
+        <h1>Equipe de Funcionários</h1>
+
+    </header>
+
+    <div class="table-card">
+        <table class="funcionarios-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Cargo</th>
+                    <th>Turno</th>
+                    <th>CPF</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>João Silva</td>
+                    <td>Atendente</td>
+                    <td>Noite</td>
+                    <td>123.456.789-00</td>
+                    <td>
+                        <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn-delete"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+               
+            </tbody>
+        </table>
+    </div>
+</main>
+</div>
+
+{% endblock %}

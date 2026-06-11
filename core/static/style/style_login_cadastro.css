@@ -1,0 +1,166 @@
+:root {
+    --primary: #2C3E50;
+    --secondary: #3498DB;
+    --bg: #ECF0F1;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --border: #DCE4E6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rajdhani', Rajdhani-serif;
+}
+
+body {
+    height: 100vh;
+    background: var(--bg);
+    overflow: hidden;
+    /* Evita scrolls desnecessários na tela principal */
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* lado esquerdo */
+.left {
+    flex: 1;
+    background: linear-gradient(135deg, var(--primary), #1a252f);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+}
+
+.left h1 {
+    font-size: 4.5rem;
+    font-weight: 700;
+}
+
+.left p {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* lado direito */
+.right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+   background: var(--white);
+    width: 350px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+form h2 {
+    margin-bottom: 25px;
+    color: var(--primary);
+    text-align: center;
+}
+
+form p {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+}
+
+/* Grupos de Entrada */
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+/* Botão Salvar */
+.btn-save {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background: var(--secondary);
+    color: var(--white);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-save:hover {
+    background: var(--primary);
+    transform: translateY(-1px);
+}
+
+/* Link de Voltar */
+.voltar,.Criar {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.voltar a,.Criar a {
+    text-decoration: none;
+    color: var(--primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.voltar a:hover,.Criar a:hover {
+    color: var(--secondary);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+    .left {
+        height: 35vh;
+        align-items: center;
+        text-align: center;
+    }
+
+    .left h1 {
+        font-size: 3rem;
+    }
+
+    .left p {
+        font-size: 1.2rem;
+    }
+
+    .right {
+        height: 65vh;
+    }
+
+}

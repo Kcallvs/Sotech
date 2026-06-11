@@ -1,0 +1,21 @@
+{% load static %}
+
+<aside class="sidebar">
+  <div class="logo">
+    <img src="{% static 'imgs/lg.png' %}" alt="SOTECH">
+    <span>SO<span class="tech">TECH</span></span>
+</div>
+    <nav>
+        <ul>
+            <li id="inicio"><a href="{% url 'dashboard' %}"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li id="pedido"><a href="{% url 'pedido' %}"><i class="fas fa-hamburger"></i> Novo Pedido</a></li>
+            <li id="historico"><a href="{% url 'historico' %}"><i class="fas fa-list-ul"></i> Histórico de Vendas</a>
+            </li>
+            <li id="estoque"><a href="{% url 'estoque' %}"><i class="fas fa-box"></i> Estoque</a></li>
+            <li id="clientes"><a href="{% url 'clientes' %}"><i class="fas fa-users"></i> Clientes</a></li>
+            <li id="funcionarios"><a href="{% url 'funcionarios' %}"><i class="fas fa-user-tie"></i> Funcionários</a>
+            </li>
+            <li id="relatorio"><a href="{% url 'relatorio' %}"><i class="fas fa-file-alt"></i> Relatório</a></li>
+        </ul>
+    </nav>
+</aside>
