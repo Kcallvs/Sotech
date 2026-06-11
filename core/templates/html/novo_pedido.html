@@ -99,11 +99,11 @@
             <!-- <input type="number" id="novo-preco" class="sigl-input" placeholder="Preço"> -->
             {% render_field form.preco placeholder="Preço" class="sigl-input" %}
             
-            <!-- {% render_field form.categoria class="sigl-input" %} -->
-            <select id="novo-tipo" class="sigl-input">
+            {% render_field form.categoria class="sigl-input" %}
+            <!-- <select id="novo-tipo" class="sigl-input">
                 <option value="lanche">Lanche</option>
                 <option value="bebida">Bebida</option>
-            </select>
+            </select> -->
             
             <button id="btn-add-produto" type="submit" class="btn-finalize-order">
                 Cadastrar

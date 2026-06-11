@@ -8,19 +8,8 @@ from .models import Cliente,Produto
 
 class ProdutoForm(forms.ModelForm):
     class Meta:
-        CATEGORIAS = [
-            ('Lanche','Lanche'),
-            ('bebida','Bebida')
-        ]
-
         model = Produto
         fields = ['nome','preco','categoria']
-
-        categoria = forms.ChoiceField(
-            choices=CATEGORIAS,
-            required=True
-        )
-
 
 class ClienteForm(forms.ModelForm):
     class Meta:

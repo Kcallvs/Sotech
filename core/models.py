@@ -51,7 +51,12 @@ class Estoque(models.Model):
 
 
 class Produto(models.Model):
-    categoria = models.CharField("Categoria",max_length=45)
+    CATEGORIAS = [
+        ('Lanche','Lanche'),
+        ('bebida','Bebida')
+    ]
+
+    categoria = models.CharField("Categoria",max_length=45,choices=CATEGORIAS)
     nome = models.CharField("Nome",max_length=45)
     preco = models.FloatField("Preço")
     disponibilidade = models.CharField("Disponibilidade",max_length=45)

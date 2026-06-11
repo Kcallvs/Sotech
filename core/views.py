@@ -28,6 +28,9 @@ def novo_pedido(request):
         'form' : form
     }
 
+    if form.is_valid():
+        return redirect("clientes")
+
     return render(request,"html/novo_pedido.html",context)
 
 def historico(request):
