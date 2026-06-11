@@ -22,14 +22,15 @@ def novo_pedido(request):
     bebidas=Produto.objects.filter(categoria="bebida")
     form = ProdutoForm(request.POST or None)
 
+
+    if form.is_valid():
+        form.save()
+        return redirect("pedido")
     context={
         'lanches' : lanches,
         'bebidas' : bebidas,
         'form' : form
     }
-
-    if form.is_valid():
-        return redirect("clientes")
 
     return render(request,"html/novo_pedido.html",context)
 
