@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% load static %}
 
 {% block titulo %}Novo Pedido{% endblock %}
@@ -87,27 +88,31 @@
         <div class="products-grid">
             <!-- produtos -->
         </div>
+        <form action="POST">
 
-        <div id="add-product-area" style="display:none; margin-top:20px;">
-
+            <div id="add-product-area" style="display:none; margin-top:20px;">
+                
             <h3>Cadastrar Produto</h3>
-
-            <input type="text" id="novo-nome" class="sigl-input" placeholder="Nome do produto">
-
-            <input type="number" id="novo-preco" class="sigl-input" placeholder="Preço">
-
+            
+            <!-- <input type="text" id="novo-nome" class="sigl-input" placeholder="Nome do produto"> -->
+            {% render_field form.nome placeholder="Nome do produto" class="sigl-input" %}
+            <!-- <input type="number" id="novo-preco" class="sigl-input" placeholder="Preço"> -->
+            {% render_field form.preco placeholder="Preço" class="sigl-input" %}
+            
             <select id="novo-tipo" class="sigl-input">
                 <option value="lanche">Lanche</option>
                 <option value="bebida">Bebida</option>
             </select>
-
+            
             <button id="btn-add-produto" class="btn-finalize-order">
                 Cadastrar
             </button>
+            
+            </div>
+        </form>
 
-        </div>
     </section>
-
+    
     <section class="checkout-sidebar">
 
         <div class="checkout-header">

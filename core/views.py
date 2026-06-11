@@ -20,10 +20,12 @@ def perfil(request):
 def novo_pedido(request):
     lanches=Produto.objects.filter(categoria="lanche")
     bebidas=Produto.objects.filter(categoria="bebida")
-    
+    form = ProdutoForm(request.POST or None)
+
     context={
         'lanches' : lanches,
-        'bebidas' : bebidas 
+        'bebidas' : bebidas,
+        'form' : form
     }
 
     return render(request,"html/novo_pedido.html",context)
