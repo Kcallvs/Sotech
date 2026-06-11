@@ -1,4 +1,4 @@
 # SOTECH
 
-soluções tecnológicas 
+[soluções tecnológicas]
 
