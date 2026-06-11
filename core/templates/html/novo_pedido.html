@@ -89,7 +89,7 @@
             <!-- produtos -->
         </div>
         <form method="POST">
-
+            {% csrf_token %} 
             <div id="add-product-area" style="display:none; margin-top:20px;">
                 
             <h3>Cadastrar Produto</h3>
