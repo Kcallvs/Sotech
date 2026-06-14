@@ -25,7 +25,7 @@
         </div>
 
         <div class="right">
-            <form method="POST">
+            <form action="{% url 'cadastro' %}"   method="POST">
                 {% csrf_token %}
 
                 <h2>Registrar Novo Funcionário</h2>
@@ -44,6 +44,11 @@
                 <div class="input-group">
                     <label for="role">Cargo / Função</label>
                     <input type="text" id="role" name="role" required>
+                </div>
+
+                   <div class="input-group">
+                    <label for="pass">Senha</label>
+                    <input type="password" id="pass" name="senha" required>
                 </div>
 
                 <button type="submit" class="btn-save">Salvar Cadastro</button>
