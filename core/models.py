@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+# adicionar uma tabela entre estoque e produto chamada dependências
 
 # # necessario para evitar problema de normalização
 # class Produto_categoria(models.Model):

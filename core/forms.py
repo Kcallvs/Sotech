@@ -6,6 +6,18 @@ from .models import Cliente,Produto
 # CustomUser = get_user_model()
 
 
+
+# class FuncionarioForm(forms.ModelForm):
+#     class Meta:
+#         model =  Funcionario
+#         fiels = ['fist_name','last_name','cargo','turno','cpf','password']
+       
+#         widgets = {
+#             'password': forms.PasswordInput(),
+#         }
+
+    
+
 class ProdutoForm(forms.ModelForm):
     class Meta:
         model = Produto

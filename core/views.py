@@ -10,7 +10,7 @@ def login(request):
 
 def cadastro(request):
     return render(request,"html/cadastro.html")
-
+   
 def dashboard(request):
     return render(request,"html/dashboard.html")
 
@@ -45,6 +45,9 @@ def estoque(request):
 
 def funcionarios(request):
     return render(request,"html/funcionarios.html")
+
+
+
 
 def relatorio(request):
     return render(request,"html/relatorio.html")

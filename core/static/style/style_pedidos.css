@@ -188,9 +188,7 @@ body {
 }
 
 
-/* ============================================================
-   CHECKOUT SIDEBAR (Resumo do Pedido)
-   ============================================================ */
+/* CHECKOUT SIDEBAR (Resumo do Pedido)*/
 .checkout-sidebar {
     background: var(--primary);
     color: var(--white);

@@ -47,11 +47,11 @@
                 </div>
 
                 <div class="product-btn">
-                    <button class="add-item-btn" data-name="{{bebida.nome}}" data-price="{{bebida.preco}}">
+                    <button class="add-item-btn" data-name="{{lanche.nome}}" data-price="{{lanche.preco}}">
                         <i class="fas fa-plus"></i>
                     </button>
 
-                    <button class="remove-item-btn" data-name="{{bebida.nome}}" data-price="{{bebida.preco}}">
+                    <button class="remove-item-btn" data-name="{{lanche.nome}}" data-price="{{lanche.preco}}">
                         <i class="fa-solid fa-minus"></i>
                     </button>
                 </div>
@@ -88,8 +88,8 @@
         <div class="products-grid">
             <!-- produtos -->
         </div>
-        <form action="post">
-            {% csrf_token %}
+        <form action="POST">
+
             <div id="add-product-area" style="display:none; margin-top:20px;">
                 
             <h3>Cadastrar Produto</h3>
