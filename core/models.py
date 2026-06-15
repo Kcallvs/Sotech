@@ -38,14 +38,13 @@ class Pagamento(models.Model):
 
 
 class Estoque(models.Model):
+    nome = models.CharField("Nome",max_length=45)
+    lote = models.CharField("Lote",max_length=45)
     data_hora_entrada = models.DateTimeField("Data e hora da entrada")
     data_hora_saida = models.DateTimeField("Data e hora da saída")
     tamanho_estoque = models.IntegerField("Tamanho do estoque")
     quantidade = models.IntegerField("Quantidade")
     validade = models.DateField("Validade")
-    localizacao = models.CharField("Localização",max_length=45)
-    lote = models.CharField("Lote",max_length=45
-    )
 
     def __str__(self):
         return self.lote

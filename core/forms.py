@@ -1,5 +1,5 @@
 from django import forms
-from .models import Cliente,Produto
+from .models import Cliente,Produto,Estoque
 # from django.contrib.auth import get_user_model
 # from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -16,6 +16,10 @@ from .models import Cliente,Produto
 #             'password': forms.PasswordInput(),
 #         }
 
+class EstoqueForm(forms.ModelForm):
+    class Meta:
+        model = Estoque
+        fields = []
     
 
 class ProdutoForm(forms.ModelForm):
