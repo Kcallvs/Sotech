@@ -6,7 +6,9 @@ urlpatterns = [
     #rota, view resposável, nome de referência
     
     path('',inicio,name="inicio"),
-    path('login/',login,name="login"),
+    
+    path('login/',autenticar,name="login"),
+
     path('cadastro/', cadastro, name="cadastro"),
     path('dashboard/',dashboard,name="dashboard"),
     path('perfil/',perfil,name="perfil"),

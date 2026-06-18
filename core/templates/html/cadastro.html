@@ -27,37 +27,37 @@
         </div>
 
         <div class="right">
-            <form method="POST">
+            <form method="post">
                 {% csrf_token %}
 
                 <div class="input-group">
                     <label>Nome</label>
-                    <input type="text" name="first_name" required>
+                    {% render_field form.first_name placeholder="Nome" %}
                 </div>
 
                 <div class="input-group">
                     <label>Sobrenome</label>
-                    <input type="text" name="last_name" required>
+                    {% render_field form.last_name placeholder="Sobrenome" %}
                 </div>
 
                 <div class="input-group">
                     <label>CPF</label>
-                    <input type="text" name="cpf" required>
+                    {% render_field form.cpf placeholder="CPF" %}
                 </div>
 
                 <div class="input-group">
                     <label>Cargo</label>
-                    <input type="text" name="cargo" required>
+                    {% render_field form.cargo placeholder="Cargo" %}
                 </div>
 
                 <div class="input-group">
                     <label>Turno</label>
-                    <input type="text" name="turno" required>
+                    {% render_field form.turno placeholder="Turno" %}
                 </div>
 
                 <div class="input-group">
                     <label>Usuário</label>
-                    <input type="text" name="username" required>
+                    {% render_field form.username placeholder="Username" %}
                 </div>
 
                 <div class="input-group">

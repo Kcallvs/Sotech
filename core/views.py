@@ -6,24 +6,37 @@ from django.contrib.auth import authenticate, login
 
 def cadastro(request):
     form = FuncionarioFormCadastro(request.POST or None)
+
     if form.is_valid():
         form.save()
         return redirect('login')
+    
+    print(form.errors)   
     context = {
-        'form':form
+        'form': form
     }
     return render(request, 'html/cadastro.html', context)
+
+def autenticar(request):
+    if request.POST:
+        username= request.POST['username']
+        password= request.POST['password']
+        user = authenticate(request,username= username, password= password)
+        if user is not None:
+            login(request,user)
+            return redirect('dashboard')
+        else:
+            return render(request, 'html/login.html')
+    else:
+            return render(request, 'html/login.html')
 
 
 def inicio(request):
     return render(request,"html/login.html")
 
-def login(request):
-    return render(request,"html/login.html")
+# def login(request):
+#     return render(request,"html/login.html")
 
-# def cadastro(request):
-#     return render(request,"html/cadastro.html")
-   
 def dashboard(request):
     return render(request,"html/dashboard.html")
 
