@@ -7,7 +7,7 @@ urlpatterns = [
     
     path('',inicio,name="inicio"),
     path('login/',login,name="login"),
-    path('cadastro/',cadastro,name="cadastro"),
+    path('cadastro/', cadastro, name="cadastro"),
     path('dashboard/',dashboard,name="dashboard"),
     path('perfil/',perfil,name="perfil"),
     path('pedido/',novo_pedido,name="pedido"),

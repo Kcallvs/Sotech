@@ -1,20 +1,12 @@
 from django import forms
-from .models import Cliente,Produto,Estoque
+from .models import Funcionario, Cliente,Produto,Estoque
 # from django.contrib.auth import get_user_model
-# from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm
 
-# CustomUser = get_user_model()
-
-
-
-# class FuncionarioForm(forms.ModelForm):
-#     class Meta:
-#         model =  Funcionario
-#         fiels = ['fist_name','last_name','cargo','turno','cpf','password']
-       
-#         widgets = {
-#             'password': forms.PasswordInput(),
-#         }
+class FuncionarioFormCadastro(UserCreationForm):
+    class Meta:
+        model =  Funcionario
+        fields = ['first_name','last_name','cargo','turno','cpf','username','password']
 
 class EstoqueForm(forms.ModelForm):
     class Meta:

@@ -1,6 +1,19 @@
 from django.shortcuts import render,redirect
-from .forms import ClienteForm,ProdutoForm
 from .models import Cliente,Funcionario,Produto
+from .forms import ClienteForm,ProdutoForm,FuncionarioFormCadastro
+from django.contrib.auth import authenticate, login
+
+
+def cadastro(request):
+    form = FuncionarioFormCadastro(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('login')
+    context = {
+        'form':form
+    }
+    return render(request, 'html/cadastro.html', context)
+
 
 def inicio(request):
     return render(request,"html/login.html")
@@ -8,8 +21,8 @@ def inicio(request):
 def login(request):
     return render(request,"html/login.html")
 
-def cadastro(request):
-    return render(request,"html/cadastro.html")
+# def cadastro(request):
+#     return render(request,"html/cadastro.html")
    
 def dashboard(request):
     return render(request,"html/dashboard.html")
