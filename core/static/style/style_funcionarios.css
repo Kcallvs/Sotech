@@ -5,7 +5,6 @@
      font-family: 'Rajdhani', Rajdhani-serif;
 }
 
-/* BODY */
 body {
     display: flex;
     background-color: var(--bg);
@@ -34,7 +33,6 @@ body {
     padding: 15px 25px;
     text-decoration: none;
     color: #BDC3C7;
-    /* Cor cinza suave para os itens */
     font-weight: 500;
     transition: 0.3s ease;
 }
@@ -49,7 +47,6 @@ body {
     background-color: var(--secondary);
     color: var(--white);
     padding-left: 30px;
-    /* Efeito de deslize no hover */
 }
 
 .main-content {
@@ -71,7 +68,7 @@ body {
     font-size: 1.6rem;
 }
 
-/* CARD DA TABELA */
+/* Card de Tabela */
 .table-card {
     background: var(--white);
     padding: 25px;
@@ -81,7 +78,7 @@ body {
 }
 
 
-/* TABELA DE FUNCIONÁRIOS */
+/* Tabela de Funcionários */
 
 .funcionarios-table {
     width: 100%;
@@ -125,7 +122,7 @@ body {
 .funcionarios-table th:nth-child(5), .funcionarios-table td:nth-child(5) { width: 25%; } /* CPF */
 .funcionarios-table th:nth-child(6), .funcionarios-table td:nth-child(6) { width: 15%; } /* Ações */
 
-/* BOTÕES DE AÇÃO NA TABELA */
+/* Botões de editar e deletar*/
 .btn-edit { 
     color: var(--secondary); 
     background: none; 

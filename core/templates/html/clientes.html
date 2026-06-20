@@ -7,20 +7,23 @@
 {% block estilo %}
 <link rel="stylesheet" href="{% static 'style/style_clientes.css' %}?{% now 'U' %}">
 {% endblock %}
+
 {% block conteudo %}
 {% block selecao %}clientes{% endblock %}
 
-<!-- Conteúdo Principal  -->
 <main class="main-content">
+
     <header class="main-header">
         <h1>Clientes Cadastrados</h1>
-        <button class="btn-add" onclick="document.getElementById('modalCliente').style.display='block'">+ Novo
-            Cliente</button>
+
+        <button class="btn-add" onclick="document.getElementById('modalCliente').style.display='block'">
+            + Novo Cliente
+        </button>
     </header>
 
-    <!-- tabela dos cliente Cadastrados -->
     <div class="table-card">
         <table class="clients-table">
+
             <thead>
                 <tr>
                     <th>ID</th>
@@ -30,54 +33,66 @@
                     <th>Ações</th>
                 </tr>
             </thead>
+
             <tbody>
 
-                
                 {% for client in clients %}
 
                 <tr>
-                    <td>{{client.id}}</td>
-                    <td>{{client.nome}}</td>
-                    <td>{{client.telefone}}</td>
-                    <td>{{client.endereco}}</td>
+                    <td>{{ client.id }}</td>
+                    <td>{{ client.nome }}</td>
+                    <td>{{ client.telefone }}</td>
+                    <td>{{ client.endereco }}</td>
 
                     <td>
+
                         <a class="btn-edit" href="{% url 'cliente_editar' client.id %}">
-                               <i class="fas fa-edit"> </i></button>
+                            <i class="fas fa-edit"></i>
+                        </a>
 
                         <a class="btn-delete" href="{% url 'cliente_remover' client.id %}">
-                                <i class="fas fa-trash"></i> </button>
+                            <i class="fas fa-trash"></i>
+                        </a>
                     </td>
                 </tr>
-
                 {% endfor %}
-
             </tbody>
         </table>
     </div>
-</main>
-</div>
 
-<!-- cadastro cliente  -->
+</main>
+
+<!-- Modal -->
 <div id="modalCliente" class="modal">
+
     <div class="modal-content">
+
         <h2>Cadastrar Cliente</h2>
+
         <form method="post">
             {% csrf_token %}
-            {{form}}
+            {{ form }}
 
-            <div class="form-buttons" style="display: flex; gap: 10px; margin-top: 15px;">
-                <button type="submit" class="btn-save">Salvar</button>
+            <div class="form-buttons" style="display:flex; gap:10px; margin-top:15px;">
+
+                <button type="submit" class="btn-save">
+                    Salvar
+                </button>
+
                 <button type="button" class="btn-cancel"
-                    onclick="document.getElementById('modalCliente').style.display='none'" style="background: #666; color: white;border: none; 
-                    padding: 14px; 
-                    width: 100%; 
-                    border-radius: 6px; 
-                    cursor: pointer; 
-                    font-weight: bold; 
-                    font-size: 1rem;
-                    margin-top: 15px;
-                    transition: 0.3s;">
+                    onclick="document.getElementById('modalCliente').style.display='none'" style="
+                        background:#666;
+                        color:white;
+                        border:none;
+                        padding:14px;
+                        width:100%;
+                        border-radius:6px;
+                        cursor:pointer;
+                        font-weight:bold;
+                        font-size:1rem;
+                        margin-top:15px;
+                        transition:0.3s;
+                    ">
                     Cancelar
                 </button>
             </div>
@@ -86,12 +101,40 @@
 </div>
 
 {% endblock %}
+
 {% block extra %}
+<script>
+    function mascaraTelefone(campo) {
+        let telefone = campo.value;
+        telefone = telefone.replace(/\D/g, "");
+        telefone = telefone.replace(/^(\d{2})(\d)/, "($1) $2");
+
+        if (telefone.length > 14) {
+            telefone = telefone.replace(/(\d{5})(\d{4})$/, "$1-$2");
+        } else {
+            telefone = telefone.replace(/(\d{4})(\d{4})$/, "$1-$2");
+        }
+
+        campo.value = telefone;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const telefone = document.querySelector('input[name="telefone"]');
+
+        if (telefone) {
+            telefone.maxLength = 15;
+            telefone.addEventListener("input", function () {
+                mascaraTelefone(this);
+            });
+        }
+    });
+</script>
 
 {% if edit %}
 <script>
-    document.getElementById('modalCliente').style.display = 'block'
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("modalCliente").style.display = "block";
+    });
 </script>
 {% endif %}
-
 {% endblock %}

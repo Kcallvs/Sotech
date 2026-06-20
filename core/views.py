@@ -17,6 +17,13 @@ def cadastro(request):
     }
     return render(request, 'html/cadastro.html', context)
 
+def funcionarios(request):
+    funcionarios = Funcionario.objects.all()
+
+    return render(request,"html/funcionarios.html",{ "funcionarios": funcionarios}
+    )
+
+
 def autenticar(request):
     if request.POST:
         username= request.POST['username']
@@ -33,9 +40,6 @@ def autenticar(request):
 
 def inicio(request):
     return render(request,"html/login.html")
-
-# def login(request):
-#     return render(request,"html/login.html")
 
 def dashboard(request):
     return render(request,"html/dashboard.html")
@@ -65,14 +69,6 @@ def historico(request):
 
 def estoque(request):
     return render(request,"html/estoque.html")
-
-# def clientes(request):
-#     return render(request,"html/clientes.html")
-
-def funcionarios(request):
-    return render(request,"html/funcionarios.html")
-
-
 
 
 def relatorio(request):

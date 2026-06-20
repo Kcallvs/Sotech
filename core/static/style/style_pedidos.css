@@ -33,7 +33,6 @@ body {
     padding: 15px 25px;
     text-decoration: none;
     color: #BDC3C7;
-    /* Cor cinza suave para os itens */
     font-weight: 500;
     transition: 0.3s ease;
 }
@@ -48,7 +47,6 @@ body {
     background-color: var(--secondary);
     color: var(--white);
     padding-left: 30px;
-    /* Efeito de deslize no hover */
 }
 
 .main-content {
@@ -57,7 +55,7 @@ body {
     height: 100vh; 
     padding: 25px;
     display: grid;
-    grid-template-columns: 1fr 380px; /* Área de produtos e Checkout */
+    grid-template-columns: 1fr 380px;
     gap: 20px;
 }
 
@@ -188,7 +186,7 @@ body {
 }
 
 
-/* CHECKOUT SIDEBAR (Resumo do Pedido)*/
+/* Resumo do Pedido*/
 .checkout-sidebar {
     background: var(--primary);
     color: var(--white);
@@ -212,7 +210,7 @@ body {
     display: block;
 }
 
-/* Inputs Estilizados */
+/* Inputs */
 .sigl-input {
     width: 100%;
     padding: 12px;
@@ -244,7 +242,7 @@ body {
 }
 
 .total-display h2 {
-    color: var(--success); /* Valor total em verde corporativo */
+    color: var(--success);
     font-size: 2.2rem;
     margin-top: 5px;
 }
@@ -315,9 +313,7 @@ body {
     box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
 }
 
-/* ============================================================
-   CADASTRO DE PRODUTO (Área Oculta)
-   ============================================================ */
+/*Cadastro de produtos*/
 #add-product-area {
     background: #FDFDFD;
     padding: 20px;

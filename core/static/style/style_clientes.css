@@ -5,7 +5,6 @@
     font-family: 'Rajdhani', Rajdhani-serif;
 }
 
-/* BODY */
 body {
     display: flex;
     background-color: var(--bg);
@@ -34,7 +33,6 @@ body {
     padding: 15px 25px;
     text-decoration: none;
     color: #BDC3C7;
-    /* Cor cinza suave para os itens */
     font-weight: 500;
     transition: 0.3s ease;
 }
@@ -49,12 +47,8 @@ body {
     background-color: var(--secondary);
     color: var(--white);
     padding-left: 30px;
-    /* Efeito de deslize no hover */
 }
 
-/*
-   CONTEÚDO PRINCIPAL (Lista de Clientes)
- */
 .main-content {
     flex: 1;
     padding: 30px;
@@ -102,9 +96,7 @@ body {
     overflow-x: auto;
 }
 
-/*
-   TABELA DE CLIENTES
- */
+/* Tabela de clintes */
 .clients-table {
     width: 100%;
     border-collapse: collapse;
@@ -135,7 +127,7 @@ body {
 }
 
 .clients-table tbody tr:hover {
-    background-color: #F0F7FD; /* Destaque sutil em azul */
+    background-color: #F0F7FD; 
 }
 
 /* Ajuste de Largura das Colunas */
@@ -170,16 +162,14 @@ body {
 .btn-edit:hover { transform: scale(1.2); }
 .btn-delete:hover { transform: scale(1.2); }
 
-/*
-   MODAL DE CADASTRO
- */
+/* Modal de cadastro e edição de clientes */
 .modal {
     display: none;
     position: fixed;
     z-index: 1000;
     left: 0; top: 0;
     width: 100%; height: 100%;
-    background: rgba(44, 62, 80, 0.7); /* Overlay corporativo */
+    background: rgba(44, 62, 80, 0.7);
 }
 
 .modal-content {
@@ -188,7 +178,7 @@ body {
     padding: 30px;
     width: 400px;
     border-radius: 12px;
-    border-top: 8px solid var(--secondary); /* Barra azul no topo */
+    border-top: 8px solid var(--secondary);
     box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
 
@@ -198,7 +188,6 @@ body {
     text-align: center;
 }
 
-/* Botão Salvar no Modal */
 .btn-save { 
     background: var(--primary); 
     color: white; 
@@ -217,7 +206,7 @@ body {
     background: #1A252F;
 }
 
-/* Estilo para labels e inputs do Modal (Caso use no HTML) */
+/* Estilo para labels e inputs do Modal */
 .modal-content label {
     display: block;
     margin-bottom: 5px;
