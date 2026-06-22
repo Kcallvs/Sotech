@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block titulo %}Gestão de Estoque{% endblock %}
 
@@ -104,13 +105,15 @@
 
         <h2>Entrada de Material</h2>
 
-        <form id="formEntrada">
+        <form id="formEntrada" method="post">
+            
 
-            <input type="text" id="nome" placeholder="Produto" required>
-            <input type="text" id="categoria" placeholder="Categoria" required>
-            <input type="number" id="qtd" placeholder="Quantidade" required>
-            <input type="number" id="ideal" placeholder="Quantidade Ideal" required>
-            <input type="text" id="validade" placeholder="Validade (DD/MM/AAAA)" required>
+
+            <input type="text" name="nome" id="nome" placeholder="Produto" required>
+            <input type="text" name="lote" id="categoria" placeholder="Categoria" required>
+            <input type="number" name="quantidade" id="qtd" placeholder="Quantidade" required>
+            <input type="number" name="" id="ideal" placeholder="Quantidade Ideal" required>
+            <input type="text" name="validade" id="validade" placeholder="Validade (DD/MM/AAAA)" required>
 
             <div class="form-buttons">
                 <button type="submit" class="btn-save">Salvar</button>

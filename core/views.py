@@ -20,8 +20,11 @@ def cadastro(request):
 def funcionarios(request):
     funcionarios = Funcionario.objects.all()
 
-    return render(request,"html/funcionarios.html",{ "funcionarios": funcionarios}
-    )
+    context = { 
+        "funcionarios": funcionarios
+    }
+
+    return render(request,"html/funcionarios.html",context)
 
 
 def autenticar(request):
@@ -71,6 +74,13 @@ def novo_pedido(request):
 def historico(request):
     return render(request,"html/historico.html")
 
+
+
+# form de estoque 
+# {% csrf_token %}
+# {% render_field form.nome %}
+# {% render_field form.lote %}
+# {% render_field form.quantidade %}
 def estoque(request):
     return render(request,"html/estoque.html")
 
