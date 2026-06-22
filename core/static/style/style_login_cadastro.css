@@ -11,22 +11,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Rajdhani', Rajdhani-serif;
+    font-family: 'Rajdhani', Rajdhani;
 }
 
 body {
-    height: 100vh;
+    min-height: 100vh;
     background: var(--bg);
-    overflow: hidden;
-    /* Evita scrolls desnecessários na tela principal */
+    overflow-x: hidden;
 }
 
 .container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
 }
 
-/* lado esquerdo */
 .left {
     flex: 1;
     background: linear-gradient(135deg, var(--primary), #1a252f);
@@ -34,31 +32,33 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 60px;
+    padding: clamp(30px, 5vw, 60px);
 }
 
 .left h1 {
-    font-size: 4.5rem;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
     font-weight: 700;
 }
 
 .left p {
-    font-size: 1rem;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
     opacity: 0.8;
+    line-height: 1.6;
 }
 
-/* lado direito */
 .right {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 form {
-   background: var(--white);
-    width: 350px;
-    padding: 40px;
+    width: 100%;
+    max-width: 380px;
+    background: var(--white);
+    padding: clamp(25px, 4vw, 40px);
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
@@ -73,9 +73,9 @@ form p {
     color: #7f8c8d;
     font-size: 0.95rem;
     margin-bottom: 25px;
+    text-align: center;
 }
 
-/* Grupos de Entrada */
 .input-group {
     margin-bottom: 18px;
 }
@@ -99,10 +99,9 @@ form p {
 
 .input-group input:focus {
     border-color: var(--secondary);
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.25);
 }
 
-/* Botão Salvar */
 .btn-save {
     width: 100%;
     padding: 12px;
@@ -110,6 +109,7 @@ form p {
     border-radius: 5px;
     background: var(--secondary);
     color: var(--white);
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
@@ -117,50 +117,62 @@ form p {
 
 .btn-save:hover {
     background: var(--primary);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
-/* Link de Voltar */
-.voltar,.Criar {
+.voltar,
+.Criar {
     margin-top: 15px;
     text-align: center;
 }
 
-.voltar a,.Criar a {
+.voltar a,
+.Criar a {
     text-decoration: none;
     color: var(--primary);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 600;
     transition: 0.3s;
 }
 
-.voltar a:hover,.Criar a:hover {
+.voltar a:hover,
+.Criar a:hover {
     color: var(--secondary);
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
+
+@media (max-width: 900px) {
 
     .container {
         flex-direction: column;
     }
 
     .left {
-        height: 35vh;
+        min-height: 35vh;
         align-items: center;
         text-align: center;
     }
 
+    .right {
+        min-height: 65vh;
+    }
+
+    form {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 500px) {
+
     .left h1 {
-        font-size: 3rem;
+        font-size: 2.3rem;
     }
 
     .left p {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
-    .right {
-        height: 65vh;
+    form {
+        padding: 25px;
     }
-
 }

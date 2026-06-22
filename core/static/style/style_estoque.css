@@ -5,7 +5,6 @@
      font-family: 'Rajdhani', Rajdhani-serif;
 }
 
-/* BODY */
 body {
     display: flex;
     background-color: var(--bg);
@@ -34,7 +33,6 @@ body {
     padding: 15px 25px;
     text-decoration: none;
     color: #BDC3C7;
-    /* Cor cinza suave para os itens */
     font-weight: 500;
     transition: 0.3s ease;
 }
@@ -49,7 +47,6 @@ body {
     background-color: var(--secondary);
     color: var(--white);
     padding-left: 30px;
-    /* Efeito de deslize no hover */
 }
 
 .main-content {
@@ -62,7 +59,7 @@ body {
     gap: 25px;
 }
 
-/* HEADER */
+/* Header */
 .main-header {
     display: flex;
     justify-content: space-between;
@@ -74,7 +71,7 @@ body {
     font-size: 1.6rem;
 }
 
-/* BOTÕES */
+/* botões */
 .btn-red {
     background: var(--danger);
     color: white;
@@ -102,7 +99,7 @@ body {
 
 .btn-yellow:hover { background: #D4AC0D; }
 
-/* CARDS DE RESUMO DO INVENTÁRIO */
+/* cards  de resumo do inventário*/
 .inventory-summary {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -143,9 +140,8 @@ body {
     color: var(--primary);
 }
 
-/* ============================================================
-   TABELA DE INVENTÁRIO
-   ============================================================ */
+/* Tabela do inventário*/
+
 .table-container {
     background: var(--white);
     border-radius: 12px;
@@ -165,7 +161,7 @@ body {
 
 .table-header h3 { color: var(--primary); }
 
-/* BARRA DE BUSCA */
+/* Barra de busca*/
 .search-input {
     padding: 10px 15px;
     border-radius: 6px;
@@ -177,7 +173,7 @@ body {
 
 .search-input:focus { border-color: var(--secondary); }
 
-/* TABELA */
+/* tabela */
 .inventory-table {
     width: 100%;
     border-collapse: collapse;
@@ -197,7 +193,7 @@ body {
     top: 0;
 }
 
-/* LINHAS */
+/* linhas */
 .inventory-table td {
     padding: 15px;
     border-bottom: 1px solid #eee;
@@ -211,7 +207,7 @@ body {
     background: #F0F7FD;
 }
 
-/* BADGES DE STATUS NO ESTOQUE */
+/* badge e status  do estoque*/
 .badge {
     padding: 5px 12px;
     border-radius: 20px;
@@ -238,7 +234,7 @@ body {
     border: 1px solid #F9E79F;
 }
 
-/* AÇÕES (Botões de ícone) */
+/* Botões de ação */
 .action-icon {
     border: 1px solid var(--border);
     background: var(--white);
@@ -256,7 +252,7 @@ body {
     border-color: var(--secondary);
 }
 
-/* FUNDO ESCURO */
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -266,7 +262,6 @@ body {
     align-items: center;
 }
 
-/* CAIXA DO MODAL */
 .modal-content {
     background: #dcdcdc;
     width: 400px;
@@ -276,7 +271,6 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* TÍTULO */
 .modal-content h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -284,7 +278,6 @@ body {
     font-weight: bold;
 }
 
-/* INPUTS */
 .modal-content input {
     width: 100%;
     padding: 12px;
@@ -299,14 +292,13 @@ body {
     font-size: 14px;
 }
 
-/* BOTÕES */
+/* Botões de salvar e cancelar */
 .form-buttons {
     display: flex;
     gap: 10px;
     margin-top: 20px;
 }
 
-/* BOTÃO SALVAR */
 .btn-save {
     flex: 1;
     background: #2c3e50;
@@ -317,8 +309,6 @@ body {
     cursor: pointer;
     font-weight: bold;
 }
-
-/* BOTÃO CANCELAR */
 .btn-cancel {
     flex: 1;
     background: #777;
@@ -330,9 +320,7 @@ body {
 }
 
 
-/* ============================================================
-   RESPONSIVIDADE
-   ============================================================ */
+/* Responsividade*/
 @media (max-width: 900px) {
     .sidebar { width: 200px; }
     .main-content { margin-left: 200px; width: calc(100% - 200px); }

@@ -11,8 +11,8 @@ from django.contrib.auth.models import AbstractUser
 
 class Funcionario(AbstractUser):
     cargo = models.CharField("Cargo", max_length=50)
-    turno = models.CharField("Turno", max_length=50)
-    cpf = models.CharField("CPF", max_length=11, primary_key=True)
+    turno = models.CharField("Turno", max_length=30)
+    cpf = models.CharField("CPF", max_length=14, primary_key=True)
 
     def __str__(self):
         return self.cpf

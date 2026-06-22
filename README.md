@@ -2,4 +2,4 @@
 
 [soluções tecnológicas]
 
-sotech é um sistema de gerencia de lachonetes
+O Sotech é um sistema de gerenciamento desenvolvido para pequenos estabelecimentos do ramo alimentício, especialmente lanchonetes.

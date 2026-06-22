@@ -29,18 +29,19 @@
                 </tr>
             </thead>
             <tbody>
+                {% for funcionario in funcionarios %}
                 <tr>
-                    <td></td>
-                    <td>João Silva</td>
-                    <td>Atendente</td>
-                    <td>Noite</td>
-                    <td>123.456.789-00</td>
+                    <td>{{ funcionario.id }}</td>
+                    <td>{{ funcionario.first_name }} {{ funcionario.last_name }}</td>
+                    <td>{{ funcionario.cargo }}</td>
+                    <td>{{ funcionario.turno }}</td>
+                    <td>{{ funcionario.cpf }}</td>
                     <td>
                         <button class="btn-edit"><i class="fas fa-edit"></i></button>
                         <button class="btn-delete"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
-               
+                {% endfor %}
             </tbody>
         </table>
     </div>
