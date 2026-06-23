@@ -31,14 +31,16 @@
             <tbody>
                 {% for funcionario in funcionarios %}
                 <tr>
-                    <td>{{ funcionario.id }}</td>
+                    <td>{{ funcionario.pk }}</td>
                     <td>{{ funcionario.first_name }} {{ funcionario.last_name }}</td>
                     <td>{{ funcionario.cargo }}</td>
                     <td>{{ funcionario.turno }}</td>
                     <td>{{ funcionario.cpf }}</td>
                     <td>
                         <button class="btn-edit"><i class="fas fa-edit"></i></button>
-                        <button class="btn-delete"><i class="fas fa-trash"></i></button>
+                        <a href="{% url 'funcionario_remover' funcionario.pk %}"><button class="btn-delete"><i
+                                    class="fas fa-trash"></i></button>
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}

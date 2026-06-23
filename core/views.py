@@ -27,6 +27,11 @@ def funcionarios(request):
     return render(request,"html/funcionarios.html",context)
 
 
+def funcionario_remover(request,id):
+    funcionario=Funcionario.objects.get(pk=id)
+    funcionario.delete()
+    return redirect("funcionarios")
+
 def autenticar(request):
     if request.POST:
         username= request.POST['username']

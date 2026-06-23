@@ -19,6 +19,11 @@ urlpatterns = [
     path('clientes/',clientes,name="clientes"),
     path('funcionarios/',funcionarios,name="funcionarios"),
     path('relatorio/',relatorio,name="relatorio"),
+
     path("cliente_editar/<int:id>/",cliente_editar,name="cliente_editar"),
-    path("cliente_remover/<int:id>/",cliente_remover,name="cliente_remover")
+    path("cliente_remover/<int:id>/",cliente_remover,name="cliente_remover"),
+
+    # por enquanto vai ser assim talvez a gente mude pra id em numero
+    path("funcionario_remover/<str:id>/",funcionario_remover,name="funcionario_remover"),
+
 ]

@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 class FuncionarioFormCadastro(UserCreationForm):
     class Meta:
         model =  Funcionario
-        fields = ['first_name','last_name','cargo','turno','cpf','username','password']
+        fields = ['first_name','last_name','cargo','turno','cpf','username']
 
 class EstoqueForm(forms.ModelForm):
     class Meta:
