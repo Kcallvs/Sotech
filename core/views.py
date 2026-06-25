@@ -60,7 +60,7 @@ def perfil(request):
     return render(request,"html/perfil.html")
 
 def novo_pedido(request):
-    lanches=Produto.objects.filter(categoria="lanche")
+    lanches=Produto.objects.filter(categoria="lanche") 
     bebidas=Produto.objects.filter(categoria="bebida")
     form = ProdutoForm(request.POST or None)
 
@@ -71,7 +71,8 @@ def novo_pedido(request):
     context={
         'lanches' : lanches,
         'bebidas' : bebidas,
-        'form' : form
+        'form' : form,
+        'clientes': Cliente.objects.all(),
     }
 
     return render(request,"html/novo_pedido.html",context)

@@ -88,32 +88,32 @@
         <div class="products-grid">
             <!-- produtos -->
         </div>
-        <form action="post" >
-    
+        <form action="post">
+
             <div id="add-product-area" style="display:none; margin-top:20px;">
-                
-            <h3>Cadastrar Produto</h3>
-            
-            <!-- <input type="text" id="novo-nome" class="sigl-input" placeholder="Nome do produto"> -->
-            {% render_field form.nome placeholder="Nome do produto" class="sigl-input" %}
-            <!-- <input type="number" id="novo-preco" class="sigl-input" placeholder="Preço"> -->
-            {% render_field form.preco placeholder="Preço" class="sigl-input" %}
-            
-            {% render_field form.categoria class="sigl-input" %}
-            <!-- <select id="novo-tipo" class="sigl-input">
+
+                <h3>Cadastrar Produto</h3>
+
+                <!-- <input type="text" id="novo-nome" class="sigl-input" placeholder="Nome do produto"> -->
+                {% render_field form.nome placeholder="Nome do produto" class="sigl-input" %}
+                <!-- <input type="number" id="novo-preco" class="sigl-input" placeholder="Preço"> -->
+                {% render_field form.preco placeholder="Preço" class="sigl-input" %}
+
+                {% render_field form.categoria class="sigl-input" %}
+                <!-- <select id="novo-tipo" class="sigl-input">
                 <option value="lanche">Lanche</option>
                 <option value="bebida">Bebida</option>
             </select> -->
-            
-            <button id="btn-add-produto" type="submit" class="btn-finalize-order">
-                Cadastrar
-            </button>
-            
+
+                <button id="btn-add-produto" type="submit" class="btn-finalize-order">
+                    Cadastrar
+                </button>
+
             </div>
         </form>
 
     </section>
-    
+
     <section class="checkout-sidebar">
 
         <div class="checkout-header">
@@ -121,10 +121,12 @@
         </div>
 
         <div class="order-info">
-            <label>Cliente (Tabela Cliente):</label>
-            <select class="sigl-input">
-                <option>Consumidor Padrão</option>
-                <option>Cliente Cadastrado #01</option>
+            <label>Cliente:</label>
+            <select class="sigl-input" name="cliente">
+                <option value="">Consumidor Padrão</option>
+                {% for cliente in clientes %}
+                <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+                {% endfor %}
             </select>
         </div>
 

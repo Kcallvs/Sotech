@@ -13,7 +13,7 @@ class Funcionario(AbstractUser):
     cargo = models.CharField("Cargo", max_length=50)
     turno = models.CharField("Turno", max_length=30)
     cpf = models.CharField("CPF", max_length=14)
-    telefone = models.CharField("Telefone", max_length=15, default="(00) 00000-0000")
+    telefone = models.CharField("Telefone", max_length=16, default="")
 
     def __str__(self):
         return self.username
@@ -22,7 +22,7 @@ class Funcionario(AbstractUser):
 class Cliente(models.Model):
     nome = models.CharField("Nome", max_length=50)
     endereco = models.CharField("Endereço", max_length=100)
-    telefone = models.CharField("Telefone", max_length=15)
+    telefone = models.CharField("Telefone", max_length=16, default="")
 
     def __str__(self):
         return self.nome
