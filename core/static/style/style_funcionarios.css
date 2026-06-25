@@ -120,7 +120,8 @@ body {
 .funcionarios-table th:nth-child(3), .funcionarios-table td:nth-child(3) { width: 20%; } /* Cargo */
 .funcionarios-table th:nth-child(4), .funcionarios-table td:nth-child(4) { width: 15%; } /* Turno */
 .funcionarios-table th:nth-child(5), .funcionarios-table td:nth-child(5) { width: 25%; } /* CPF */
-.funcionarios-table th:nth-child(6), .funcionarios-table td:nth-child(6) { width: 15%; } /* Ações */
+.funcionarios-table th:nth-child(6), .funcionarios-table td:nth-child(6) { width: 25%; } /* Telefone */
+.funcionarios-table th:nth-child(7), .funcionarios-table td:nth-child(7) { width: 15%; } /* Ações */
 
 /* Botões de editar e deletar*/
 .btn-edit { 

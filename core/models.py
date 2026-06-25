@@ -12,10 +12,11 @@ from django.contrib.auth.models import AbstractUser
 class Funcionario(AbstractUser):
     cargo = models.CharField("Cargo", max_length=50)
     turno = models.CharField("Turno", max_length=30)
-    cpf = models.CharField("CPF", max_length=14, primary_key=True)
+    cpf = models.CharField("CPF", max_length=14)
+    telefone = models.CharField("Telefone", max_length=15, default="(00) 00000-0000")
 
     def __str__(self):
-        return self.cpf
+        return self.username
 
 
 class Cliente(models.Model):

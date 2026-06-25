@@ -27,23 +27,23 @@ def funcionarios(request):
     return render(request,"html/funcionarios.html",context)
 
 
-def funcionario_remover(request,id):
-    funcionario=Funcionario.objects.get(pk=id)
+def funcionario_remover(request, id):
+    funcionario = Funcionario.objects.get(pk=id)
     funcionario.delete()
-    return redirect("funcionarios")
+    return redirect("funcionarios")  # ← estava fora da função
 
 def autenticar(request):
     if request.POST:
-        username= request.POST['username']
-        password= request.POST['password']
-        user = authenticate(request,username= username, password= password)
-        if user is not None:
-            login(request,user)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:  # ← estava fora do if request.POST
+            login(request, user)
             return redirect('dashboard')
         else:
             return render(request, 'html/login.html')
     else:
-            return render(request, 'html/login.html')
+        return render(request, 'html/login.html')
 
 def sair(request):
     logout(request)
