@@ -62,14 +62,14 @@
                     <th>Produto</th>
                     <th>Categoria</th>
                     <th>Qtd. Atual</th>
-                    <th>Tam. Ideal</th>
+                    <th>Tam. Maximo</th>
                     <th>Validade</th>
                     <th>Status</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <!-- <tr>
                     <td><strong>Pão de Brioche</strong></td>
                     <td>Padaria</td>
                     <td>15 un</td>
@@ -80,8 +80,26 @@
                         <button class="action-icon"><i class="fas fa-sync"></i></button>
                         <button class="action-icon"><i class="fas fa-edit"></i></button>
                     </td>
-                </tr>
+                </tr> -->
+                {% for estoque in estoques %}
                 <tr>
+                    <td><strong>{{estoque.nome}}</strong></td>
+                    <td>{{estoque.categoria}}</td>
+                    <td>{{estoque.quantidade}} un</td>
+                    <td>{{estoque.tamanho_estoque}} un</td>
+                    <td>{{estoque.validade}}</td>
+
+                    <td><span class="badge red">Crítico</span></td>
+                    
+                    <td>
+                        <button class="action-icon"><i class="fas fa-sync"></i></button>
+                        <button class="action-icon"><i class="fas fa-edit"></i></button>
+                    </td>
+                </tr>
+                {% endfor %}
+
+
+                <!-- <tr>
                     <td><strong>Hambúrguer Bovino 180g</strong></td>
                     <td>Carnes</td>
                     <td>85 un</td>
@@ -92,7 +110,7 @@
                         <button class="action-icon"><i class="fas fa-sync"></i></button>
                         <button class="action-icon"><i class="fas fa-edit"></i></button>
                     </td>
-                </tr>
+                </tr> -->
             </tbody>
         </table>
     </section>

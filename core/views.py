@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Cliente,Funcionario,Produto
+from .models import Cliente,Funcionario,Produto,Estoque
 from .forms import ClienteForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm
 from django.contrib.auth import authenticate, login, logout
 
@@ -88,12 +88,14 @@ def historico(request):
 # {% render_field form.quantidade %}
 def estoque(request):
     form = EstoqueForm(request.POST or None)
+    estoques = Estoque.objects.all()
     
     if form.is_valid():
         form.save()
         return redirect("estoque")
     context={
-        'form':form
+        'form':form,
+        'estoques' : estoques
     }
     return render(request,"html/estoque.html",context)
 
