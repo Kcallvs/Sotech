@@ -11,7 +11,7 @@ class FuncionarioFormCadastro(UserCreationForm):
 class EstoqueForm(forms.ModelForm):
     class Meta:
         model = Estoque
-        fields = ["nome","lote","quantidade","validade"]
+        fields = ["nome","categoria","lote","quantidade","tamanho_estoque","validade"]
     
 
 class ProdutoForm(forms.ModelForm):

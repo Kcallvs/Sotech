@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import Cliente,Funcionario,Produto
-from .forms import ClienteForm,ProdutoForm,FuncionarioFormCadastro
+from .forms import ClienteForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -64,7 +64,6 @@ def novo_pedido(request):
     bebidas=Produto.objects.filter(categoria="bebida")
     form = ProdutoForm(request.POST or None)
 
-
     if form.is_valid():
         form.save()
         return redirect("pedido")
@@ -88,7 +87,15 @@ def historico(request):
 # {% render_field form.lote %}
 # {% render_field form.quantidade %}
 def estoque(request):
-    return render(request,"html/estoque.html")
+    form = EstoqueForm(request.POST or None)
+    
+    if form.is_valid():
+        form.save()
+        return redirect("estoque")
+    context={
+        'form':form
+    }
+    return render(request,"html/estoque.html",context)
 
 
 def relatorio(request):

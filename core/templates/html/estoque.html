@@ -106,17 +106,29 @@
         <h2>Entrada de Material</h2>
 
         <form id="formEntrada" method="post">
+            {% csrf_token %}
+
+            {% render_field form.nome placeholder="Nome do Produto" %}
+            {% render_field form.categoria placeholder="Categoria" %}
+            {% render_field form.quantidade placeholder="Quantidade" %}
+            {% render_field form.tamanho_estoque placeholder="Tamanho do estoque" %}
+            {% render_field form.lote placeholder="Lote" %}
+            <label for="">Validade</label>
+            {% render_field form.validade type="date" %}
+    
+    
             
-
-
-            <input type="text" name="nome" id="nome" placeholder="Produto" required>
-            <input type="text" name="lote" id="categoria" placeholder="Categoria" required>
+            <!-- <input type="text" name="nome" id="nome" placeholder="Nome do Produto" required>
+            <input type="text" name="categoria" id="categoria" placeholder="Categoria" required>
             <input type="number" name="quantidade" id="qtd" placeholder="Quantidade" required>
-            <input type="number" name="" id="ideal" placeholder="Quantidade Ideal" required>
-            <input type="text" name="validade" id="validade" placeholder="Validade (DD/MM/AAAA)" required>
-
+            <input type="number" name="Tamanho" id="ideal" placeholder="Tamanho do estoque" required>
+            <input type="text" name="lote" id="lote" placeholder="Lote" required>
+            <input type="text" name="validade" id="validade" placeholder="Validade (DD/MM/AAAA)" required> -->
+            
+           
             <div class="form-buttons">
                 <button type="submit" class="btn-save">Salvar</button>
+                
                 <button type="button" id="btnCancelar" class="btn-cancel">Cancelar</button>
             </div>
 
