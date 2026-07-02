@@ -1,8 +1,15 @@
+import json
+from django.http import JsonResponse
+from django.utils import timezone
 from django.shortcuts import render,redirect
-from .models import Cliente,Funcionario,Produto,Estoque
+from .models import Cliente,Funcionario, Pagamento, Pedido,Produto,Estoque
 from .forms import ClienteForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm
 from django.contrib.auth import authenticate, login, logout
 
+def inicio(request):
+    return render(request,"html/login.html")
+    
+# ------------------------ AUTENTICAÇÃO -------------------------------
 
 def cadastro(request):
     form = FuncionarioFormCadastro(request.POST or None)
@@ -17,20 +24,6 @@ def cadastro(request):
     }
     return render(request, 'html/cadastro.html', context)
 
-def funcionarios(request):
-    funcionarios = Funcionario.objects.all()
-
-    context = { 
-        "funcionarios": funcionarios
-    }
-
-    return render(request,"html/funcionarios.html",context)
-
-
-def funcionario_remover(request, id):
-    funcionario = Funcionario.objects.get(pk=id)
-    funcionario.delete()
-    return redirect("funcionarios")  # ← estava fora da função
 
 def autenticar(request):
     if request.POST:
@@ -45,47 +38,119 @@ def autenticar(request):
     else:
         return render(request, 'html/login.html')
 
+#LOGOUT
 def sair(request):
     logout(request)
     return redirect('inicio')
 
+#==========================FIM=================================
 
-def inicio(request):
-    return render(request,"html/login.html")
+
+#============== REDIRECIONAMENTO DE CADASTRO PARA O A PAG FUNCIONÁRIOS ==============
+
+def funcionarios(request):
+    funcionarios = Funcionario.objects.all()
+
+    context = { 
+        "funcionarios": funcionarios
+    }
+
+    return render(request,"html/funcionarios.html",context)
+
+def funcionario_remover(request, id):
+    funcionario = Funcionario.objects.get(pk=id)
+    funcionario.delete()
+    return redirect("funcionarios") 
+
+#=====================================FIM==============================================
+
+
+#======================REDIRECIONAMENTO DE PEDIDOS PARA O DASHBOARD====================
 
 def dashboard(request):
-    return render(request,"html/dashboard.html")
+    pedidos = Pedido.objects.all().order_by('-data_hora_pedido')
+    return render(request, "html/dashboard.html", {"pedidos": pedidos})
 
-def perfil(request):
-    return render(request,"html/perfil.html")
+def finalizar_pedido(request):
+    if request.method != "POST":
+        return JsonResponse({"erro": "Método inválido"}, status=405)
+
+    try:
+        dados = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"erro": "JSON inválido"}, status=400)
+
+    itens = dados.get("itens", [])
+    cliente_id = dados.get("cliente_id")
+    observacoes = dados.get("observacoes", "")
+    forma_pagamento = dados.get("forma_pagamento", "Dinheiro")
+    valor_recebido = float(dados.get("valor_recebido") or 0)
+    total = float(dados.get("total") or 0)
+
+    if not itens:
+        return JsonResponse({"erro": "Carrinho vazio"}, status=400)
+
+    cliente = Cliente.objects.filter(id=cliente_id).first() if cliente_id else None
+
+    pagamento = Pagamento.objects.create(
+        valor_pago=valor_recebido,
+        forma_de_pagamento=forma_pagamento,
+        troco=max(valor_recebido - total, 0),
+        data_hora_pagamento=timezone.now(),
+    )
+
+    pedido = Pedido.objects.create(
+        data_hora_pedido=timezone.now(),
+        valor_total=total,
+        observacoes=observacoes,
+        pagamento=pagamento,
+        cliente=cliente,
+        funcionario=request.user,
+        status="pendente"
+    )
+
+    for item in itens:
+        nome_produto = item.get("nome")
+        quantidade = int(item.get("quantidade", 1))
+
+        produto = Produto.objects.filter(nome=nome_produto).first()
+        if produto:
+            for _ in range(quantidade):
+                pedido.produtos.add(produto)
+
+    return JsonResponse({
+        "sucesso": True,
+        "redirect_url": "/dashboard/"})
+
+#=====================================FIM==============================================
+
+#================================CRUD PEDIDOS==========================================
 
 def novo_pedido(request):
-    lanches=Produto.objects.filter(categoria="lanche") 
-    bebidas=Produto.objects.filter(categoria="bebida")
+    lanches = Produto.objects.filter(categoria="lanche")
+    bebidas = Produto.objects.filter(categoria="bebida")
     form = ProdutoForm(request.POST or None)
 
     if form.is_valid():
-        form.save()
+        produto = form.save(commit=False)
+        produto.disponibilidade = "Disponível"  
+        produto.save()
         return redirect("pedido")
-    context={
-        'lanches' : lanches,
-        'bebidas' : bebidas,
-        'form' : form,
+
+    context = {
+        'lanches': lanches,
+        'bebidas': bebidas,
+        'form': form,
         'clientes': Cliente.objects.all(),
     }
 
-    return render(request,"html/novo_pedido.html",context)
+    return render(request, "html/novo_pedido.html", context)
 
-def historico(request):
-    return render(request,"html/historico.html")
-
+#=====================================FIM==============================================
 
 
-# form de estoque 
-# {% csrf_token %}
-# {% render_field form.nome %}
-# {% render_field form.lote %}
-# {% render_field form.quantidade %}
+#================================CRUD ESTOQUE==========================================
+
 def estoque(request):
     form = EstoqueForm(request.POST or None)
     estoques = Estoque.objects.all()
@@ -99,12 +164,11 @@ def estoque(request):
     }
     return render(request,"html/estoque.html",context)
 
+#=====================================FIM==============================================
 
-def relatorio(request):
-    return render(request,"html/relatorio.html")
 
-# def cliente_editar(request,id):
-#     cliente= 
+
+#==============================CRUD CLIENTE============================================
 
 def clientes(request):
     form = ClienteForm(request.POST or None)
@@ -138,3 +202,14 @@ def cliente_editar(request,id):
         "edit" : True
     }
     return render(request,"html/clientes.html",context)
+
+#=====================================FIM==============================================
+
+def perfil(request):
+    return render(request,"html/perfil.html")
+
+def historico(request):
+    return render(request,"html/historico.html")
+
+def relatorio(request):
+    return render(request,"html/relatorio.html")

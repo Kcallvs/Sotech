@@ -316,3 +316,13 @@ body {
 .close-modal:hover {
     opacity: 1;
 }
+
+.status-badge.gray {
+    background-color: #f1f3f5;
+    color: #495057;
+    border: 1px solid #ced4da;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-block;
+}

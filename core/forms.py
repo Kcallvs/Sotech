@@ -17,7 +17,7 @@ class EstoqueForm(forms.ModelForm):
 class ProdutoForm(forms.ModelForm):
     class Meta:
         model = Produto
-        fields = ['nome','preco','categoria']
+        fields = ['nome', 'preco', 'categoria', 'estoque']
 
 class ClienteForm(forms.ModelForm):
     class Meta:

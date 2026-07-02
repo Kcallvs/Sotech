@@ -88,22 +88,16 @@
         <div class="products-grid">
             <!-- produtos -->
         </div>
-        <form action="post">
-
+        <form method="POST" action="{% url 'pedido' %}">
+            {% csrf_token %}
             <div id="add-product-area" style="display:none; margin-top:20px;">
 
                 <h3>Cadastrar Produto</h3>
 
-                <!-- <input type="text" id="novo-nome" class="sigl-input" placeholder="Nome do produto"> -->
                 {% render_field form.nome placeholder="Nome do produto" class="sigl-input" %}
-                <!-- <input type="number" id="novo-preco" class="sigl-input" placeholder="Preço"> -->
                 {% render_field form.preco placeholder="Preço" class="sigl-input" %}
-
                 {% render_field form.categoria class="sigl-input" %}
-                <!-- <select id="novo-tipo" class="sigl-input">
-                <option value="lanche">Lanche</option>
-                <option value="bebida">Bebida</option>
-            </select> -->
+                {% render_field form.estoque class="sigl-input" %}
 
                 <button id="btn-add-produto" type="submit" class="btn-finalize-order">
                     Cadastrar
@@ -133,6 +127,12 @@
         <!-- carrinho -->
         <div class="cart-list"></div>
 
+        <div class="order-info">
+            <label for="observacoes">Observações:</label>
+            <textarea id="observacoes" name="observacoes" class="sigl-input"
+                placeholder="Ex: sem cebola, ponto da carne, troco para R$50..." rows="3" maxlength="200"></textarea>
+        </div>
+
         <div class="payment-box">
 
             <div class="total-display">
@@ -144,9 +144,9 @@
                 <p>Forma de Pagamento:</p>
 
                 <div class="method-grid">
-                    <button class="method-btn active">Dinheiro</button>
-                    <button class="method-btn">Cartão</button>
-                    <button class="method-btn">PIX</button>
+                    <button type="button" class="method-btn active">Dinheiro</button>
+                    <button type="button" class="method-btn">Cartão</button>
+                    <button type="button" class="method-btn">PIX</button>
                 </div>
             </div>
 
@@ -163,12 +163,12 @@
 
             </div>
 
-            <button class="btn-finalize-order">
-                FINALIZAR
-            </button>
-
+            <form action="{% url 'dashboard' %}" method="get">
+                <button type="submit" class="btn-finalize-order">
+                    FINALIZAR
+                </button>
+            </form>
         </div>
-
     </section>
 </main>
 

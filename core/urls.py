@@ -13,7 +13,9 @@ urlpatterns = [
     path('cadastro/', cadastro, name="cadastro"),
     path('dashboard/',dashboard,name="dashboard"),
     path('perfil/',perfil,name="perfil"),
+
     path('pedido/',novo_pedido,name="pedido"),
+    path('pedido/finalizar/', finalizar_pedido, name='finalizar_pedido'),
     path('historico/',historico,name="historico"),
     path('estoque/',estoque,name="estoque"),
     path('clientes/',clientes,name="clientes"),

@@ -12,9 +12,7 @@ const addArea = document.getElementById("add-product-area");
 const gridProdutos = document.querySelector(".products-grid");
 
 
-// =========================
 // FILTRO DE PRODUTOS
-// =========================
 
 botoesFiltro.forEach(botao => {
 
@@ -57,9 +55,7 @@ botoesFiltro.forEach(botao => {
 });
 
 
-// =========================
 // ADICIONAR ITEM AO PEDIDO
-// =========================
 
 produtos.addEventListener("click", (event) => {
 
@@ -111,9 +107,7 @@ produtos.addEventListener("click", (event) => {
 });
 
 
-// =========================
 // PAGAMENTO
-// =========================
 
 let metodoPagamento = "Dinheiro";
 
@@ -132,10 +126,7 @@ botoesPagamento.forEach(botao => {
 
 });
 
-
-// =========================
 // TROCO
-// =========================
 
 const inputRecebido = document.getElementById("valor-recebido");
 const trocoDisplay = document.getElementById("troco-value");
@@ -148,7 +139,6 @@ inputRecebido.addEventListener("input", () => {
 
         trocoDisplay.textContent = "R$ 0,00";
         return;
-
     }
 
     const troco = recebido - total;
@@ -160,9 +150,7 @@ inputRecebido.addEventListener("input", () => {
 });
 
 
-// =========================
 // CADASTRAR NOVO PRODUTO
-// =========================
 
 const btnAddProduto = document.getElementById("btn-add-produto");
 
@@ -253,3 +241,55 @@ function carregarProdutos() {
     });
 
 }
+const btnFinalizar = document.querySelector(".btn-finalize-order:last-of-type");
+
+btnFinalizar.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    const itensCarrinho = [...document.querySelectorAll(".cart-item")].map(item => ({
+        nome: item.dataset.name,
+        quantidade: parseInt(item.dataset.qtd)
+    }));
+
+    if (itensCarrinho.length === 0) {
+        alert("Adicione ao menos um item ao pedido.");
+        return;
+    }
+
+    const clienteId = document.querySelector('select[name="cliente"]').value;
+    const observacoes = document.getElementById("observacoes").value;
+    const valorRecebido = parseFloat(document.getElementById("valor-recebido").value) || 0;
+
+    const dados = {
+        itens: itensCarrinho,
+        cliente_id: clienteId || null,
+        observacoes: observacoes,
+        forma_pagamento: document.querySelector(".method-btn.active").textContent.trim(),
+        valor_recebido: valorRecebido,
+        total: total
+    };
+
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    try {
+        const resposta = await fetch("/finalizar-pedido/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken
+            },
+            body: JSON.stringify(dados)
+        });
+
+        const resultado = await resposta.json();
+
+        if (resultado.sucesso) {
+            window.location.href = resultado.redirect_url;
+        } else {
+            alert(resultado.erro || "Erro ao finalizar pedido.");
+        }
+    } catch (erro) {
+        console.error(erro);
+        alert("Erro ao finalizar pedido.");
+    }
+});

@@ -54,9 +54,9 @@ class Estoque(models.Model):
 
 class Produto(models.Model):
     CATEGORIAS = [
-        ('Lanche','Lanche'),
-        ('bebida','Bebida')
-    ]
+    ('lanche', 'Lanche'),
+    ('bebida', 'Bebida'),
+]
 
     categoria = models.CharField("Categoria",max_length=45,choices=CATEGORIAS)
     nome = models.CharField("Nome",max_length=45)
@@ -70,13 +70,20 @@ class Produto(models.Model):
 
 
 class Pedido(models.Model):
+    STATUS_CHOICES = [
+        ('pendente', 'Pendente'),
+        ('preparando', 'Preparando'),
+        ('concluido', 'Concluído'),
+    ]
+
     data_hora_pedido = models.DateTimeField("Data e hora do pedido")
     valor_total = models.FloatField("Valor total")
-    observacoes = models.CharField("Observações", max_length=200)
+    observacoes = models.CharField("Observações", max_length=200, blank=True, null=True)
     produtos = models.ManyToManyField(Produto)
-    pagamento = models.ForeignKey(Pagamento,on_delete=models.PROTECT)
-    cliente = models.ForeignKey(Cliente,on_delete=models.PROTECT)
-    funcionario = models.ForeignKey(Funcionario,on_delete=models.PROTECT)
+    pagamento = models.ForeignKey(Pagamento, on_delete=models.PROTECT)
+    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT, null=True, blank=True)
+    funcionario = models.ForeignKey(Funcionario, on_delete=models.PROTECT)
+    status = models.CharField("Status", max_length=20, choices=STATUS_CHOICES, default='pendente')
 
     def __str__(self):
         return f'Pedido {self.id}'
