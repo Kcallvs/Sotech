@@ -1,190 +1,190 @@
-document.addEventListener("DOMContentLoaded", () => {
-
 let total = 0;
 
-const botoesFiltro = document.querySelectorAll(".filter-btn");
-const produtos = document.querySelector(".products-grid");
-const carrinho = document.querySelector(".cart-list");
+document.addEventListener("DOMContentLoaded", () => {
 
-const totalDisplay = document.getElementById("total-value");
+    const botoesFiltro = document.querySelectorAll(".filter-btn");
+    const produtos = document.querySelector(".products-grid");
+    const carrinho = document.querySelector(".cart-list");
 
-const addArea = document.getElementById("add-product-area");
-const gridProdutos = document.querySelector(".products-grid");
+    const totalDisplay = document.getElementById("total-value");
+
+    const addArea = document.getElementById("add-product-area");
+    const gridProdutos = document.querySelector(".products-grid");
 
 
-// FILTRO DE PRODUTOS
+    // FILTRO DE PRODUTOS
 
-botoesFiltro.forEach(botao => {
+    botoesFiltro.forEach(botao => {
 
-    botao.addEventListener("click", () => {
+        botao.addEventListener("click", () => {
 
-        botoesFiltro.forEach(btn => btn.classList.remove("active"));
-        botao.classList.add("active");
+            botoesFiltro.forEach(btn => btn.classList.remove("active"));
+            botao.classList.add("active");
 
-        const filtro = botao.dataset.filter;
+            const filtro = botao.dataset.filter;
 
-        if (filtro === "add") {
+            if (filtro === "add") {
 
-            gridProdutos.style.display = "none";
-            addArea.style.display = "block";
-            return;
+                gridProdutos.style.display = "none";
+                addArea.style.display = "block";
+                return;
 
-        }
-
-        gridProdutos.style.display = "grid";
-        addArea.style.display = "none";
-
-        const cards = document.querySelectorAll(".product-card");
-
-        cards.forEach(produto => {
-
-            if (filtro === "todos") {
-                produto.style.display = "flex";
             }
-            else if (produto.classList.contains(filtro)) {
-                produto.style.display = "flex";
-            }
-            else {
-                produto.style.display = "none";
-            }
+
+            gridProdutos.style.display = "grid";
+            addArea.style.display = "none";
+
+            const cards = document.querySelectorAll(".product-card");
+
+            cards.forEach(produto => {
+
+                if (filtro === "todos") {
+                    produto.style.display = "flex";
+                }
+                else if (produto.classList.contains(filtro)) {
+                    produto.style.display = "flex";
+                }
+                else {
+                    produto.style.display = "none";
+                }
+
+            });
 
         });
 
     });
 
-});
 
+    // ADICIONAR ITEM AO PEDIDO
 
-// ADICIONAR ITEM AO PEDIDO
+    produtos.addEventListener("click", (event) => {
 
-produtos.addEventListener("click", (event) => {
+        const botao = event.target.closest(".add-item-btn");
 
-    const botao = event.target.closest(".add-item-btn");
+        if (!botao) return;
 
-    if (!botao) return;
+        const nome = botao.dataset.name;
+        const preco = parseFloat(botao.dataset.price);
 
-    const nome = botao.dataset.name;
-    const preco = parseFloat(botao.dataset.price);
+        let itemExistente = carrinho.querySelector(`[data-name="${nome}"]`);
 
-    let itemExistente = carrinho.querySelector(`[data-name="${nome}"]`);
+        if (itemExistente) {
 
-    if (itemExistente) {
+            let quantidade = parseInt(itemExistente.dataset.qtd);
+            quantidade++;
 
-        let quantidade = parseInt(itemExistente.dataset.qtd);
-        quantidade++;
+            itemExistente.dataset.qtd = quantidade;
 
-        itemExistente.dataset.qtd = quantidade;
+            itemExistente.querySelector(".item-qtd").textContent = quantidade + "x";
 
-        itemExistente.querySelector(".item-qtd").textContent = quantidade + "x";
+            const novoTotal = quantidade * preco;
 
-        const novoTotal = quantidade * preco;
+            itemExistente.querySelector(".item-preco").textContent =
+                novoTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
-        itemExistente.querySelector(".item-preco").textContent =
-            novoTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+        } else {
 
-    } else {
+            const item = document.createElement("div");
+            item.classList.add("cart-item");
 
-        const item = document.createElement("div");
-        item.classList.add("cart-item");
+            item.dataset.name = nome;
+            item.dataset.qtd = 1;
 
-        item.dataset.name = nome;
-        item.dataset.qtd = 1;
+            item.innerHTML = `
+                <span class="item-qtd">1x</span> ${nome}
+                <strong class="item-preco">${preco.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</strong>
+            `;
 
-        item.innerHTML = `
-            <span class="item-qtd">1x</span> ${nome}
-            <strong class="item-preco">${preco.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</strong>
-        `;
+            carrinho.appendChild(item);
 
-        carrinho.appendChild(item);
+        }
 
-    }
+        total += preco;
 
-    total += preco;
-
-    totalDisplay.textContent =
-        total.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-
-});
-
-
-// PAGAMENTO
-
-let metodoPagamento = "Dinheiro";
-
-const botoesPagamento = document.querySelectorAll(".method-btn");
-
-botoesPagamento.forEach(botao => {
-
-    botao.addEventListener("click", () => {
-
-        botoesPagamento.forEach(btn => btn.classList.remove("active"));
-        botao.classList.add("active");
-
-        metodoPagamento = botao.textContent;
+        totalDisplay.textContent =
+            total.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 
     });
 
-});
 
-// TROCO
+    // PAGAMENTO
 
-const inputRecebido = document.getElementById("valor-recebido");
-const trocoDisplay = document.getElementById("troco-value");
+    let metodoPagamento = "Dinheiro";
 
-inputRecebido.addEventListener("input", () => {
+    const botoesPagamento = document.querySelectorAll(".method-btn");
 
-    const recebido = parseFloat(inputRecebido.value);
+    botoesPagamento.forEach(botao => {
 
-    if (isNaN(recebido)) {
+        botao.addEventListener("click", () => {
 
-        trocoDisplay.textContent = "R$ 0,00";
-        return;
-    }
+            botoesPagamento.forEach(btn => btn.classList.remove("active"));
+            botao.classList.add("active");
 
-    const troco = recebido - total;
+            metodoPagamento = botao.textContent;
 
-    trocoDisplay.textContent = troco >= 0
-        ? troco.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})
-        : "R$ 0,00";
+        });
 
-});
+    });
+
+    // TROCO
+
+    const inputRecebido = document.getElementById("valor-recebido");
+    const trocoDisplay = document.getElementById("troco-value");
+
+    inputRecebido.addEventListener("input", () => {
+
+        const recebido = parseFloat(inputRecebido.value);
+
+        if (isNaN(recebido)) {
+
+            trocoDisplay.textContent = "R$ 0,00";
+            return;
+        }
+
+        const troco = recebido - total;
+
+        trocoDisplay.textContent = troco >= 0
+            ? troco.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})
+            : "R$ 0,00";
+
+    });
 
 
-// CADASTRAR NOVO PRODUTO
+    // CADASTRAR NOVO PRODUTO
 
-const btnAddProduto = document.getElementById("btn-add-produto");
+    const btnAddProduto = document.getElementById("btn-add-produto");
 
-btnAddProduto.addEventListener("click", () => {
+    btnAddProduto.addEventListener("click", () => {
 
-    const nome = document.getElementById("novo-nome").value;
-    const preco = document.getElementById("novo-preco").value;
-    const tipo = document.getElementById("novo-tipo").value;
+        const nome = document.getElementById("novo-nome").value;
+        const preco = document.getElementById("novo-preco").value;
+        const tipo = document.getElementById("novo-tipo").value;
 
-    if (!nome || !preco) {
-        alert("Preencha todos os campos");
-        return;
-    }
+        if (!nome || !preco) {
+            alert("Preencha todos os campos");
+            return;
+        }
 
-    const produto = document.createElement("div");
-    produto.classList.add("product-card", tipo);
+        const produto = document.createElement("div");
+        produto.classList.add("product-card", tipo);
 
-    produto.innerHTML = `
-        <div class="product-det">
-            <h4>${nome}</h4>
-            <span class="item-price">R$ ${parseFloat(preco).toFixed(2)}</span>
-        </div>
+        produto.innerHTML = `
+            <div class="product-det">
+                <h4>${nome}</h4>
+                <span class="item-price">R$ ${parseFloat(preco).toFixed(2)}</span>
+            </div>
 
-        <button class="add-item-btn" data-name="${nome}" data-price="${preco}">
-            <i class="fas fa-plus"></i>
-        </button>
-    `;
+            <button class="add-item-btn" data-name="${nome}" data-price="${preco}">
+                <i class="fas fa-plus"></i>
+            </button>
+        `;
 
-    gridProdutos.appendChild(produto);
+        gridProdutos.appendChild(produto);
 
-    document.getElementById("novo-nome").value = "";
-    document.getElementById("novo-preco").value = "";
+        document.getElementById("novo-nome").value = "";
+        document.getElementById("novo-preco").value = "";
 
-});
+    });
 
 });
 
@@ -241,10 +241,10 @@ function carregarProdutos() {
     });
 
 }
-const btnFinalizar = document.querySelector(".btn-finalize-order:last-of-type");
 
-btnFinalizar.addEventListener("click", async (event) => {
-    event.preventDefault();
+const btnFinalizar = document.getElementById("btn-finalizar-pedido");
+
+btnFinalizar.addEventListener("click", async () => {
 
     const itensCarrinho = [...document.querySelectorAll(".cart-item")].map(item => ({
         nome: item.dataset.name,

@@ -12,10 +12,12 @@ urlpatterns = [
 
     path('cadastro/', cadastro, name="cadastro"),
     path('dashboard/',dashboard,name="dashboard"),
+    path('pedido/status/<int:id>/', atualizar_status_pedido, name='atualizar_status_pedido'),
+
     path('perfil/',perfil,name="perfil"),
 
     path('pedido/',novo_pedido,name="pedido"),
-    path('pedido/finalizar/', finalizar_pedido, name='finalizar_pedido'),
+    path('finalizar-pedido/', finalizar_pedido, name='finalizar_pedido'),
     path('historico/',historico,name="historico"),
     path('estoque/',estoque,name="estoque"),
     path('clientes/',clientes,name="clientes"),

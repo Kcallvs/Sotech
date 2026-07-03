@@ -100,8 +100,8 @@
                 {% render_field form.estoque class="sigl-input" %}
 
                 <button id="btn-add-produto" type="submit" class="btn-finalize-order">
-                    Cadastrar
-                </button>
+    Cadastrar
+</button>
 
             </div>
         </form>
@@ -164,9 +164,9 @@
             </div>
 
             <form action="{% url 'dashboard' %}" method="get">
-                <button type="submit" class="btn-finalize-order">
-                    FINALIZAR
-                </button>
+                <button type="button" id="btn-finalizar-pedido" class="btn-finalize-order">
+            FINALIZAR
+               </button>
             </form>
         </div>
     </section>

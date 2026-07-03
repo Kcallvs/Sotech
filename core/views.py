@@ -4,7 +4,9 @@ from django.utils import timezone
 from django.shortcuts import render,redirect
 from .models import Cliente,Funcionario, Pagamento, Pedido,Produto,Estoque
 from .forms import ClienteForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm
+from django.db.models import Sum
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 def inicio(request):
     return render(request,"html/login.html")
@@ -69,8 +71,24 @@ def funcionario_remover(request, id):
 
 def dashboard(request):
     pedidos = Pedido.objects.all().order_by('-data_hora_pedido')
-    return render(request, "html/dashboard.html", {"pedidos": pedidos})
+    hoje = timezone.now().date()
 
+    vendas_hoje = Pedido.objects.filter(
+        data_hora_pedido__date=hoje
+    ).aggregate(total=Sum('valor_total'))['total'] or 0
+
+    pedidos_pendentes = Pedido.objects.filter(status='pendente').count()
+    itens_em_falta = Estoque.objects.filter(quantidade__lte=5).count()
+
+    context = {
+        "pedidos": pedidos,
+        "vendas_hoje": vendas_hoje,
+        "pedidos_pendentes": pedidos_pendentes,
+        "itens_em_falta": itens_em_falta,
+    }
+    return render(request, "html/dashboard.html", context)
+
+@login_required
 def finalizar_pedido(request):
     if request.method != "POST":
         return JsonResponse({"erro": "Método inválido"}, status=405)
@@ -120,8 +138,32 @@ def finalizar_pedido(request):
 
     return JsonResponse({
         "sucesso": True,
-        "redirect_url": "/dashboard/"})
+        "redirect_url": "/dashboard/"
+    })
 
+def atualizar_status_pedido(request, id):
+    if request.method != "POST":
+        return JsonResponse({"erro": "Método inválido"}, status=405)
+
+    try:
+        dados = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"erro": "JSON inválido"}, status=400)
+
+    novo_status = dados.get("status")
+
+    status_validos = ['pendente', 'preparando', 'concluido']
+    if novo_status not in status_validos:
+        return JsonResponse({"erro": "Status inválido"}, status=400)
+
+    pedido = Pedido.objects.filter(id=id).first()
+    if not pedido:
+        return JsonResponse({"erro": "Pedido não encontrado"}, status=404)
+
+    pedido.status = novo_status
+    pedido.save()
+
+    return JsonResponse({"sucesso": True, "status": pedido.status})
 #=====================================FIM==============================================
 
 #================================CRUD PEDIDOS==========================================
