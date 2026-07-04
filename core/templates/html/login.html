@@ -25,7 +25,7 @@
         </div>
 
         <div class="right">
-            <form method="post">
+            <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                 <h2>Entrar</h2>
 

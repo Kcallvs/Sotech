@@ -21,8 +21,9 @@ class Funcionario(AbstractUser):
 
 class Cliente(models.Model):
     nome = models.CharField("Nome", max_length=50)
-    endereco = models.CharField("Endereço", max_length=100)
+    endereco = models.CharField("Endereço", max_length=100, default="", blank=True)
     telefone = models.CharField("Telefone", max_length=16, default="")
+    cadastro_completo = models.BooleanField("Cadastro completo", default=True)
 
     def __str__(self):
         return self.nome
@@ -75,14 +76,13 @@ class Pedido(models.Model):
         ('preparando', 'Preparando'),
         ('concluido', 'Concluído'),
     ]
-
     data_hora_pedido = models.DateTimeField("Data e hora do pedido")
     valor_total = models.FloatField("Valor total")
     observacoes = models.CharField("Observações", max_length=200, blank=True, null=True)
     produtos = models.ManyToManyField(Produto)
     pagamento = models.ForeignKey(Pagamento, on_delete=models.PROTECT)
-    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT, null=True, blank=True)
-    funcionario = models.ForeignKey(Funcionario, on_delete=models.PROTECT)
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
+    funcionario = models.ForeignKey(Funcionario, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField("Status", max_length=20, choices=STATUS_CHOICES, default='pendente')
 
     def __str__(self):

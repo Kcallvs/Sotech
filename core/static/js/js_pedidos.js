@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             item.innerHTML = `
                 <span class="item-qtd">1x</span> ${nome}
-                <strong class="item-preco">${preco.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</strong>
+                <strong class="item-preco">${preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</strong>
             `;
 
             carrinho.appendChild(item);
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         total += preco;
 
         totalDisplay.textContent =
-            total.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+            total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
     });
 
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const troco = recebido - total;
 
         trocoDisplay.textContent = troco >= 0
-            ? troco.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})
+            ? troco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
             : "R$ 0,00";
 
     });
@@ -195,7 +195,7 @@ function salvarProdutos() {
     document.querySelectorAll(".product-card").forEach(produto => {
 
         const nome = produto.querySelector("h4").textContent;
-        const preco = produto.querySelector(".item-price").textContent.replace("R$","").trim();
+        const preco = produto.querySelector(".item-price").textContent.replace("R$", "").trim();
         const tipo = produto.classList.contains("lanche") ? "lanche" : "bebida";
 
         produtos.push({
@@ -214,7 +214,7 @@ function carregarProdutos() {
 
     const produtosSalvos = JSON.parse(localStorage.getItem("produtosSIGL"));
 
-    if(!produtosSalvos) return;
+    if (!produtosSalvos) return;
 
     const grid = document.querySelector(".products-grid");
 
@@ -256,13 +256,20 @@ btnFinalizar.addEventListener("click", async () => {
         return;
     }
 
-    const clienteId = document.querySelector('select[name="cliente"]').value;
+    const clienteId = document.getElementById("select-cliente").value;
+    const novoClienteNome = document.getElementById("novo-cliente-nome").value.trim();
     const observacoes = document.getElementById("observacoes").value;
     const valorRecebido = parseFloat(document.getElementById("valor-recebido").value) || 0;
 
+    if (clienteId === "novo" && !novoClienteNome) {
+        alert("Digite o nome do novo cliente.");
+        return;
+    }
+
     const dados = {
         itens: itensCarrinho,
-        cliente_id: clienteId || null,
+        cliente_id: clienteId === "novo" ? null : (clienteId || null),
+        cliente_nome_novo: clienteId === "novo" ? novoClienteNome : null,
         observacoes: observacoes,
         forma_pagamento: document.querySelector(".method-btn.active").textContent.trim(),
         valor_recebido: valorRecebido,
@@ -292,4 +299,22 @@ btnFinalizar.addEventListener("click", async () => {
         console.error(erro);
         alert("Erro ao finalizar pedido.");
     }
+});
+
+
+// CLIENTE NOVO 
+
+const selectCliente = document.getElementById("select-cliente");
+const inputNovoCliente = document.getElementById("novo-cliente-nome");
+
+selectCliente.addEventListener("change", () => {
+
+    if (selectCliente.value === "novo") {
+        inputNovoCliente.style.display = "block";
+        inputNovoCliente.focus();
+    } else {
+        inputNovoCliente.style.display = "none";
+        inputNovoCliente.value = "";
+    }
+
 });

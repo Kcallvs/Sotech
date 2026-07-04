@@ -6,15 +6,16 @@ urlpatterns = [
     #rota, view resposável, nome de referência
     
     path('',inicio,name="inicio"),
+
     path('sair/',sair,name="sair"),
     
     path('login/',autenticar,name="login"),
 
     path('cadastro/', cadastro, name="cadastro"),
     path('dashboard/',dashboard,name="dashboard"),
+
     path('pedido/status/<int:id>/', atualizar_status_pedido, name='atualizar_status_pedido'),
 
-    path('perfil/',perfil,name="perfil"),
 
     path('pedido/',novo_pedido,name="pedido"),
     path('finalizar-pedido/', finalizar_pedido, name='finalizar_pedido'),
@@ -30,4 +31,5 @@ urlpatterns = [
     # por enquanto vai ser assim talvez a gente mude pra id em numero
     path("funcionario_remover/<str:id>/",funcionario_remover,name="funcionario_remover"),
 
+    path('perfil/',perfil,name="perfil"),
 ]

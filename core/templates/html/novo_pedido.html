@@ -115,15 +115,18 @@
         </div>
 
         <div class="order-info">
-            <label>Cliente:</label>
-            <select class="sigl-input" name="cliente">
-                <option value="">Consumidor Padrão</option>
-                {% for cliente in clientes %}
-                <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
-                {% endfor %}
-            </select>
-        </div>
+    <label>Cliente:</label>
+    <select class="sigl-input" name="cliente" id="select-cliente">
+        <option value="">Consumidor Padrão</option>
+        {% for cliente in clientes %}
+        <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+        {% endfor %}
+        <option value="novo">+ Novo Cliente</option>
+    </select>
 
+    <input type="text" id="novo-cliente-nome" class="sigl-input"
+           placeholder="Nome do novo cliente" style="display:none; margin-top:8px;">
+</div>
         <!-- carrinho -->
         <div class="cart-list"></div>
 

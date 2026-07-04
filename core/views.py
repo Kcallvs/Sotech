@@ -28,15 +28,15 @@ def cadastro(request):
 
 
 def autenticar(request):
-    if request.POST:
+    if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        if user is not None:  # ← estava fora do if request.POST
+        if user is not None: 
             login(request, user)
             return redirect('dashboard')
         else:
-            return render(request, 'html/login.html')
+            return render(request, 'html/login.html', {'erro': 'Usuário ou senha inválidos'})
     else:
         return render(request, 'html/login.html')
 
@@ -70,7 +70,7 @@ def funcionario_remover(request, id):
 #======================REDIRECIONAMENTO DE PEDIDOS PARA O DASHBOARD====================
 
 def dashboard(request):
-    pedidos = Pedido.objects.all().order_by('-data_hora_pedido')
+    pedidos = Pedido.objects.exclude(status='concluido').order_by('-data_hora_pedido')
     hoje = timezone.now().date()
 
     vendas_hoje = Pedido.objects.filter(
@@ -88,6 +88,11 @@ def dashboard(request):
     }
     return render(request, "html/dashboard.html", context)
 
+
+def historico(request):
+    pedidos = Pedido.objects.filter(status='concluido').order_by('-data_hora_pedido')
+    return render(request, "html/historico.html", {"pedidos": pedidos})
+
 @login_required
 def finalizar_pedido(request):
     if request.method != "POST":
@@ -100,6 +105,7 @@ def finalizar_pedido(request):
 
     itens = dados.get("itens", [])
     cliente_id = dados.get("cliente_id")
+    cliente_nome_novo = dados.get("cliente_nome_novo")
     observacoes = dados.get("observacoes", "")
     forma_pagamento = dados.get("forma_pagamento", "Dinheiro")
     valor_recebido = float(dados.get("valor_recebido") or 0)
@@ -108,7 +114,17 @@ def finalizar_pedido(request):
     if not itens:
         return JsonResponse({"erro": "Carrinho vazio"}, status=400)
 
-    cliente = Cliente.objects.filter(id=cliente_id).first() if cliente_id else None
+    if cliente_nome_novo:
+        cliente = Cliente.objects.create(
+            nome=cliente_nome_novo,
+            endereco="",
+            telefone="",
+            cadastro_completo=False
+        )
+    elif cliente_id:
+        cliente = Cliente.objects.filter(id=cliente_id).first()
+    else:
+        cliente = None
 
     pagamento = Pagamento.objects.create(
         valor_pago=valor_recebido,
@@ -214,16 +230,17 @@ def estoque(request):
 
 def clientes(request):
     form = ClienteForm(request.POST or None)
-    clientes = Cliente.objects.all()
+    clientes = Cliente.objects.filter(cadastro_completo=True)
 
     if form.is_valid():
         form.save()
         return redirect("clientes")
-    context={
-        "form" : form,
-        "clients" : clientes,
+
+    context = {
+        "form": form,
+        "clients": clientes,
     }
-    return render(request,"html/clientes.html",context)
+    return render(request, "html/clientes.html", context)
 
 def cliente_remover(request,id):
     client = Cliente.objects.get(pk=id)
@@ -251,7 +268,8 @@ def perfil(request):
     return render(request,"html/perfil.html")
 
 def historico(request):
-    return render(request,"html/historico.html")
+    pedidos = Pedido.objects.filter(status='concluido').order_by('-data_hora_pedido')
+    return render(request, "html/historico.html", {"pedidos": pedidos})
 
 def relatorio(request):
     return render(request,"html/relatorio.html")
