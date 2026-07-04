@@ -8,9 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalItens = document.querySelector(".summary-card:nth-child(3) strong");
     
     
-    // =========================
     // FILTRO DE BUSCA
-    // =========================
     
     busca.addEventListener("input", () => {
     
@@ -27,9 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     
-    // =========================
     // FUNÇÃO VERIFICAR VALIDADE
-    // =========================
     
     function verificarValidade(dataValidade){
     
@@ -37,8 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         hoje.setHours(0, 0, 0, 0);
     
         let validade;
-    
-        // Aceita tanto "dd/mm/yyyy" (texto na tabela) quanto "yyyy-mm-dd" (input type="date")
+
         if (dataValidade.includes("/")) {
             const partes = dataValidade.split("/");
             validade = new Date(partes[2], partes[1] - 1, partes[0]);
@@ -46,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const partes = dataValidade.split("-");
             validade = new Date(partes[0], partes[1] - 1, partes[2]);
         } else {
-            // formato desconhecido, evita "Invalid Date" quebrando o resto
             return "normal";
         }
     
@@ -67,9 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     
-    // =========================
     // ATUALIZAR STATUS
-    // =========================
     
     function atualizarStatus(){
     
@@ -103,9 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     
-    // =========================
     // ATUALIZAR RESUMO
-    // =========================
     
     function atualizarResumo(){
     
@@ -131,17 +121,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     
-    // =========================
     // EXECUTAR AO CARREGAR
-    // =========================
     
     atualizarStatus();
     atualizarResumo();
     
     
-    // =========================
     // ATUALIZAR QUANTIDADE
-    // =========================
     
     tabela.addEventListener("click", (e)=>{
     
@@ -165,42 +151,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     
-    // =========================
-    // EDITAR PRODUTO
-    // =========================
+    // // EDITAR PRODUTO
     
-    tabela.addEventListener("click", (e)=>{
+    // tabela.addEventListener("click", (e)=>{
     
-        const botao = e.target.closest(".fa-edit");
+    //     const botao = e.target.closest(".fa-edit");
     
-        if(!botao) return;
+    //     if(!botao) return;
     
-        const linha = botao.closest("tr");
+    //     const linha = botao.closest("tr");
     
-        const nome = linha.children[0].textContent;
-        const categoria = linha.children[1].textContent;
+    //     const nome = linha.children[0].textContent;
+    //     const categoria = linha.children[1].textContent;
     
-        const novoNome = prompt("Editar nome:", nome);
-        const novaCategoria = prompt("Editar categoria:", categoria);
+    //     const novoNome = prompt("Editar nome:", nome);
+    //     const novaCategoria = prompt("Editar categoria:", categoria);
     
-        if(novoNome) linha.children[0].innerHTML = "<strong>"+novoNome+"</strong>";
-        if(novaCategoria) linha.children[1].textContent = novaCategoria;
+    //     if(novoNome) linha.children[0].innerHTML = "<strong>"+novoNome+"</strong>";
+    //     if(novaCategoria) linha.children[1].textContent = novaCategoria;
     
-    });
+    // });
     
     
     
-    // =========================
     // MODAL - ENTRADA DE MATERIAL
-    // =========================
     
     const btnEntrada = document.getElementById("btnEntrada");
     const modal = document.getElementById("modalCliente");
     const btnCancelar = document.getElementById("btnCancelar");
     const form = document.getElementById("formEntrada");
     
-    // Checagem defensiva: se algum elemento não existir, avisa no console
-    // em vez de travar silenciosamente o resto do script.
     if (!btnEntrada) console.error('Elemento #btnEntrada não encontrado no HTML.');
     if (!modal) console.error('Elemento #modalCliente não encontrado no HTML.');
     if (!btnCancelar) console.error('Elemento #btnCancelar não encontrado no HTML.');
@@ -224,8 +204,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     
-        // só fecha o modal ao enviar, sem mexer na tabela
-        // (tira esse listener se quiser que o form realmente faça o POST pro Django)
         if (form) {
             form.addEventListener("submit", () => {
                 modal.style.display = "none";
