@@ -1,12 +1,5 @@
 Ajustes
 
-1-Assim que a gente fizer o pedido, ele automaticamente preenche o campo como "pedente",
-ai teríamos que mudar manualmente para preparando ou concluído. E na parte de pedentes do dash diminuiria a quantidade.
-
-2-mexer nos pedidos (adicionar o sistema de render deles)
+1 -mexer nos pedidos (adicionar o sistema de render deles)
  - mexer nos estoque 
  - mexer no sistema de formulário
-
- 3-Criar o campo de observações
-
- 4 no models de pedido - status=models.CharField("status", max_length=1, default="P")
