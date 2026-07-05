@@ -2,178 +2,143 @@
 {% load widget_tweaks %}
 {% load static %}
 
-{% block titulo %}Novo Pedido{% endblock %}
+{% block titulo %}
+  Novo Pedido
+{% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/style_pedidos.css' %}?{% now 'U' %}">
+  <link rel="stylesheet" href="{% static 'style/style_pedidos.css' %}?{% now 'U' %}" />
 {% endblock %}
-{% block selecao %}pedido{% endblock %}
+{% block selecao %}
+  pedido
+{% endblock %}
 {% block conteudo %}
-
-
-
-<main class="main-content pdv-layout">
+  <main class="main-content pdv-layout">
     <section class="products-area">
-        <header class="content-header">
-            <h2><i class="fas fa-cart-plus"></i> Novo Pedido</h2>
-            <div class="filter-bar">
+      <header class="content-header">
+        <h2><i class="fas fa-cart-plus"></i> Novo Pedido</h2>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="todos">Todos</button>
 
-                <button class="filter-btn active" data-filter="todos">Todos</button>
+          <button class="filter-btn" data-filter="lanche">Lanches</button>
 
-                <button class="filter-btn" data-filter="lanche">Lanches</button>
+          <button class="filter-btn" data-filter="bebida">Bebidas</button>
 
-                <button class="filter-btn" data-filter="bebida">Bebidas</button>
-
-                <button class="filter-btn add-product-btn" data-filter="add">
-                    <i class="fas fa-plus"></i> Novo Produto
-                </button>
-
-            </div>
-        </header>
-
-        <div class="products-grid">
-
-            <!-- LANCHE -->
-            {% for lanche in lanches %}
-            <div class="product-card lanche">
-
-                <button class="btn-remove">
-                    <i class="fa-solid fa-x"></i>
-                </button>
-
-                <div class="product-det">
-                    <h4>{{lanche.nome}}</h4>
-                    <span class="item-price">R$ {{lanche.preco}}</span>
-                </div>
-
-                <div class="product-btn">
-                    <button class="add-item-btn" data-name="{{lanche.nome}}" data-price="{{lanche.preco}}">
-                        <i class="fas fa-plus"></i>
-                    </button>
-
-                    <button class="remove-item-btn" data-name="{{lanche.nome}}" data-price="{{lanche.preco}}">
-                        <i class="fa-solid fa-minus"></i>
-                    </button>
-                </div>
-
-            </div>
-            {% endfor %}
-
-            {% for bebida in bebidas %}
-            <div class="product-card bebida">
-
-                <button class="btn-remove">
-                    <i class="fa-solid fa-x"></i>
-                </button>
-
-                <div class="product-det">
-                    <h4>{{bebida.nome}}</h4>
-                    <span class="item-price">R$ {{bebida.preco}}</span>
-                </div>
-
-                <div class="product-btn">
-                    <button class="add-item-btn" data-name="{{bebida.nome}}" data-price="{{bebida.preco}}">
-                        <i class="fas fa-plus"></i>
-                    </button>
-
-                    <button class="remove-item-btn" data-name="{{bebida.nome}}" data-price="{{bebida.preco}}">
-                        <i class="fa-solid fa-minus"></i>
-                    </button>
-                </div>
-            </div>
-            {% endfor %}
-
-
+          <button class="filter-btn add-product-btn" data-filter="add"><i class="fas fa-plus"></i> Novo Produto</button>
         </div>
-        <div class="products-grid">
-            <!-- produtos -->
-        </div>
-        <form method="POST" action="{% url 'pedido' %}">
-            {% csrf_token %}
-            <div id="add-product-area" style="display:none; margin-top:20px;">
+      </header>
 
-                <h3>Cadastrar Produto</h3>
+      <div class="products-grid">
+        <!-- LANCHE -->
+        {% for lanche in lanches %}
+          <div class="product-card lanche">
+            <button class="btn-remove"><i class="fa-solid fa-x"></i></button>
 
-                {% render_field form.nome placeholder="Nome do produto" class="sigl-input" %}
-                {% render_field form.preco placeholder="Preço" class="sigl-input" %}
-                {% render_field form.categoria class="sigl-input" %}
-                {% render_field form.estoque class="sigl-input" %}
-
-                <button id="btn-add-produto" type="submit" class="btn-finalize-order">
-    Cadastrar
-</button>
-
+            <div class="product-det">
+              <h4>{{ lanche.nome }}</h4>
+              <span class="item-price">R$ {{ lanche.preco }}</span>
             </div>
-        </form>
 
+            <div class="product-btn">
+              <button class="add-item-btn" data-name="{{ lanche.nome }}" data-price="{{ lanche.preco }}"><i class="fas fa-plus"></i></button>
+
+              <button class="remove-item-btn" data-name="{{ lanche.nome }}" data-price="{{ lanche.preco }}"><i class="fa-solid fa-minus"></i></button>
+            </div>
+          </div>
+        {% endfor %}
+
+        {% for bebida in bebidas %}
+          <div class="product-card bebida">
+            <button class="btn-remove"><i class="fa-solid fa-x"></i></button>
+
+            <div class="product-det">
+              <h4>{{ bebida.nome }}</h4>
+              <span class="item-price">R$ {{ bebida.preco }}</span>
+            </div>
+
+            <div class="product-btn">
+              <button class="add-item-btn" data-name="{{ bebida.nome }}" data-price="{{ bebida.preco }}"><i class="fas fa-plus"></i></button>
+
+              <button class="remove-item-btn" data-name="{{ bebida.nome }}" data-price="{{ bebida.preco }}"><i class="fa-solid fa-minus"></i></button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="products-grid">
+        <!-- produtos -->
+      </div>
+      <form method="POST" action="{% url 'pedido' %}">
+        {% csrf_token %}
+        <div id="add-product-area" style="display:none; margin-top:20px;">
+          <h3>Cadastrar Produto</h3>
+
+          {% render_field form.nome placeholder='Nome do produto' class='sigl-input' %}
+          {% render_field form.preco placeholder='Preço' class='sigl-input' %}
+          {% render_field form.categoria class='sigl-input' %}
+          {% render_field form.estoque class='sigl-input' %}
+
+          <button id="btn-add-produto" type="submit" class="btn-finalize-order">Cadastrar</button>
+        </div>
+      </form>
     </section>
 
     <section class="checkout-sidebar">
+      <div class="checkout-header">
+        <h3>Resumo do Pedido</h3>
+      </div>
 
-        <div class="checkout-header">
-            <h3>Resumo do Pedido</h3>
+      <div class="order-info">
+        <label>Cliente:</label>
+        <select class="sigl-input" name="cliente" id="select-cliente">
+          <option value="">Consumidor Padrão</option>
+          {% for cliente in clientes %}
+            <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+          {% endfor %}
+          <option value="novo">+ Novo Cliente</option>
+        </select>
+
+        <input type="text" id="novo-cliente-nome" class="sigl-input" placeholder="Nome do novo cliente" style="display:none; margin-top:8px;" />
+      </div>
+      <!-- carrinho -->
+      <div class="cart-list"></div>
+
+      <div class="order-info">
+        <label for="observacoes">Observações:</label>
+        <textarea id="observacoes" name="observacoes" class="sigl-input" placeholder="Ex: sem cebola, ponto da carne, troco para R$50..." rows="3" maxlength="200"></textarea>
+      </div>
+
+      <div class="payment-box">
+        <div class="total-display">
+          <span>TOTAL A PAGAR</span>
+          <h2 id="total-value">R$ 0,00</h2>
         </div>
 
-        <div class="order-info">
-    <label>Cliente:</label>
-    <select class="sigl-input" name="cliente" id="select-cliente">
-        <option value="">Consumidor Padrão</option>
-        {% for cliente in clientes %}
-        <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
-        {% endfor %}
-        <option value="novo">+ Novo Cliente</option>
-    </select>
+        <div class="method-select">
+          <p>Forma de Pagamento:</p>
 
-    <input type="text" id="novo-cliente-nome" class="sigl-input"
-           placeholder="Nome do novo cliente" style="display:none; margin-top:8px;">
-</div>
-        <!-- carrinho -->
-        <div class="cart-list"></div>
-
-        <div class="order-info">
-            <label for="observacoes">Observações:</label>
-            <textarea id="observacoes" name="observacoes" class="sigl-input"
-                placeholder="Ex: sem cebola, ponto da carne, troco para R$50..." rows="3" maxlength="200"></textarea>
+          <div class="method-grid">
+            <button type="button" class="method-btn active">Dinheiro</button>
+            <button type="button" class="method-btn">Cartão</button>
+            <button type="button" class="method-btn">PIX</button>
+          </div>
         </div>
 
-        <div class="payment-box">
+        <div class="change-area">
+          <label for="valor-recebido">Valor Recebido</label>
 
-            <div class="total-display">
-                <span>TOTAL A PAGAR</span>
-                <h2 id="total-value">R$ 0,00</h2>
-            </div>
+          <input type="number" id="valor-recebido" class="sigl-input" placeholder="Digite o valor recebido" step="0.01" />
 
-            <div class="method-select">
-                <p>Forma de Pagamento:</p>
-
-                <div class="method-grid">
-                    <button type="button" class="method-btn active">Dinheiro</button>
-                    <button type="button" class="method-btn">Cartão</button>
-                    <button type="button" class="method-btn">PIX</button>
-                </div>
-            </div>
-
-            <div class="change-area">
-
-                <label for="valor-recebido">Valor Recebido</label>
-
-                <input type="number" id="valor-recebido" class="sigl-input" placeholder="Digite o valor recebido"
-                    step="0.01">
-
-                <div class="change-text">
-                    Troco: <strong id="troco-value">R$ 0,00</strong>
-                </div>
-
-            </div>
-
-            <form action="{% url 'dashboard' %}" method="get">
-                <button type="button" id="btn-finalizar-pedido" class="btn-finalize-order">
-            FINALIZAR
-               </button>
-            </form>
+          <div class="change-text">
+            Troco: <strong id="troco-value">R$ 0,00</strong>
+          </div>
         </div>
+
+        <form action="{% url 'dashboard' %}" method="get">
+          <button type="button" id="btn-finalizar-pedido" class="btn-finalize-order">FINALIZAR</button>
+        </form>
+      </div>
     </section>
-</main>
+  </main>
 
-<script src="{% static 'js/js_pedidos.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'js/js_pedidos.js' %}?{% now 'U' %}"></script>
 {% endblock %}

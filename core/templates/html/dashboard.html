@@ -1,118 +1,114 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block titulo %}Sistema de Gestão e controle operacional{% endblock %}
+{% block titulo %}
+  Sistema de Gestão e controle operacional
+{% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/style_inicio.css' %}?{% now 'U' %}">
+  <link rel="stylesheet" href="{% static 'style/style_inicio.css' %}?{% now 'U' %}" />
 {% endblock %}
-{% block selecao %}inicio{% endblock %}
+{% block selecao %}
+  inicio
+{% endblock %}
 {# block conteudo #}
 
-
-
 {% block extra %}
-{% csrf_token %}
-<main class="main-content">
+  {% csrf_token %}
+  <main class="main-content">
     <header class="top-header">
-        <h2 id="tituloPainel">Dashboard Principal</h2>
-        <div class="user-info">
-            <span id="boasVindas" style="margin-right: 15px; font-weight: 500;"></span>
+      <h2 id="tituloPainel">Dashboard Principal</h2>
+      <div class="user-info">
+        <span id="boasVindas" style="margin-right: 15px; font-weight: 500;"></span>
 
-            <a href="{% url 'sair' %}"><button class="btn-logout">Sair</button></a>
-        </div>
+        <a href="{% url 'sair' %}"><button class="btn-logout">Sair</button></a>
+      </div>
     </header>
 
     <!-- Dashboard Cards -->
     <section class="dashboard-cards">
-        <div class="card card-red">
-            <h3>Vendas Hoje</h3>
-            <p>R$ {{ vendas_hoje|floatformat:2 }}</p>
-        </div>
-        <div class="card card-yellow">
-            <h3>Pedidos Pendentes</h3>
-            <p>{{ pedidos_pendentes }}</p>
-        </div>
-        <div class="card card-white">
-            <h3>Itens em Falta</h3>
-            <p>{{ itens_em_falta }}</p>
-        </div>
+      <div class="card card-red">
+        <h3>Vendas Hoje</h3>
+        <p>R$ {{ vendas_hoje|floatformat:2 }}</p>
+      </div>
+      <div class="card card-yellow">
+        <h3>Pedidos Pendentes</h3>
+        <p>{{ pedidos_pendentes }}</p>
+      </div>
+      <div class="card card-white">
+        <h3>Itens em Falta</h3>
+        <p>{{ itens_em_falta }}</p>
+      </div>
     </section>
 
     <!-- As tabelas dos ultimos pedidos, que vem redirecionada de outra pagina. -->
     <section class="data-section">
-        <div class="section-header">
-            <h3>Últimos Pedidos</h3>
+      <div class="section-header">
+        <h3>Últimos Pedidos</h3>
 
-            <button class="btn-add" onclick="window.location.href=`{% url 'pedido' %}`">+ Novo Pedido</button>
-
-        </div>
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Data/Hora</th>
-                    <th>Cliente</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                    <th>Observações</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for pedido in pedidos %}
-                <tr data-pedido-id="{{ pedido.id }}">
-                    <td>#{{ pedido.id }}</td>
-                    <td>{{ pedido.data_hora_pedido|date:"d/m - H:i" }}</td>
-                    <td>
-                        {% if pedido.cliente %}
-                        {{ pedido.cliente.nome }}
-                        {% else %}
-                        Consumidor Padrão
-                        {% endif %}
-                    </td>
-                    <td>R$ {{ pedido.valor_total }}</td>
-                    <td class="status-cell">
-                        {% if pedido.status == 'pendente' %}
-                        <span class="status-badge gray">PENDENTE</span>
-                        {% elif pedido.status == 'preparando' %}
-                        <span class="status-badge yellow">PREPARANDO</span>
-                        {% elif pedido.status == 'concluido' %}
-                        <span class="status-badge green">CONCLUÍDO</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if pedido.observacoes %}
-                        {{ pedido.observacoes }}
-                        {% else %}
-                        -
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if pedido.status == 'pendente' %}
-                        <button class="btn-status" data-id="{{ pedido.id }}" data-novo-status="preparando">
-                            Iniciar Preparo
-                        </button>
-                        {% elif pedido.status == 'preparando' %}
-                        <button class="btn-status" data-id="{{ pedido.id }}" data-novo-status="concluido">
-                            Concluir
-                        </button>
-                        {% else %}
-                        -
-                        {% endif %}
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="7">Nenhum pedido encontrado.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <button class="btn-add" onclick="window.location.href=`{% url 'pedido' %}`">+ Novo Pedido</button>
+      </div>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Data/Hora</th>
+            <th>Cliente</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Observações</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pedido in pedidos %}
+            <tr data-pedido-id="{{ pedido.id }}">
+              <td>#{{ pedido.id }}</td>
+              <td>{{ pedido.data_hora_pedido|date:'d/m - H:i' }}</td>
+              <td>
+                {% if pedido.cliente %}
+                  {{ pedido.cliente.nome }}
+                {% else %}
+                  Consumidor Padrão
+                {% endif %}
+              </td>
+              <td>R$ {{ pedido.valor_total }}</td>
+              <td class="status-cell">
+                {% if pedido.status == 'pendente' %}
+                  <span class="status-badge gray">PENDENTE</span>
+                {% elif pedido.status == 'preparando' %}
+                  <span class="status-badge yellow">PREPARANDO</span>
+                {% elif pedido.status == 'concluido' %}
+                  <span class="status-badge green">CONCLUÍDO</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if pedido.observacoes %}
+                  {{ pedido.observacoes }}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+              <td>
+                {% if pedido.status == 'pendente' %}
+                  <button class="btn-status" data-id="{{ pedido.id }}" data-novo-status="preparando">Iniciar Preparo</button>
+                {% elif pedido.status == 'preparando' %}
+                  <button class="btn-status" data-id="{{ pedido.id }}" data-novo-status="concluido">Concluir</button>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="7">Nenhum pedido encontrado.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </section>
-</main>
+  </main>
 
-<script src="{% static 'js/js_inicio.js' %}?{% now 'U' %}"></script>
-<script src="{% static 'js/js_dashboard.js' %}?{% now 'U' %}"></script>
-
+  <script src="{% static 'js/js_inicio.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'js/js_dashboard.js' %}?{% now 'U' %}"></script>
 {% endblock %}
