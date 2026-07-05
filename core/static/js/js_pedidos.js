@@ -107,6 +107,47 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    //REMOVER ITENS DO CARRINHO
+
+    produtos.addEventListener("click", (event) => {
+
+        const botao = event.target.closest(".remove-item-btn");
+
+        if (!botao) return;
+
+        const nome = botao.dataset.name;
+        const preco = parseFloat(botao.dataset.price);
+
+        const itemExistente = carrinho.querySelector(`[data-name="${nome}"]`);
+
+        if (!itemExistente) return; 
+        let quantidade = parseInt(itemExistente.dataset.qtd);
+        quantidade--;
+
+        if (quantidade <= 0) {
+
+            itemExistente.remove();
+
+        } else {
+
+            itemExistente.dataset.qtd = quantidade;
+            itemExistente.querySelector(".item-qtd").textContent = quantidade + "x";
+
+            const novoTotal = quantidade * preco;
+            itemExistente.querySelector(".item-preco").textContent =
+                novoTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+        }
+
+        total -= preco;
+        if (total < 0) total = 0;
+
+        totalDisplay.textContent =
+            total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+    });
+
+
     // PAGAMENTO
 
     let metodoPagamento = "Dinheiro";
