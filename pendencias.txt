@@ -1,12 +1,31 @@
 Ajustes
 
-1-Assim que a gente fizer o pedido, ele automaticamente preenche o campo como "pedente",
-ai teríamos que mudar manualmente para preparando ou concluído. E na parte de pedentes do dash diminuiria a quantidade.
+Novo_Pedido:
+- Colocar para funcionar o botão de X que remove os lanches (Necessário).
+- Adicionar imagens nos lanches.
 
-2-mexer nos pedidos (adicionar o sistema de render deles)
- - mexer nos estoque 
- - mexer no sistema de formulário
+Histórico de pedidos:
+- Um botão de deletar o pedidos do histórico.
 
- 3-Criar o campo de observações
+Estoque:
+- Colocar para funcionar os cards de Itens Críticos e Vencendo em 7 dias 0 (Necessário).
+- Fazer a parte de filtar produtos (Necessário). (pesquisar estoque feito)
+- Adicionar os botões de editar e excluir produtos (Necessário). (deletado feito)
+- Diminuir a quantidade de produtos e atualizar no estoque, assim que o pedido for feito .                                                           
 
- 4 no models de pedido - status=models.CharField("status", max_length=1, default="P")
+Clientes:
+- Tudo OK até o momento.
+
+Funcionarios:
+- Adicionar botão de editar.
+
+Relatório:
+- Fazer todo o Relatório (Está todo estático)(Necessário).
+
+Pefil:
+- Criar um apagina de perfil de usuário.
+
+(Davi)
+1 -mexer nos pedidos (adicionar o sistema de render deles)
+ - mexer nos estoque ( sistema de deletar feito)
+ - mexer no sistema de formulário 

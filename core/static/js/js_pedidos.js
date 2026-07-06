@@ -1,202 +1,231 @@
-document.addEventListener("DOMContentLoaded", () => {
-
 let total = 0;
 
-const botoesFiltro = document.querySelectorAll(".filter-btn");
-const produtos = document.querySelector(".products-grid");
-const carrinho = document.querySelector(".cart-list");
+document.addEventListener("DOMContentLoaded", () => {
 
-const totalDisplay = document.getElementById("total-value");
+    const botoesFiltro = document.querySelectorAll(".filter-btn");
+    const produtos = document.querySelector(".products-grid");
+    const carrinho = document.querySelector(".cart-list");
 
-const addArea = document.getElementById("add-product-area");
-const gridProdutos = document.querySelector(".products-grid");
+    const totalDisplay = document.getElementById("total-value");
+
+    const addArea = document.getElementById("add-product-area");
+    const gridProdutos = document.querySelector(".products-grid");
 
 
-// =========================
-// FILTRO DE PRODUTOS
-// =========================
+    // FILTRO DE PRODUTOS
 
-botoesFiltro.forEach(botao => {
+    botoesFiltro.forEach(botao => {
 
-    botao.addEventListener("click", () => {
+        botao.addEventListener("click", () => {
 
-        botoesFiltro.forEach(btn => btn.classList.remove("active"));
-        botao.classList.add("active");
+            botoesFiltro.forEach(btn => btn.classList.remove("active"));
+            botao.classList.add("active");
 
-        const filtro = botao.dataset.filter;
+            const filtro = botao.dataset.filter;
 
-        if (filtro === "add") {
+            if (filtro === "add") {
 
-            gridProdutos.style.display = "none";
-            addArea.style.display = "block";
-            return;
+                gridProdutos.style.display = "none";
+                addArea.style.display = "block";
+                return;
 
-        }
-
-        gridProdutos.style.display = "grid";
-        addArea.style.display = "none";
-
-        const cards = document.querySelectorAll(".product-card");
-
-        cards.forEach(produto => {
-
-            if (filtro === "todos") {
-                produto.style.display = "flex";
             }
-            else if (produto.classList.contains(filtro)) {
-                produto.style.display = "flex";
-            }
-            else {
-                produto.style.display = "none";
-            }
+
+            gridProdutos.style.display = "grid";
+            addArea.style.display = "none";
+
+            const cards = document.querySelectorAll(".product-card");
+
+            cards.forEach(produto => {
+
+                if (filtro === "todos") {
+                    produto.style.display = "flex";
+                }
+                else if (produto.classList.contains(filtro)) {
+                    produto.style.display = "flex";
+                }
+                else {
+                    produto.style.display = "none";
+                }
+
+            });
 
         });
 
     });
 
-});
 
+    // ADICIONAR ITEM AO PEDIDO
 
-// =========================
-// ADICIONAR ITEM AO PEDIDO
-// =========================
+    produtos.addEventListener("click", (event) => {
 
-produtos.addEventListener("click", (event) => {
+        const botao = event.target.closest(".add-item-btn");
 
-    const botao = event.target.closest(".add-item-btn");
+        if (!botao) return;
 
-    if (!botao) return;
+        const nome = botao.dataset.name;
+        const preco = parseFloat(botao.dataset.price);
 
-    const nome = botao.dataset.name;
-    const preco = parseFloat(botao.dataset.price);
+        let itemExistente = carrinho.querySelector(`[data-name="${nome}"]`);
 
-    let itemExistente = carrinho.querySelector(`[data-name="${nome}"]`);
+        if (itemExistente) {
 
-    if (itemExistente) {
+            let quantidade = parseInt(itemExistente.dataset.qtd);
+            quantidade++;
 
-        let quantidade = parseInt(itemExistente.dataset.qtd);
-        quantidade++;
+            itemExistente.dataset.qtd = quantidade;
 
-        itemExistente.dataset.qtd = quantidade;
+            itemExistente.querySelector(".item-qtd").textContent = quantidade + "x";
 
-        itemExistente.querySelector(".item-qtd").textContent = quantidade + "x";
+            const novoTotal = quantidade * preco;
 
-        const novoTotal = quantidade * preco;
+            itemExistente.querySelector(".item-preco").textContent =
+                novoTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
-        itemExistente.querySelector(".item-preco").textContent =
-            novoTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+        } else {
 
-    } else {
+            const item = document.createElement("div");
+            item.classList.add("cart-item");
 
-        const item = document.createElement("div");
-        item.classList.add("cart-item");
+            item.dataset.name = nome;
+            item.dataset.qtd = 1;
 
-        item.dataset.name = nome;
-        item.dataset.qtd = 1;
+            item.innerHTML = `
+                <span class="item-qtd">1x</span> ${nome}
+                <strong class="item-preco">${preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</strong>
+            `;
 
-        item.innerHTML = `
-            <span class="item-qtd">1x</span> ${nome}
-            <strong class="item-preco">${preco.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</strong>
-        `;
+            carrinho.appendChild(item);
 
-        carrinho.appendChild(item);
+        }
 
-    }
+        total += preco;
 
-    total += preco;
-
-    totalDisplay.textContent =
-        total.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-
-});
-
-
-// =========================
-// PAGAMENTO
-// =========================
-
-let metodoPagamento = "Dinheiro";
-
-const botoesPagamento = document.querySelectorAll(".method-btn");
-
-botoesPagamento.forEach(botao => {
-
-    botao.addEventListener("click", () => {
-
-        botoesPagamento.forEach(btn => btn.classList.remove("active"));
-        botao.classList.add("active");
-
-        metodoPagamento = botao.textContent;
+        totalDisplay.textContent =
+            total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
     });
 
-});
+
+    //REMOVER ITENS DO CARRINHO
+
+    produtos.addEventListener("click", (event) => {
+
+        const botao = event.target.closest(".remove-item-btn");
+
+        if (!botao) return;
+
+        const nome = botao.dataset.name;
+        const preco = parseFloat(botao.dataset.price);
+
+        const itemExistente = carrinho.querySelector(`[data-name="${nome}"]`);
+
+        if (!itemExistente) return; 
+        let quantidade = parseInt(itemExistente.dataset.qtd);
+        quantidade--;
+
+        if (quantidade <= 0) {
+
+            itemExistente.remove();
+
+        } else {
+
+            itemExistente.dataset.qtd = quantidade;
+            itemExistente.querySelector(".item-qtd").textContent = quantidade + "x";
+
+            const novoTotal = quantidade * preco;
+            itemExistente.querySelector(".item-preco").textContent =
+                novoTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+        }
+
+        total -= preco;
+        if (total < 0) total = 0;
+
+        totalDisplay.textContent =
+            total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+    });
 
 
-// =========================
-// TROCO
-// =========================
+    // PAGAMENTO
 
-const inputRecebido = document.getElementById("valor-recebido");
-const trocoDisplay = document.getElementById("troco-value");
+    let metodoPagamento = "Dinheiro";
 
-inputRecebido.addEventListener("input", () => {
+    const botoesPagamento = document.querySelectorAll(".method-btn");
 
-    const recebido = parseFloat(inputRecebido.value);
+    botoesPagamento.forEach(botao => {
 
-    if (isNaN(recebido)) {
+        botao.addEventListener("click", () => {
 
-        trocoDisplay.textContent = "R$ 0,00";
-        return;
+            botoesPagamento.forEach(btn => btn.classList.remove("active"));
+            botao.classList.add("active");
 
-    }
+            metodoPagamento = botao.textContent;
 
-    const troco = recebido - total;
+        });
 
-    trocoDisplay.textContent = troco >= 0
-        ? troco.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})
-        : "R$ 0,00";
+    });
 
-});
+    // TROCO
+
+    const inputRecebido = document.getElementById("valor-recebido");
+    const trocoDisplay = document.getElementById("troco-value");
+
+    inputRecebido.addEventListener("input", () => {
+
+        const recebido = parseFloat(inputRecebido.value);
+
+        if (isNaN(recebido)) {
+
+            trocoDisplay.textContent = "R$ 0,00";
+            return;
+        }
+
+        const troco = recebido - total;
+
+        trocoDisplay.textContent = troco >= 0
+            ? troco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+            : "R$ 0,00";
+
+    });
 
 
-// =========================
-// CADASTRAR NOVO PRODUTO
-// =========================
+    // CADASTRAR NOVO PRODUTO
 
-const btnAddProduto = document.getElementById("btn-add-produto");
+    const btnAddProduto = document.getElementById("btn-add-produto");
 
-btnAddProduto.addEventListener("click", () => {
+    btnAddProduto.addEventListener("click", () => {
 
-    const nome = document.getElementById("novo-nome").value;
-    const preco = document.getElementById("novo-preco").value;
-    const tipo = document.getElementById("novo-tipo").value;
+        const nome = document.getElementById("novo-nome").value;
+        const preco = document.getElementById("novo-preco").value;
+        const tipo = document.getElementById("novo-tipo").value;
 
-    if (!nome || !preco) {
-        alert("Preencha todos os campos");
-        return;
-    }
+        if (!nome || !preco) {
+            alert("Preencha todos os campos");
+            return;
+        }
 
-    const produto = document.createElement("div");
-    produto.classList.add("product-card", tipo);
+        const produto = document.createElement("div");
+        produto.classList.add("product-card", tipo);
 
-    produto.innerHTML = `
-        <div class="product-det">
-            <h4>${nome}</h4>
-            <span class="item-price">R$ ${parseFloat(preco).toFixed(2)}</span>
-        </div>
+        produto.innerHTML = `
+            <div class="product-det">
+                <h4>${nome}</h4>
+                <span class="item-price">R$ ${parseFloat(preco).toFixed(2)}</span>
+            </div>
 
-        <button class="add-item-btn" data-name="${nome}" data-price="${preco}">
-            <i class="fas fa-plus"></i>
-        </button>
-    `;
+            <button class="add-item-btn" data-name="${nome}" data-price="${preco}">
+                <i class="fas fa-plus"></i>
+            </button>
+        `;
 
-    gridProdutos.appendChild(produto);
+        gridProdutos.appendChild(produto);
 
-    document.getElementById("novo-nome").value = "";
-    document.getElementById("novo-preco").value = "";
+        document.getElementById("novo-nome").value = "";
+        document.getElementById("novo-preco").value = "";
 
-});
+    });
 
 });
 
@@ -207,7 +236,7 @@ function salvarProdutos() {
     document.querySelectorAll(".product-card").forEach(produto => {
 
         const nome = produto.querySelector("h4").textContent;
-        const preco = produto.querySelector(".item-price").textContent.replace("R$","").trim();
+        const preco = produto.querySelector(".item-price").textContent.replace("R$", "").trim();
         const tipo = produto.classList.contains("lanche") ? "lanche" : "bebida";
 
         produtos.push({
@@ -226,7 +255,7 @@ function carregarProdutos() {
 
     const produtosSalvos = JSON.parse(localStorage.getItem("produtosSIGL"));
 
-    if(!produtosSalvos) return;
+    if (!produtosSalvos) return;
 
     const grid = document.querySelector(".products-grid");
 
@@ -253,3 +282,80 @@ function carregarProdutos() {
     });
 
 }
+
+const btnFinalizar = document.getElementById("btn-finalizar-pedido");
+
+btnFinalizar.addEventListener("click", async () => {
+
+    const itensCarrinho = [...document.querySelectorAll(".cart-item")].map(item => ({
+        nome: item.dataset.name,
+        quantidade: parseInt(item.dataset.qtd)
+    }));
+
+    if (itensCarrinho.length === 0) {
+        alert("Adicione ao menos um item ao pedido.");
+        return;
+    }
+
+    const clienteId = document.getElementById("select-cliente").value;
+    const novoClienteNome = document.getElementById("novo-cliente-nome").value.trim();
+    const observacoes = document.getElementById("observacoes").value;
+    const valorRecebido = parseFloat(document.getElementById("valor-recebido").value) || 0;
+
+    if (clienteId === "novo" && !novoClienteNome) {
+        alert("Digite o nome do novo cliente.");
+        return;
+    }
+
+    const dados = {
+        itens: itensCarrinho,
+        cliente_id: clienteId === "novo" ? null : (clienteId || null),
+        cliente_nome_novo: clienteId === "novo" ? novoClienteNome : null,
+        observacoes: observacoes,
+        forma_pagamento: document.querySelector(".method-btn.active").textContent.trim(),
+        valor_recebido: valorRecebido,
+        total: total
+    };
+
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    try {
+        const resposta = await fetch("/finalizar-pedido/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken
+            },
+            body: JSON.stringify(dados)
+        });
+
+        const resultado = await resposta.json();
+
+        if (resultado.sucesso) {
+            window.location.href = resultado.redirect_url;
+        } else {
+            alert(resultado.erro || "Erro ao finalizar pedido.");
+        }
+    } catch (erro) {
+        console.error(erro);
+        alert("Erro ao finalizar pedido.");
+    }
+});
+
+
+// CLIENTE NOVO 
+
+const selectCliente = document.getElementById("select-cliente");
+const inputNovoCliente = document.getElementById("novo-cliente-nome");
+
+selectCliente.addEventListener("change", () => {
+
+    if (selectCliente.value === "novo") {
+        inputNovoCliente.style.display = "block";
+        inputNovoCliente.focus();
+    } else {
+        inputNovoCliente.style.display = "none";
+        inputNovoCliente.value = "";
+    }
+
+});
