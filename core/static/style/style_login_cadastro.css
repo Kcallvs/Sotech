@@ -141,38 +141,44 @@ form p {
 }
 
 
-@media (max-width: 900px) {
+@media (max-width:768px){
 
-    .container {
-        flex-direction: column;
+    .container{
+        flex-direction:column;
     }
 
-    .left {
-        min-height: 35vh;
-        align-items: center;
-        text-align: center;
+    .left{
+        min-height:180px;
+        padding:25px;
     }
 
-    .right {
-        min-height: 65vh;
+    .left h1{
+        font-size:2.4rem;
     }
 
-    form {
-        max-width: 450px;
-    }
-}
-
-@media (max-width: 500px) {
-
-    .left h1 {
-        font-size: 2.3rem;
+    .left p{
+        font-size:1rem;
     }
 
-    .left p {
-        font-size: 1rem;
+    .right{
+        padding:15px;
+        align-items:flex-start;
     }
 
-    form {
-        padding: 25px;
+    form{
+
+        width:100%;
+        max-width:100%;
+
+        display:flex;
+        flex-direction:column;
+
+        padding:25px;
     }
+
+    .btn-save,
+    .voltar{
+        width:100%;
+    }
+
 }
