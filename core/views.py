@@ -27,6 +27,7 @@ def cadastro(request):
     return render(request, 'html/cadastro.html', context)
 
 
+@login_required
 def autenticar(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -50,6 +51,7 @@ def sair(request):
 
 #============== REDIRECIONAMENTO DE CADASTRO PARA O A PAG FUNCIONÁRIOS ==============
 
+@login_required
 def funcionarios(request):
     funcionarios = Funcionario.objects.all()
 
@@ -59,6 +61,7 @@ def funcionarios(request):
 
     return render(request,"html/funcionarios.html",context)
 
+@login_required
 def funcionario_remover(request, id):
     funcionario = Funcionario.objects.get(pk=id)
     funcionario.delete()
@@ -69,6 +72,7 @@ def funcionario_remover(request, id):
 
 #======================REDIRECIONAMENTO DE PEDIDOS PARA O DASHBOARD====================
 
+@login_required
 def dashboard(request):
     pedidos = Pedido.objects.exclude(status='concluido').order_by('-data_hora_pedido')
     hoje = timezone.now().date()
@@ -89,6 +93,7 @@ def dashboard(request):
     return render(request, "html/dashboard.html", context)
 
 
+@login_required
 def historico(request):
     pedidos = Pedido.objects.filter(status='concluido').order_by('-data_hora_pedido')
     return render(request, "html/historico.html", {"pedidos": pedidos})
@@ -157,6 +162,7 @@ def finalizar_pedido(request):
         "redirect_url": "/dashboard/"
     })
 
+@login_required
 def atualizar_status_pedido(request, id):
     if request.method != "POST":
         return JsonResponse({"erro": "Método inválido"}, status=405)
@@ -184,6 +190,7 @@ def atualizar_status_pedido(request, id):
 
 #================================CRUD PEDIDOS==========================================
 
+@login_required
 def novo_pedido(request):
     lanches = Produto.objects.filter(categoria="lanche")
     bebidas = Produto.objects.filter(categoria="bebida")
@@ -204,11 +211,17 @@ def novo_pedido(request):
 
     return render(request, "html/novo_pedido.html", context)
 
+def produto_remover(request,id):
+    produto = Produto.objects.get(pk=id)
+    produto.delete()
+    return redirect("pedido")
+
 #=====================================FIM==============================================
 
 
 #================================CRUD ESTOQUE==========================================
 
+@login_required
 def estoque(request):
     form = EstoqueForm(request.POST or None)
     estoques = Estoque.objects.all()
@@ -228,6 +241,7 @@ def estoque(request):
 
 #==============================CRUD CLIENTE============================================
 
+@login_required
 def clientes(request):
     form = ClienteForm(request.POST or None)
     clientes = Cliente.objects.filter(cadastro_completo=True)
@@ -242,11 +256,13 @@ def clientes(request):
     }
     return render(request, "html/clientes.html", context)
 
+@login_required
 def cliente_remover(request,id):
     client = Cliente.objects.get(pk=id)
     client.delete()
     return redirect("clientes")
 
+@login_required
 def cliente_editar(request,id):
     cliente = Cliente.objects.get(pk=id)
     form = ClienteForm(request.POST or None,instance=cliente)
@@ -264,17 +280,21 @@ def cliente_editar(request,id):
 
 #=====================================FIM==============================================
 
+@login_required
 def perfil(request):
     return render(request,"html/perfil.html")
 
+@login_required
 def historico(request):
     pedidos = Pedido.objects.filter(status='concluido').order_by('-data_hora_pedido')
     return render(request, "html/historico.html", {"pedidos": pedidos})
 
+@login_required
 def relatorio(request):
     return render(request,"html/relatorio.html")
 
 
+@login_required
 def pegar_estoque(request):
     query = request.GET.get('q', '').strip()
 

@@ -18,6 +18,8 @@ urlpatterns = [
 
 
     path('pedido/',novo_pedido,name="pedido"),
+    path('produto_remover/<int:id>/',produto_remover,name="produto_remover"),
+
     path('finalizar-pedido/', finalizar_pedido, name='finalizar_pedido'),
     path('historico/',historico,name="historico"),
     path('estoque/',estoque,name="estoque"),

@@ -42,7 +42,7 @@
             <div class="product-btn">
               <button class="add-item-btn" data-name="{{ lanche.nome }}" data-price="{{ lanche.preco }}"><i class="fas fa-plus"></i></button>
 
-              <button class="remove-item-btn" data-name="{{ lanche.nome }}" data-price="{{ lanche.preco }}"><i class="fa-solid fa-minus"></i></button>
+              <a href="{% url 'produto_remover' lanche.id %}"><button class="remove-item-btn" data-name="{{ lanche.nome }}" data-price="{{ lanche.preco }}"><i class="fa-solid fa-minus"></i></button></a>
             </div>
           </div>
         {% endfor %}
@@ -59,7 +59,7 @@
             <div class="product-btn">
               <button class="add-item-btn" data-name="{{ bebida.nome }}" data-price="{{ bebida.preco }}"><i class="fas fa-plus"></i></button>
 
-              <button class="remove-item-btn" data-name="{{ bebida.nome }}" data-price="{{ bebida.preco }}"><i class="fa-solid fa-minus"></i></button>
+              <a href="{% url 'produto_remover' bebida.id %}"><button class="remove-item-btn" data-name="{{ bebida.nome }}" data-price="{{ bebida.preco }}"><i class="fa-solid fa-minus"></i></button></a>
             </div>
           </div>
         {% endfor %}
