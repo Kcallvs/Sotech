@@ -9,8 +9,8 @@ Histórico de pedidos:
 
 Estoque:
 - Colocar para funcionar os cards de Itens Críticos e Vencendo em 7 dias 0 (Necessário).
-- Fazer a parte de filtar produtos (Necessário).
-- Adicionar os botões de editar e excluir produtos (Necessário).
+- Fazer a parte de filtar produtos (Necessário). (pesquisar estoque feito)
+- Adicionar os botões de editar e excluir produtos (Necessário). (deletado feito)
 - Diminuir a quantidade de produtos e atualizar no estoque, assim que o pedido for feito .                                                           
 
 Clientes:
@@ -27,5 +27,5 @@ Pefil:
 
 (Davi)
 1 -mexer nos pedidos (adicionar o sistema de render deles)
- - mexer nos estoque 
- - mexer no sistema de formulário
+ - mexer nos estoque ( sistema de deletar feito)
+ - mexer no sistema de formulário 

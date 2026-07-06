@@ -28,10 +28,37 @@ async function estoque_pegue(string_de_busca="",lista){
     }
 }
 
+
+
+function verificarValidade(dataValidade) {
+
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+    const partes = dataValidade.split("-");
+    const validade = new Date(partes[0], partes[1] - 1, partes[2]);
+    const diferenca = validade - hoje;
+    const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+    if (dias < 0) {
+        return ["critico", "badge red"];
+    }
+
+    if (dias <= 7) {
+        return ["vencendo", "badge yellow"];
+    }
+
+    return ["normal", "badge green"];
+}
+
+
+
 function renderizar_lista(_info,lista){
     let string="";
 
     _info.forEach(estoque => {
+
+
+        const [texto,classe] = verificarValidade(estoque.validade);
+        console.log(classe);
         string+=`<tr>
               <td>
                 <strong>${estoque.nome}</strong>
@@ -42,7 +69,7 @@ function renderizar_lista(_info,lista){
               <td>${estoque.lote}</td>
               <td>${estoque.validade}</td>
               <td>
-                <span class="badge red">Crítico</span>
+                <span class="${classe}">${texto}</span>
               </td>
 
               <td>
@@ -87,72 +114,11 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // FUNÇÃO VERIFICAR VALIDADE
     
-    function verificarValidade(dataValidade){
-    
-        const hoje = new Date();
-        hoje.setHours(0, 0, 0, 0);
-    
-        let validade;
-
-        if (dataValidade.includes("/")) {
-            const partes = dataValidade.split("/");
-            validade = new Date(partes[2], partes[1] - 1, partes[0]);
-        } else if (dataValidade.includes("-")) {
-            const partes = dataValidade.split("-");
-            validade = new Date(partes[0], partes[1] - 1, partes[2]);
-        } else {
-            return "normal";
-        }
-    
-        const diferenca = validade - hoje;
-    
-        const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-    
-        if(dias < 0){
-            return "critico";
-        }
-    
-        if(dias <= 7){
-            return "vencendo";
-        }
-    
-        return "normal";
-    
-    }
     
     
     // ATUALIZAR STATUS
     
-    function atualizarStatus(){
-    
-        const linhas = document.querySelectorAll(".inventory-table tbody tr");
-    
-        linhas.forEach(linha => {
-    
-            const data = linha.children[4].textContent;
-    
-            const status = verificarValidade(data);
-    
-            const badge = linha.querySelector(".badge");
-    
-            if(status === "critico"){
-                badge.textContent = "Crítico";
-                badge.className = "badge red";
-            }
-    
-            if(status === "vencendo"){
-                badge.textContent = "Vencendo";
-                badge.className = "badge yellow";
-            }
-    
-            if(status === "normal"){
-                badge.textContent = "Normal";
-                badge.className = "badge green";
-            }
-    
-        });
-    
-    }
+   
     
     
     // ATUALIZAR RESUMO
@@ -183,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // EXECUTAR AO CARREGAR
     
-    atualizarStatus();
+    
     atualizarResumo();
     
     
