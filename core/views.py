@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.shortcuts import render,redirect
 from .models import Cliente,Funcionario, Pagamento, Pedido,Produto,Estoque
 from .forms import ClienteForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm
-from django.db.models import Sum
+from django.db.models import Sum,Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -273,3 +273,20 @@ def historico(request):
 
 def relatorio(request):
     return render(request,"html/relatorio.html")
+
+
+def pegar_estoque(request):
+    query = request.GET.get('q', '').strip()
+
+    estoque = Estoque.objects.all()
+
+    if query:
+        palavras = query.split()
+        filtro = Q()
+        for palavra in palavras:
+            filtro &= (Q(categoria__icontains=palavra) | Q(nome__icontains=palavra))
+        estoque = estoque.filter(filtro)
+
+    estoque = estoque.values('categoria', 'nome', 'quantidade', 'tamanho_estoque', 'lote', 'validade')
+
+    return JsonResponse({"sucesso": True, "lista": list(estoque)})

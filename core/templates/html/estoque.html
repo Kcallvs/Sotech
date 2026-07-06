@@ -3,132 +3,112 @@
 {% load widget_tweaks %}
 
 {% block titulo %}
-  Gestão de Estoque
+Gestão de Estoque
 {% endblock %}
 
 {% block estilo %}
-  <link rel="stylesheet" href="{% static 'style/style_estoque.css' %}?{% now 'U' %}" />
+<link rel="stylesheet" href="{% static 'style/style_estoque.css' %}?{% now 'U' %}" />
 {% endblock %}
 {% block selecao %}
-  estoque
+estoque
 {% endblock %}
 {% block conteudo %}
-  <main class="main-content">
-    <header class="main-header">
+<main class="main-content">
+  <header class="main-header">
+    <div>
+      <h1>Controle de Inventário</h1>
+      <p>Gerencie insumos e validades dos produtos</p>
+    </div>
+    <div class="actions">
+      <button class="btn-yellow"><i class="fas fa-file-export"></i> Relatório</button>
+
+      <button class="btn-red" id="btnEntrada"><i class="fas fa-plus"></i> Entrada de Material</button>
+    </div>
+  </header>
+
+  <section class="inventory-summary">
+    <div class="summary-card">
+      <i class="fas fa-exclamation-triangle icon-alert"></i>
       <div>
-        <h1>Controle de Inventário</h1>
-        <p>Gerencie insumos e validades dos produtos</p>
+        <span>Itens Críticos</span>
+        <strong>04</strong>
       </div>
-      <div class="actions">
-        <button class="btn-yellow"><i class="fas fa-file-export"></i> Relatório</button>
-
-        <button class="btn-red" id="btnEntrada"><i class="fas fa-plus"></i> Entrada de Material</button>
+    </div>
+    <div class="summary-card">
+      <i class="fas fa-calendar-times icon-expire"></i>
+      <div>
+        <span>Vencendo em 7 dias</span>
+        <strong>02</strong>
       </div>
-    </header>
-
-    <section class="inventory-summary">
-      <div class="summary-card">
-        <i class="fas fa-exclamation-triangle icon-alert"></i>
-        <div>
-          <span>Itens Críticos</span>
-          <strong>04</strong>
-        </div>
+    </div>
+    <div class="summary-card">
+      <i class="fas fa-check-circle icon-ok"></i>
+      <div>
+        <span>Total de Itens</span>
+        <strong>156</strong>
       </div>
-      <div class="summary-card">
-        <i class="fas fa-calendar-times icon-expire"></i>
-        <div>
-          <span>Vencendo em 7 dias</span>
-          <strong>02</strong>
-        </div>
-      </div>
-      <div class="summary-card">
-        <i class="fas fa-check-circle icon-ok"></i>
-        <div>
-          <span>Total de Itens</span>
-          <strong>156</strong>
-        </div>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="table-container">
-      <div class="table-header">
-        <h3>Lista de Insumos</h3>
-        <input type="text" placeholder="Filtrar por nome ou categoria..." class="search-input" />
-      </div>
-      <table class="inventory-table">
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Categoria</th>
-            <th>Qtd. Atual</th>
-            <th>Tam. Maximo</th>
-            <th>Lote</th>
-            <th>Validade</th>
-            <th>Status</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-   
-          {% for estoque in estoques %}
-            <tr>
-              <td>
-                <strong>{{ estoque.nome }}</strong>
-              </td>
-              <td>{{ estoque.categoria }}</td>
-              <td>{{ estoque.quantidade }} un</td>
-              <td>{{ estoque.tamanho_estoque }} un</td>
-              <td>{{ estoque.lote }}</td>
-              <td>{{ estoque.validade }}</td>
+  <section class="table-container">
+    <div class="table-header">
+      <h3>Lista de Insumos</h3>
+      <input type="text" placeholder="Filtrar por nome ou categoria..." class="search-input" />
+    </div>
+    <table class="inventory-table">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Categoria</th>
+          <th>Qtd. Atual</th>
+          <th>Tam. Maximo</th>
+          <th>Lote</th>
+          <th>Validade</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="estoque_lista">
+        
+        <!--removido agora o JS insere o codigo assim permitindo busca rapida-->
 
-              <td>
-                <span class="badge red">Crítico</span>
-              </td>
-
-              <td>
-                <button class="action-icon"><i class="fas fa-sync"></i></button>
-                <button class="action-icon"><i class="fas fa-edit"></i></button>
-              </td>
-            </tr>
-          {% endfor %}
-
-        </tbody>
-      </table>
-    </section>
-  </main>
+      </tbody>
+    </table>
+  </section>
+</main>
 {% endblock %}
 
 {% block extra %}
-  <div id="modalCliente" class="modal">
-    <div class="modal-content">
-      <h2>Entrada de Material</h2>
+<div id="modalCliente" class="modal">
+  <div class="modal-content">
+    <h2>Entrada de Material</h2>
 
-      <form id="formEntrada" method="post">
-        {% csrf_token %}
+    <form id="formEntrada" method="post">
+      {% csrf_token %}
 
-        {% render_field form.nome placeholder='Nome do Produto' %}
-        {% render_field form.categoria placeholder='Categoria' %}
-        {% render_field form.quantidade placeholder='Quantidade' %}
-        {% render_field form.tamanho_estoque placeholder='Tamanho do estoque' %}
-        {% render_field form.lote placeholder='Lote' %}
-        <label for="">Validade</label>
-        {% render_field form.validade type='date' %}
+      {% render_field form.nome placeholder='Nome do Produto' %}
+      {% render_field form.categoria placeholder='Categoria' %}
+      {% render_field form.quantidade placeholder='Quantidade' %}
+      {% render_field form.tamanho_estoque placeholder='Tamanho do estoque' %}
+      {% render_field form.lote placeholder='Lote' %}
+      <label for="">Validade</label>
+      {% render_field form.validade type='date' %}
 
-        <!--  <input type="text" name="nome" id="nome" placeholder="Nome do Produto" required>
+      <!--  <input type="text" name="nome" id="nome" placeholder="Nome do Produto" required>
             <input type="text" name="categoria" id="categoria" placeholder="Categoria" required>
             <input type="number" name="quantidade" id="qtd" placeholder="Quantidade" required>
             <input type="number" name="Tamanho" id="ideal" placeholder="Tamanho do estoque" required>
             <input type="text" name="lote" id="lote" placeholder="Lote" required>
             <input type="text" name="validade" id="validade" placeholder="Validade (DD/MM/AAAA)" required>  -->
 
-        <div class="form-buttons">
-          <button type="submit" class="btn-save">Salvar</button>
+      <div class="form-buttons">
+        <button type="submit" class="btn-save">Salvar</button>
 
-          <button type="button" id="btnCancelar" class="btn-cancel">Cancelar</button>
-        </div>
-      </form>
-    </div>
+        <button type="button" id="btnCancelar" class="btn-cancel">Cancelar</button>
+      </div>
+    </form>
   </div>
+</div>
 
-  <script src="{% static 'js/js_estoque.js' %}?{% now 'U' %}"></script>
+<script src="{% static 'js/js_estoque.js' %}?{% now 'U' %}"></script>
 {% endblock %}

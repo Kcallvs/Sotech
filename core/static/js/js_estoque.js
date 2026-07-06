@@ -1,3 +1,62 @@
+
+async function estoque_pegue(string_de_busca="",lista){
+    try {
+        const params = new URLSearchParams();
+
+        if(string_de_busca!==""){
+            params.append("q",string_de_busca);
+        }
+
+        const resposta = await fetch(`/pegar_estoque/?${params.toString()}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+           
+        });
+
+        const resultado = await resposta.json();
+      
+        if (resultado.sucesso) {
+           renderizar_lista(resultado.lista,lista)
+        } else {
+            alert(resultado.erro || "Erro ao pegar dados");
+        }
+    } catch (erro) {
+        console.error(erro);
+        alert("erro ao carregar o estoque");
+    }
+}
+
+function renderizar_lista(_info,lista){
+    let string="";
+
+    _info.forEach(estoque => {
+        string+=`<tr>
+              <td>
+                <strong>${estoque.nome}</strong>
+              </td>
+              <td>${estoque.categoria}</td>
+              <td>${estoque.quantidade} un</td>
+              <td>${estoque.tamanho_estoque} un</td>
+              <td>${estoque.lote}</td>
+              <td>${estoque.validade}</td>
+              <td>
+                <span class="badge red">Crítico</span>
+              </td>
+
+              <td>
+                <button class="action-icon"><i class="fas fa-sync"></i></button>
+                <button class="action-icon"><i class="fas fa-edit"></i></button>
+              </td>
+            </tr>`
+    });
+    lista.innerHTML=string;
+
+}
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const tabela = document.querySelector(".inventory-table tbody");
@@ -6,22 +65,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const itensCriticos = document.querySelector(".summary-card:nth-child(1) strong");
     const itensVencendo = document.querySelector(".summary-card:nth-child(2) strong");
     const totalItens = document.querySelector(".summary-card:nth-child(3) strong");
+
+    const lista_items= document.getElementById('estoque_lista');
+
+
+
+    lista_items.innerHTML="";
+
+    estoque_pegue("",lista_items);
+
     
     
     // FILTRO DE BUSCA
     
-    busca.addEventListener("input", () => {
-    
-        const valor = busca.value.toLowerCase();
-    
-        document.querySelectorAll(".inventory-table tbody tr").forEach(linha => {
-    
-            const texto = linha.textContent.toLowerCase();
-    
-            linha.style.display = texto.includes(valor) ? "" : "none";
-    
-        });
-    
+    busca.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            estoque_pegue(busca.value,lista_items);
+        }
     });
     
     

@@ -32,4 +32,6 @@ urlpatterns = [
     path("funcionario_remover/<str:id>/",funcionario_remover,name="funcionario_remover"),
 
     path('perfil/',perfil,name="perfil"),
+
+    path('pegar_estoque/',pegar_estoque,name="pegar_estoque")
 ]
