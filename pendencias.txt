@@ -29,3 +29,4 @@ Pefil:
 1 -mexer nos pedidos (adicionar o sistema de render deles)
  - mexer nos estoque ( sistema de deletar feito)
  - mexer no sistema de formulário 
+ - Fazer rota de editar e editar (estoque/)

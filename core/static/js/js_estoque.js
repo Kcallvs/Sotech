@@ -39,6 +39,7 @@ async function estoque_pegue(string_de_busca = "", lista, total) {
 }
 
 
+
 // VERIFICAR VALIDADE 
 function verificarValidade(dataValidade) {
     const hoje = new Date();
