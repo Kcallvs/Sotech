@@ -1,5 +1,5 @@
 
-async function estoque_pegue(string_de_busca="",lista){
+async function estoque_pegue(string_de_busca="",lista,total){
     try {
         const params = new URLSearchParams();
 
@@ -16,9 +16,14 @@ async function estoque_pegue(string_de_busca="",lista){
         });
 
         const resultado = await resposta.json();
-      
+        
         if (resultado.sucesso) {
-           renderizar_lista(resultado.lista,lista)
+           renderizar_lista(resultado.lista,lista);
+           total.innerHTML = resultado.len;
+           vencendo.innerHTML = resultado.validade;
+
+           critico.innerHTML = resultado.critico;
+
         } else {
             alert(resultado.erro || "Erro ao pegar dados");
         }
@@ -95,11 +100,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const lista_items= document.getElementById('estoque_lista');
 
+    const total = document.getElementById("total");
+    const critico = document.getElementById("critico");
+    const vencendo = document.getElementById("vencendo");
 
 
     lista_items.innerHTML="";
 
-    estoque_pegue("",lista_items);
+    estoque_pegue("",lista_items,total);
 
     
     
@@ -107,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     busca.addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
-            estoque_pegue(busca.value,lista_items);
+            estoque_pegue(busca.value,lista_items,total);
         }
     });
     

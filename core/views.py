@@ -1,4 +1,5 @@
 import json
+from datetime import date, timedelta
 from django.http import JsonResponse
 from django.utils import timezone
 from django.shortcuts import render,redirect
@@ -211,6 +212,7 @@ def novo_pedido(request):
 
     return render(request, "html/novo_pedido.html", context)
 
+@login_required
 def produto_remover(request,id):
     produto = Produto.objects.get(pk=id)
     produto.delete()
@@ -297,8 +299,14 @@ def relatorio(request):
 @login_required
 def pegar_estoque(request):
     query = request.GET.get('q', '').strip()
+    hoje = date.today()
+    limite = hoje + timedelta(days=7)
 
+    itens_criticos = Estoque.objects.filter(validade__lt=hoje)
+    itens_vencendo = Estoque.objects.filter(validade__gte=hoje, validade__lte=limite)
     estoque = Estoque.objects.all()
+
+    itens_vencendo = Estoque.objects.filter(validade__gte=hoje, validade__lte=limite)
 
     if query:
         palavras = query.split()
@@ -308,5 +316,4 @@ def pegar_estoque(request):
         estoque = estoque.filter(filtro)
 
     estoque = estoque.values('categoria', 'nome', 'quantidade', 'tamanho_estoque', 'lote', 'validade')
-
-    return JsonResponse({"sucesso": True, "lista": list(estoque)})
+    return JsonResponse({"sucesso": True, "lista": list(estoque),"len":len(estoque),"critico":len(itens_criticos),"validade":len(itens_vencendo)})
