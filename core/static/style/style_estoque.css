@@ -399,3 +399,9 @@ body {
     }
 
 }
+
+
+.btn-edit,
+.btn-delete {
+    text-decoration: none;
+}
