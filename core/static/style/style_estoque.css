@@ -320,17 +320,82 @@ body {
 }
 
 
-/* Responsividade*/
-@media (max-width: 900px) {
-    .sidebar { width: 200px; }
-    .main-content { margin-left: 200px; width: calc(100% - 200px); }
-    .inventory-summary { grid-template-columns: repeat(2, 1fr); }
-}
 
-@media (max-width: 700px) {
-    .sidebar { display: none; }
-    .main-content { margin-left: 0; width: 100%; }
-    .inventory-summary { grid-template-columns: 1fr; }
-    .table-header { flex-direction: column; gap: 15px; align-items: flex-start; }
-    .search-input { width: 100%; }
+/* CELULARES */
+
+@media (max-width:576px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main-content{
+        width:100%;
+        margin-left:0;
+        padding:15px;
+    }
+
+    .main-header h1{
+        font-size:1.5rem;
+    }
+
+    .main-header p{
+        font-size:.9rem;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .btn-red,
+    .btn-yellow{
+        width:100%;
+        margin:0;
+    }
+
+    .summary-card{
+        gap:15px;
+        padding:16px;
+    }
+
+    .summary-card i{
+        font-size:1.8rem;
+    }
+
+    .summary-card strong{
+        font-size:1.3rem;
+    }
+
+    .table-container{
+        padding:15px;
+    }
+
+    .inventory-table{
+        min-width:780px;
+    }
+
+    .inventory-table th,
+    .inventory-table td{
+        font-size:12px;
+        padding:10px;
+    }
+
+    .action-icon{
+        padding:6px 8px;
+    }
+
+    .modal-content{
+        width:95%;
+        padding:20px;
+    }
+
+    .form-buttons{
+        flex-direction:column;
+    }
+
+    .btn-save,
+    .btn-cancel{
+        width:100%;
+    }
+
 }
