@@ -32,7 +32,7 @@
         <!-- LANCHE -->
         {% for lanche in lanches %}
           <div class="product-card lanche">
-            <button class="btn-remove"><i class="fa-solid fa-x"></i></button>
+            <a href="{% url 'produto_remover' lanche.id %}"><button class="btn-remove"><i class="fa-solid fa-x"></i></button></a>
 
             <div class="product-det">
               <h4>{{ lanche.nome }}</h4>
@@ -42,14 +42,18 @@
             <div class="product-btn">
               <button class="add-item-btn" data-name="{{ lanche.nome }}" data-price="{{ lanche.preco }}"><i class="fas fa-plus"></i></button>
 
-              <a href="{% url 'produto_remover' lanche.id %}"><button class="remove-item-btn" data-name="{{ lanche.nome }}" data-price="{{ lanche.preco }}"><i class="fa-solid fa-minus"></i></button></a>
+              <button class="remove-item-btn" data-name="{{ lanche.nome }}" data-price="{{ lanche.preco }}"><i class="fa-solid fa-minus"></i></button>
             </div>
           </div>
         {% endfor %}
 
         {% for bebida in bebidas %}
           <div class="product-card bebida">
-            <button class="btn-remove"><i class="fa-solid fa-x"></i></button>
+            <a href="{% url 'produto_remover' bebida.id %}">
+              <button class="btn-remove"><i class="fa-solid fa-x">
+
+              </i></button>
+            </a>
 
             <div class="product-det">
               <h4>{{ bebida.nome }}</h4>
@@ -59,7 +63,7 @@
             <div class="product-btn">
               <button class="add-item-btn" data-name="{{ bebida.nome }}" data-price="{{ bebida.preco }}"><i class="fas fa-plus"></i></button>
 
-              <a href="{% url 'produto_remover' bebida.id %}"><button class="remove-item-btn" data-name="{{ bebida.nome }}" data-price="{{ bebida.preco }}"><i class="fa-solid fa-minus"></i></button></a>
+              <button class="remove-item-btn" data-name="{{ bebida.nome }}" data-price="{{ bebida.preco }}"><i class="fa-solid fa-minus"></i></button>
             </div>
           </div>
         {% endfor %}
