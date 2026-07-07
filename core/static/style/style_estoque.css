@@ -319,6 +319,27 @@ body {
     cursor: pointer;
 }
 
+.btn-edit { 
+    color: var(--secondary); 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    margin-right: 10px; 
+    font-size: 1.1rem;
+    transition: 0.2s;
+}
+
+.btn-delete { 
+    color: var(--danger); 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 1.1rem;
+    transition: 0.2s;
+}
+
+.btn-edit:hover { transform: scale(1.2); }
+.btn-delete:hover { transform: scale(1.2); }
 
 
 /* CELULARES */

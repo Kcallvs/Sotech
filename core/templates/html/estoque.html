@@ -50,7 +50,7 @@ estoque
     </div>
   </section>
 
-  <section class="table-container">
+<section class="table-container">
     <div class="table-header">
       <h3>Lista de Insumos</h3>
       <input type="text" placeholder="Filtrar por nome ou categoria..." class="search-input" />
@@ -68,13 +68,33 @@ estoque
           <th>Ações</th>
         </tr>
       </thead>
+
       <tbody id="estoque_lista">
-        
+
         <!--removido agora o JS insere o codigo assim permitindo busca rapida-->
 
       </tbody>
     </table>
   </section>
+
+  <!-- Template usado pelo JS para renderizar cada linha da tabela -->
+  <template id="tpl-linha-estoque">
+    <tr>
+      <td><strong data-campo="nome"></strong></td>
+      <td data-campo="categoria"></td>
+      <td data-campo="quantidade"></td>
+      <td data-campo="tamanho_estoque"></td>
+      <td data-campo="lote"></td>
+      <td data-campo="validade"></td>
+      <td>
+        <span data-campo="status"></span>
+      </td>
+       <td>
+        <button class="btn-edit" data-acao="editar"><i class="fas fa-edit"></i></button>
+        <button class="btn-delete" data-acao="excluir"><i class="fas fa-trash"></i></button>
+      </td>
+    </tr>
+  </template>
 </main>
 {% endblock %}
 
@@ -93,13 +113,6 @@ estoque
       {% render_field form.lote placeholder='Lote' %}
       <label for="">Validade</label>
       {% render_field form.validade type='date' %}
-
-      <!--  <input type="text" name="nome" id="nome" placeholder="Nome do Produto" required>
-            <input type="text" name="categoria" id="categoria" placeholder="Categoria" required>
-            <input type="number" name="quantidade" id="qtd" placeholder="Quantidade" required>
-            <input type="number" name="Tamanho" id="ideal" placeholder="Tamanho do estoque" required>
-            <input type="text" name="lote" id="lote" placeholder="Lote" required>
-            <input type="text" name="validade" id="validade" placeholder="Validade (DD/MM/AAAA)" required>  -->
 
       <div class="form-buttons">
         <button type="submit" class="btn-save">Salvar</button>
