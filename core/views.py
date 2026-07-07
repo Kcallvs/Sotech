@@ -27,7 +27,7 @@ def cadastro(request):
     return render(request, 'html/cadastro.html', context)
 
 
-@login_required
+
 def autenticar(request):
     if request.method == "POST":
         username = request.POST['username']
