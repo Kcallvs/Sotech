@@ -1,14 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# adicionar uma tabela entre estoque e produto chamada dependências
-
-# # necessario para evitar problema de normalização
-# class Produto_categoria(models.Model):
-#     nome = models.CharField("Nome",max_length=45)
-#     def __str__(self):
-#         return self.nome
-
 class Funcionario(AbstractUser):
     cargo = models.CharField("Cargo", max_length=50)
     turno = models.CharField("Turno", max_length=30)
@@ -28,7 +20,6 @@ class Cliente(models.Model):
     def __str__(self):
         return self.nome
 
-
 class Pagamento(models.Model):
     valor_pago = models.FloatField("Valor pago")
     forma_de_pagamento = models.CharField("Forma de pagamento",max_length=15)
@@ -37,7 +28,6 @@ class Pagamento(models.Model):
 
     def __str__(self):
         return self.forma_de_pagamento
-
 
 class Estoque(models.Model):
     nome = models.CharField("Nome",max_length=45)
@@ -52,7 +42,6 @@ class Estoque(models.Model):
     def __str__(self):
         return self.lote
 
-
 class Produto(models.Model):
     CATEGORIAS = [
     ('lanche', 'Lanche'),
@@ -64,11 +53,10 @@ class Produto(models.Model):
     preco = models.FloatField("Preço")
     disponibilidade = models.CharField("Disponibilidade",max_length=45)
     estoque = models.ForeignKey(Estoque,on_delete=models.PROTECT)
-    #estoque = models.ForeignKey(Produto_categoria,on_delete=models.PROTECT)
+    
      
     def __str__(self):
         return self.nome
-
 
 class Pedido(models.Model):
     STATUS_CHOICES = [
@@ -88,4 +76,3 @@ class Pedido(models.Model):
     def __str__(self):
         return f'Pedido {self.id}'
     
-# tabela relatorio faltando
