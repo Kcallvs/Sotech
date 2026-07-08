@@ -11,15 +11,15 @@
 {% block selecao %}
   inicio
 {% endblock %}
-{# block conteudo #}
+
 
 {% block extra %}
   {% csrf_token %}
   <main class="main-content">
     <header class="top-header">
       <h2 id="tituloPainel">Dashboard Principal</h2>
-      <div class="user-info">
-        <span id="boasVindas" style="margin-right: 15px; font-weight: 500;"></span>
+      {% comment %} <div class="user-info">
+        <span id="boasVindas" style="margin-right: 15px; font-weight: 500;"></span> {% endcomment %}
 
         <a href="{% url 'sair' %}"><button class="btn-logout">Sair</button></a>
       </div>
@@ -47,7 +47,9 @@
         <h3>Últimos Pedidos</h3>
 
         <button class="btn-add" onclick="window.location.href=`{% url 'pedido' %}`">+ Novo Pedido</button>
+      
       </div>
+
       <table class="styled-table">
         <thead>
           <tr>
@@ -60,6 +62,7 @@
             <th>Ações</th>
           </tr>
         </thead>
+
         <tbody>
           {% for pedido in pedidos %}
             <tr data-pedido-id="{{ pedido.id }}">
@@ -72,6 +75,7 @@
                   Consumidor Padrão
                 {% endif %}
               </td>
+
               <td>R$ {{ pedido.valor_total }}</td>
               <td class="status-cell">
                 {% if pedido.status == 'pendente' %}
@@ -82,6 +86,7 @@
                   <span class="status-badge green">CONCLUÍDO</span>
                 {% endif %}
               </td>
+
               <td>
                 {% if pedido.observacoes %}
                   {{ pedido.observacoes }}
@@ -89,6 +94,7 @@
                   -
                 {% endif %}
               </td>
+
               <td>
                 {% if pedido.status == 'pendente' %}
                   <button class="btn-status" data-id="{{ pedido.id }}" data-novo-status="preparando">Iniciar Preparo</button>
@@ -98,12 +104,17 @@
                   -
                 {% endif %}
               </td>
+
             </tr>
+
           {% empty %}
+
             <tr>
               <td colspan="7">Nenhum pedido encontrado.</td>
             </tr>
+
           {% endfor %}
+
         </tbody>
       </table>
     </section>

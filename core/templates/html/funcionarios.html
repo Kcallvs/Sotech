@@ -1,50 +1,100 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block titulo %}Funcionários{% endblock %}
-
-{% block estilo %}
-<link rel="stylesheet" href="{% static 'style/style_funcionarios.css' %}?{% now 'U' %}">
+{% block titulo %}
+  Funcionários
 {% endblock %}
 
-{% block selecao %}funcionarios{% endblock %}
+{% block estilo %}
+  <link rel="stylesheet" href="{% static 'style/style_funcionarios.css' %}?{% now 'U' %}" />
+{% endblock %}
+
 {% block conteudo %}
-<main class="main-content">
+  {% block selecao %}
+    funcionarios
+  {% endblock %}
+
+  <main class="main-content">
     <header class="main-header">
-        <h1>Equipe de Funcionários</h1>
+      <h1>Equipe de Funcionários</h1>
     </header>
     <div class="table-card">
-        <table class="funcionarios-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Cargo</th>
-                    <th>Turno</th>
-                    <th>CPF</th>
-                    <th>Telefone</th>  
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for funcionario in funcionarios %}
-                <tr>
-                    <td>{{ funcionario.id }}</td>
-                    <td>{{ funcionario.first_name }} {{ funcionario.last_name }}</td>
-                    <td>{{ funcionario.cargo }}</td>
-                    <td>{{ funcionario.turno }}</td>
-                    <td>{{ funcionario.cpf }}</td>
-                    <td>{{ funcionario.telefone }}</td>
-                    <td>
-                        <button class="btn-edit"><i class="fas fa-edit"></i></button>
-                        <a href="{% url 'funcionario_remover' funcionario.pk %}">
-                            <button class="btn-delete"><i class="fas fa-trash"></i></button>
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      <table class="funcionarios-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Cargo</th>
+            <th>Turno</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for funcionario in funcionarios %}
+            <tr>
+              <td>{{ funcionario.id }}</td>
+              <td>{{ funcionario.first_name }} {{ funcionario.last_name }}</td>
+              <td>{{ funcionario.cargo }}</td>
+              <td>{{ funcionario.turno }}</td>
+              <td>{{ funcionario.cpf }}</td>
+              <td>{{ funcionario.telefone }}</td>
+              <td>
+                <a class="btn-edit" href="{% url 'funcionario_editar' funcionario.pk %}"><i class="fas fa-edit"></i></a>
+                <a class="btn-delete" href="{% url 'funcionario_remover' funcionario.pk %}"><i class="fas fa-trash"></i></a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-</main>
-{% endblock %}  
+  </main>
+
+  <!-- Modal -->
+  <div id="modalFuncionario" class="modal">
+    <div class="modal-content">
+      <h2>Editar Funcionário</h2>
+      <form method="post" action="{% if funcionario_edit %}{% url 'funcionario_editar' funcionario_edit.pk %}{% endif %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-buttons">
+          <button type="submit" class="btn-save">Salvar</button>
+          <button type="button" class="btn-cancel" onclick="window.location.href='{% url 'funcionarios' %}'">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+{% block extra %}
+  <script>
+    function mascaraTelefone(campo) {
+      let telefone = campo.value
+      telefone = telefone.replace(/\D/g, '')
+      telefone = telefone.replace(/^(\d{2})(\d)/, '($1) $2')
+      if (telefone.length > 14) {
+        telefone = telefone.replace(/(\d{5})(\d{4})$/, '$1-$2')
+      } else {
+        telefone = telefone.replace(/(\d{4})(\d{4})$/, '$1-$2')
+      }
+      campo.value = telefone
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      const telefone = document.querySelector('input[name="telefone"]')
+      if (telefone) {
+        telefone.maxLength = 15
+        telefone.addEventListener('input', function () {
+          mascaraTelefone(this)
+        })
+      }
+    })
+  </script>
+  {% if edit %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('modalFuncionario').style.display = 'block'
+      })
+    </script>
+  {% endif %}
+{% endblock %}
