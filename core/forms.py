@@ -39,10 +39,10 @@ class ClienteForm(forms.ModelForm):
             })
         }
 
-# class FuncionarioForm(forms.ModelForm):
-#     class meta:
-#         model = Funcionario
-#         fields = ['cargo','turno','cpf']
+class FuncionarioForm(forms.ModelForm):
+    class Meta:
+        model = Funcionario
+        fields = ['first_name', 'last_name', 'cargo', 'turno', 'cpf', 'telefone']
 
         
 

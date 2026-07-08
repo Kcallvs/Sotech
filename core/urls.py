@@ -31,6 +31,8 @@ urlpatterns = [
     path("cliente_remover/<int:id>/",cliente_remover,name="cliente_remover"),
 
     # por enquanto vai ser assim talvez a gente mude pra id em numero
+  
+    path("funcionario_editar/<str:id>/",funcionario_editar,name="funcionario_editar"),
     path("funcionario_remover/<str:id>/",funcionario_remover,name="funcionario_remover"),
 
     path('perfil/',perfil,name="perfil"),

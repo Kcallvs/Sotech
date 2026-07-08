@@ -8,15 +8,16 @@
 {% block estilo %}
   <link rel="stylesheet" href="{% static 'style/style_relatorio.css' %}?{% now 'U' %}" />
 {% endblock %}
+
 {% block selecao %}
   relatorio
 {% endblock %}
+
 {% block conteudo %}
   <main class="main-content">
     <header class="main-header">
       <h1>Relatórios Gerais</h1>
     </header>
-
     <div class="filter-card">
       <label>De:</label>
       <input type="date" />
@@ -32,15 +33,14 @@
         <p>R$ 5.200,00</p>
       </div>
       <div class="card" style="border-top-color: var(--success);">
-        <h3>Lucro Estimado</h3>
-        <p>R$ 2.100,00</p>
+        <h3>Ticket Médio</h3>
+        <p>R$ 43,33</p>
       </div>
-      <div class="card" style="border-top-color: var(--danger);">
-        <h3>Custos Operacionais</h3>
-        <p>R$ 3.100,00</p>
+      <div class="card">
+        <h3>Total de Pedidos</h3>
+        <p>120</p>
       </div>
     </div>
-
     <div class="table-card">
       <table class="sigl-table">
         <thead>
@@ -69,19 +69,14 @@
     <h2 class="section-title">Vendas e Operação</h2>
     <div class="cards">
       <div class="card">
-        <h3>Total de Pedidos</h3>
-        <p>120</p>
-      </div>
-      <div class="card">
-        <h3>Ticket Médio</h3>
-        <p>R$ 43,33</p>
+        <h3>Itens Vendidos</h3>
+        <p>187</p>
       </div>
       <div class="card">
         <h3>Horário de Pico</h3>
         <p>19h às 21h</p>
       </div>
     </div>
-
     <div class="table-card">
       <table class="sigl-table">
         <thead>
@@ -110,8 +105,8 @@
     <h2 class="section-title">Estoque</h2>
     <div class="cards">
       <div class="card">
-        <h3>Patrimônio em Estoque</h3>
-        <p>R$ 3.000,00</p>
+        <h3>Itens em Estoque</h3>
+        <p>3.000 un.</p>
       </div>
       <div class="card">
         <h3>Alertas de Ruptura</h3>
@@ -130,7 +125,6 @@
         <p>158</p>
       </div>
     </div>
-
     <div class="table-card">
       <table class="sigl-table">
         <thead>

@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.shortcuts import render,redirect
 from .models import Cliente,Funcionario, Pagamento, Pedido,Produto,Estoque
-from .forms import ClienteForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm
+from .forms import ClienteForm, FuncionarioForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm
 from django.db.models import Sum,Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -28,7 +28,6 @@ def cadastro(request):
     return render(request, 'html/cadastro.html', context)
 
 
-
 def autenticar(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -43,6 +42,7 @@ def autenticar(request):
         return render(request, 'html/login.html')
 
 #LOGOUT
+
 def sair(request):
     logout(request)
     return redirect('inicio')
@@ -50,7 +50,7 @@ def sair(request):
 #==========================FIM=================================
 
 
-#============== REDIRECIONAMENTO DE CADASTRO PARA O A PAG FUNCIONÁRIOS ==============
+#============== REDIRECIONAMENTO DE CADASTRO PARA A PAG FUNCIONÁRIOS ==============
 
 @login_required
 def funcionarios(request):
@@ -62,12 +62,26 @@ def funcionarios(request):
 
     return render(request,"html/funcionarios.html",context)
 
-@login_required
 def funcionario_remover(request, id):
     funcionario = Funcionario.objects.get(pk=id)
     funcionario.delete()
-    return redirect("funcionarios") 
+    return redirect("funcionarios")   
 
+
+def funcionario_editar(request, id):
+    funcionario = Funcionario.objects.get(pk=id)
+    form = FuncionarioForm(request.POST or None, instance=funcionario)
+    if form.is_valid():
+        form.save()
+        return redirect("funcionarios")
+    
+    context = {
+        "form": form,
+        "funcionarios": Funcionario.objects.all(),
+        "funcionario_edit": funcionario,
+        "edit": True,
+    }
+    return render(request, "html/funcionarios.html", context)
 #=====================================FIM==============================================
 
 
