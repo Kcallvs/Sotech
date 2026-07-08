@@ -239,17 +239,21 @@ def produto_remover(request,id):
 
 @login_required
 def estoque(request):
-    form = EstoqueForm(request.POST or None)
+    if request.method == "POST":
+        form = EstoqueForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({"sucesso": True})
+        else:
+            return JsonResponse(
+                {"sucesso": False, "erro": form.errors.as_text()},
+                status=400
+            )
+
+    form = EstoqueForm()
     estoques = Estoque.objects.all()
-    
-    if form.is_valid():
-        form.save()
-        return redirect("estoque")
-    context={
-        'form':form,
-        'estoques' : estoques
-    }
-    return render(request,"html/estoque.html",context)
+    context = {"form": form, "estoques": estoques}
+    return render(request, "html/estoque.html", context)
 
 #=====================================FIM==============================================
 
