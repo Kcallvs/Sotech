@@ -37,5 +37,8 @@ urlpatterns = [
 
     path('perfil/',perfil,name="perfil"),
 
-    path('pegar_estoque/',pegar_estoque,name="pegar_estoque")
+    path('pegar_estoque/',pegar_estoque,name="pegar_estoque"),
+
+    path('pegar_relatorio/',relatorios_gerais,name="pegar_relatorio")
+
 ]

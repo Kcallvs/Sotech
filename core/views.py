@@ -1,13 +1,14 @@
 import json
-from datetime import date, timedelta
+from datetime import date, timedelta,datetime
 from django.http import JsonResponse
 from django.utils import timezone
 from django.shortcuts import render,redirect
 from .models import Cliente,Funcionario, Pagamento, Pedido,Produto,Estoque
 from .forms import ClienteForm, FuncionarioForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm
-from django.db.models import Sum,Q
+from django.db.models import Sum,Q,Count,F,FloatField,Min
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models.functions import Coalesce, ExtractHour
 
 def inicio(request):
     return render(request,"html/login.html")
@@ -335,3 +336,120 @@ def pegar_estoque(request):
 
     estoque = estoque.values('categoria', 'nome', 'quantidade', 'tamanho_estoque', 'lote', 'validade')
     return JsonResponse({"sucesso": True, "lista": list(estoque),"len":len(estoque),"critico":len(itens_criticos),"validade":len(itens_vencendo)})
+
+@login_required
+def relatorios_gerais(request):
+
+    de_str = request.GET.get('de')
+    ate_str = request.GET.get('ate')
+    hoje = timezone.localdate()
+
+    try:
+        data_inicio = datetime.strptime(de_str, "%Y-%m-%d").date() if de_str else hoje - timedelta(days=30)
+        data_fim = datetime.strptime(ate_str, "%Y-%m-%d").date() if ate_str else hoje
+    except ValueError:
+        return JsonResponse({"sucesso": False, "erro": "Datas inválidas, use YYYY-MM-DD"}, status=400)
+
+    if data_inicio > data_fim:
+        return JsonResponse({"sucesso": False, "erro": "Data inicial não pode ser maior que a data final"}, status=400)
+
+    pedidos = Pedido.objects.filter(
+        data_hora_pedido__date__gte=data_inicio,
+        data_hora_pedido__date__lte=data_fim
+    )
+
+    # --- Financeiro ---
+    receita_bruta = pedidos.aggregate(
+        total=Coalesce(Sum('valor_total'), 0.0, output_field=FloatField())
+    )['total']
+
+    total_pedidos = pedidos.count()
+    ticket_medio = round(receita_bruta / total_pedidos, 2) if total_pedidos else 0.0
+
+    meio_pagamento_qs = (
+        pedidos.exclude(pagamento__isnull=True)
+        .values('pagamento__forma_de_pagamento')
+        .annotate(total=Sum('valor_total'))
+        .order_by('-total')
+    )
+    meio_pagamento = [
+        {"meio": item['pagamento__forma_de_pagamento'], "total": item['total']}
+        for item in meio_pagamento_qs
+    ]
+
+    # --- Vendas e Operação ---
+    itens_vendidos = pedidos.aggregate(total=Count('produtos'))['total'] or 0
+
+    horas_qs = (
+        pedidos.annotate(hora=ExtractHour('data_hora_pedido'))
+        .values('hora')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+    )
+    if horas_qs:
+        hora_pico = horas_qs[0]['hora']
+        horario_pico = f"{hora_pico}h às {(hora_pico + 2) % 24}h"
+    else:
+        horario_pico = "Sem dados"
+
+    produtos_mais_vendidos_qs = (
+        Produto.objects.filter(pedido__in=pedidos)
+        .annotate(qtd=Count('pedido'))
+        .order_by('-qtd')
+        .values('nome', 'qtd')[:3]
+    )
+    produtos_mais_vendidos = list(produtos_mais_vendidos_qs)
+
+    # --- Estoque ---
+    itens_em_estoque = Estoque.objects.aggregate(
+        total=Coalesce(Sum('quantidade'), 0)
+    )['total']
+
+    LIMIAR_RUPTURA = 0.2  # 20% do tamanho do estoque
+    alertas_ruptura = Estoque.objects.filter(
+        quantidade__lte=F('tamanho_estoque') * LIMIAR_RUPTURA
+    ).count()
+
+    # --- Fidelidade de Clientes ---
+    clientes_ativos = pedidos.exclude(cliente__isnull=True).values('cliente').distinct().count()
+
+    top_clientes = (
+        pedidos.exclude(cliente__isnull=True)
+        .values('cliente__id', 'cliente__nome')
+        .annotate(total_pedidos=Count('id'), total_gasto=Sum('valor_total'))
+        .order_by('-total_gasto')[:3]
+    )
+
+    top_clientes_lista = [
+        {
+            "nome": c['cliente__nome'],
+            "total_pedidos": c['total_pedidos'],
+            "total_gasto": c['total_gasto']
+        }
+        for c in top_clientes
+    ]
+
+    # --- RESPOSTA JSON ---
+    return JsonResponse({
+        "sucesso": True,
+        "periodo": {"de": str(data_inicio), "ate": str(data_fim)},
+        "financeiro": {
+            "receita_bruta": receita_bruta,
+            "ticket_medio": ticket_medio,
+            "total_pedidos": total_pedidos,
+            "meio_pagamento": meio_pagamento,
+        },
+        "vendas_operacao": {
+            "itens_vendidos": itens_vendidos,
+            "horario_pico": horario_pico,
+            "produtos_mais_vendidos": produtos_mais_vendidos,
+        },
+        "estoque": {
+            "itens_em_estoque": itens_em_estoque,
+            "alertas_ruptura": alertas_ruptura,
+        },
+        "fidelidade_clientes": {
+            "clientes_ativos": clientes_ativos,
+            "top_clientes": top_clientes_lista,
+        }
+    })

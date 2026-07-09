@@ -20,25 +20,25 @@
     </header>
     <div class="filter-card">
       <label>De:</label>
-      <input type="date" />
+      <input type="date" id="data_inicio" />
       <label>Até:</label>
-      <input type="date" />
-      <button class="btn-filter"><i class="fas fa-filter"></i> Filtrar</button>
+      <input type="date" id="data_fim" />
+      <button class="btn-filter" id="btn-filtrar"><i class="fas fa-filter"></i> Filtrar</button>
     </div>
 
     <h2 class="section-title">Financeiro</h2>
     <div class="cards">
       <div class="card" style="border-top-color: var(--secondary);">
         <h3>Receita Bruta</h3>
-        <p>R$ 5.200,00</p>
+        <p id="receita-bruta">R$ 5.200,00</p>
       </div>
       <div class="card" style="border-top-color: var(--success);">
         <h3>Ticket Médio</h3>
-        <p>R$ 43,33</p>
+        <p id="ticket">R$ 43,33</p>
       </div>
       <div class="card">
         <h3>Total de Pedidos</h3>
-        <p>120</p>
+        <p id="total-pedidos">120</p>
       </div>
     </div>
     <div class="table-card">
@@ -52,15 +52,15 @@
         <tbody>
           <tr>
             <td>Dinheiro</td>
-            <td>R$ 1.000,00</td>
+            <td id="dinheiro-pagar">R$ 1.000,00</td>
           </tr>
           <tr>
             <td>PIX</td>
-            <td>R$ 2.500,00</td>
+            <td id="pix-pagar">R$ 2.500,00</td>
           </tr>
           <tr>
             <td>Cartão de Crédito/Débito</td>
-            <td>R$ 1.700,00</td>
+            <td id="credito-pagar">R$ 1.700,00</td>
           </tr>
         </tbody>
       </table>
@@ -70,11 +70,11 @@
     <div class="cards">
       <div class="card">
         <h3>Itens Vendidos</h3>
-        <p>187</p>
+        <p id="itens-vendidos">187</p>
       </div>
       <div class="card">
         <h3>Horário de Pico</h3>
-        <p>19h às 21h</p>
+        <p id="horario-de-pico">19h às 21h</p>
       </div>
     </div>
     <div class="table-card">
@@ -85,7 +85,7 @@
             <th>Quantidade</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="lista">
           <tr>
             <td>X-Burguer Especial</td>
             <td>80</td>
@@ -99,6 +99,7 @@
             <td>42</td>
           </tr>
         </tbody>
+
       </table>
     </div>
 
@@ -106,23 +107,23 @@
     <div class="cards">
       <div class="card">
         <h3>Itens em Estoque</h3>
-        <p>3.000 un.</p>
+        <p id="itens-estoque">3.000 un.</p>
       </div>
       <div class="card">
         <h3>Alertas de Ruptura</h3>
-        <p style="color: var(--danger);">5 Itens</p>
+        <p id="alerta-ruptura" style="color: var(--danger);">5 Itens</p>
       </div>
     </div>
 
     <h2 class="section-title">Fidelidade de Clientes</h2>
     <div class="cards">
-      <div class="card">
+      <!-- <div class="card">
         <h3>Novos Clientes (Mês)</h3>
         <p>24</p>
-      </div>
+      </div> -->
       <div class="card">
         <h3>Clientes Ativos</h3>
-        <p>158</p>
+        <p id="cliente-ativos">158</p>
       </div>
     </div>
     <div class="table-card">
@@ -134,7 +135,7 @@
             <th>Total Gasto (R$)</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="cliente-lista">
           <tr>
             <td>Marcos Oliveira</td>
             <td>15</td>
@@ -154,4 +155,5 @@
       </table>
     </div>
   </main>
+  <script src="{% static 'js/js_relatorio.js' %}?{% now 'U' %}"></script>
 {% endblock %}
