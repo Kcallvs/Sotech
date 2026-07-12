@@ -52,7 +52,7 @@ class Produto(models.Model):
     nome = models.CharField("Nome",max_length=45)
     preco = models.FloatField("Preço")
     disponibilidade = models.CharField("Disponibilidade",max_length=45)
-    estoque = models.ForeignKey(Estoque,on_delete=models.PROTECT)
+    estoque = models.ForeignKey(Estoque,on_delete=models.SET_NULL,null=True, blank=True,)
     
      
     def __str__(self):

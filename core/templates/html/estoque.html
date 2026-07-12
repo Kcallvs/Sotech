@@ -3,124 +3,138 @@
 {% load widget_tweaks %}
 
 {% block titulo %}
-Gestão de Estoque
+  Gestão de Estoque
 {% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/style_estoque.css' %}?{% now 'U' %}" />
+  <link rel="stylesheet" href="{% static 'style/style_estoque.css' %}?{% now 'U' %}" />
 {% endblock %}
-{% block selecao %}
-estoque
-{% endblock %}
+
 {% block conteudo %}
-<main class="main-content">
-  <header class="main-header">
-    <div>
-      <h1>Controle de Inventário</h1>
-      <p>Gerencie insumos e validades dos produtos</p>
-    </div>
-    <div class="actions">
-      <button class="btn-yellow"><i class="fas fa-file-export"></i> Relatório</button>
+  {% block selecao %}
+    estoque
+  {% endblock %}
 
-      <button class="btn-red" id="btnEntrada"><i class="fas fa-plus"></i> Entrada de Material</button>
-    </div>
-  </header>
-
-  <section class="inventory-summary">
-    <div class="summary-card">
-      <i class="fas fa-exclamation-triangle icon-alert"></i>
+  <main class="main-content">
+    <header class="main-header">
       <div>
-        <span>Itens Críticos</span>
-        <strong id="critico">04</strong>
+        <h1>Controle de Inventário</h1>
+        <p>Gerencie insumos e validades dos produtos</p>
       </div>
-    </div>
-    <div class="summary-card">
-      <i class="fas fa-calendar-times icon-expire"></i>
-      <div>
-        <span>Vencendo em 7 dias</span>
-        <strong id="vencendo">02</strong>
+      <div class="actions">
+        <button class="btn-yellow"><i class="fas fa-file-export"></i> Relatório</button>
+        <button class="btn-red" onclick="document.getElementById('modalCliente').style.display='block'"><i class="fas fa-plus"></i> Entrada de Material</button>
       </div>
-    </div>
-    <div class="summary-card">
-      <i class="fas fa-check-circle icon-ok"></i>
-      <div>
-        <span>Total de Itens</span>
-        <strong id="total">156</strong>
+    </header>
+
+    <section class="inventory-summary">
+      <div class="summary-card">
+        <i class="fas fa-exclamation-triangle icon-alert"></i>
+        <div>
+          <span>Itens Críticos</span>
+          <strong id="critico">0</strong>
+        </div>
       </div>
+      <div class="summary-card">
+        <i class="fas fa-calendar-times icon-expire"></i>
+        <div>
+          <span>Vencendo em 7 dias</span>
+          <strong id="vencendo">0</strong>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="fas fa-check-circle icon-ok"></i>
+        <div>
+          <span>Total de Itens</span>
+          <strong id="total">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="table-container">
+      <div class="table-header">
+        <h3>Lista de Insumos</h3>
+        <input type="text" placeholder="Filtrar por nome ou categoria..." class="search-input" />
+      </div>
+      <table class="inventory-table">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Categoria</th>
+            <th>Qtd. Atual</th>
+            <th>Tam. Maximo</th>
+            <th>Lote</th>
+            <th>Validade</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="estoque_lista">
+          {% for estoque in itens_estoque %}
+            <tr data-validade="{{ estoque.validade|date:'Y-m-d' }}">
+              <td>
+                <strong>{{ estoque.nome }}</strong>
+              </td>
+              <td>{{ estoque.categoria }}</td>
+              <td>{{ estoque.quantidade }} un</td>
+              <td>{{ estoque.tamanho_estoque }} un</td>
+              <td>{{ estoque.lote }}</td>
+              <td>{{ estoque.validade|date:'d/m/Y' }}</td>
+              <td>
+                <span class="badge status-badge"></span>
+              </td>
+              <td>
+                <a class="btn-edit" href="{% url 'estoque_editar' estoque.id %}"><i class="fas fa-edit"></i></a>
+                <a class="btn-delete" href="{% url 'estoque_remover' estoque.id %}"><i class="fas fa-trash"></i></a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="8">Nenhum item cadastrado.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modalCliente" class="modal">
+    <div class="modal-content">
+      <h2>Entrada de Material</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form }}
+
+        <div class="form-buttons" style="display:flex; gap:10px; margin-top:15px;">
+          <button type="submit" class="btn-save">Salvar</button>
+          <button type="button" class="btn-cancel" onclick="document.getElementById('modalCliente').style.display='none'" style="
+            background:#666;
+            color:white;
+            border:none;
+            padding:14px;
+            width:100%;
+            border-radius:6px;
+            cursor:pointer;
+            font-weight:bold;
+            font-size:1rem;
+            margin-top:15px;
+            transition:0.3s;
+          ">Cancelar</button>
+        </div>
+      </form>
     </div>
-  </section>
-
-<section class="table-container">
-    <div class="table-header">
-      <h3>Lista de Insumos</h3>
-      <input type="text" placeholder="Filtrar por nome ou categoria..." class="search-input" />
-    </div>
-    <table class="inventory-table">
-      <thead>
-        <tr>
-          <th>Produto</th>
-          <th>Categoria</th>
-          <th>Qtd. Atual</th>
-          <th>Tam. Maximo</th>
-          <th>Lote</th>
-          <th>Validade</th>
-          <th>Status</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-
-      <tbody id="estoque_lista">
-
-        <!--removido agora o JS insere o codigo assim permitindo busca rapida-->
-
-      </tbody>
-    </table>
-  </section>
-
-  <!-- Template usado pelo JS para renderizar cada linha da tabela -->
-  <template id="tpl-linha-estoque">
-    <tr>
-      <td><strong data-campo="nome"></strong></td>
-      <td data-campo="categoria"></td>
-      <td data-campo="quantidade"></td>
-      <td data-campo="tamanho_estoque"></td>
-      <td data-campo="lote"></td>
-      <td data-campo="validade"></td>
-      <td>
-        <span data-campo="status"></span>
-      </td>
-       <td>
-        <button class="btn-edit" data-acao="editar"><i class="fas fa-edit"></i></button>
-        <button class="btn-delete" data-acao="excluir"><i class="fas fa-trash"></i></button>
-      </td>
-    </tr>
-  </template>
-</main>
+  </div>
 {% endblock %}
 
 {% block extra %}
-<div id="modalCliente" class="modal">
-  <div class="modal-content">
-    <h2>Entrada de Material</h2>
+  <script src="{% static 'js/js_estoque.js' %}?{% now 'U' %}"></script>
 
-    <form id="formEntrada" method="post">
-      {% csrf_token %}
-
-      {% render_field form.nome placeholder='Nome do Produto' %}
-      {% render_field form.categoria placeholder='Categoria' %}
-      {% render_field form.quantidade placeholder='Quantidade' %}
-      {% render_field form.tamanho_estoque placeholder='Tamanho do estoque' %}
-      {% render_field form.lote placeholder='Lote' %}
-      {% render_field form.validade type='date' %}
-
-      <div class="form-buttons">
-        <button type="submit" class="btn-save">Salvar</button>
-
-        <button type="button" id="btnCancelar" class="btn-cancel">Cancelar</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<script src="{% static 'js/js_estoque.js' %}?{% now 'U' %}"></script>
+  {% if edit %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('modalCliente').style.display = 'block'
+      })
+    </script>
+  {% endif %}
 {% endblock %}

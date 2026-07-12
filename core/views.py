@@ -2,7 +2,7 @@ import json
 from datetime import date, timedelta,datetime
 from django.http import JsonResponse
 from django.utils import timezone
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from .models import Cliente,Funcionario, Pagamento, Pedido,Produto,Estoque
 from .forms import ClienteForm, FuncionarioForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm
 from django.db.models import Sum,Q,Count,F,FloatField,Min
@@ -240,20 +240,41 @@ def produto_remover(request,id):
 
 @login_required
 def estoque(request):
-    if request.method == "POST":
-        form = EstoqueForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({"sucesso": True})
-        else:
-            return JsonResponse(
-                {"sucesso": False, "erro": form.errors.as_text()},
-                status=400
-            )
+    form = EstoqueForm(request.POST or None)
+    itens_estoque = Estoque.objects.all()
 
-    form = EstoqueForm()
-    estoques = Estoque.objects.all()
-    context = {"form": form, "estoques": estoques}
+    if form.is_valid():
+        form.save()
+        return redirect("estoque")
+
+    context = {
+        "form": form,
+        "itens_estoque": itens_estoque,
+    }
+    return render(request, "html/estoque.html", context)
+
+
+def estoque_remover(request, pk):
+    item = Estoque.objects.get(pk=pk)
+    item.delete()
+    return redirect("estoque")
+
+
+@login_required
+def estoque_editar(request, pk):
+    item = Estoque.objects.get(pk=pk)
+    form = EstoqueForm(request.POST or None, instance=item)
+    itens_estoque = Estoque.objects.all()
+
+    if form.is_valid():
+        form.save()
+        return redirect("estoque")
+
+    context = {
+        "form": form,
+        "itens_estoque": itens_estoque,
+        "edit": True,
+    }
     return render(request, "html/estoque.html", context)
 
 #=====================================FIM==============================================

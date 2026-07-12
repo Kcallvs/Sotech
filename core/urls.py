@@ -1,4 +1,5 @@
 
+from django import views
 from django.urls import path
 from .views import *
 
@@ -22,23 +23,27 @@ urlpatterns = [
 
     path('finalizar-pedido/', finalizar_pedido, name='finalizar_pedido'),
     path('historico/',historico,name="historico"),
+
+
     path('estoque/',estoque,name="estoque"),
-    path('clientes/',clientes,name="clientes"),
-    path('funcionarios/',funcionarios,name="funcionarios"),
+    path('estoque/<int:pk>/editar/',estoque_editar, name='estoque_editar'),
+    path('estoque/<int:pk>/remover/',estoque_remover, name='estoque_remover'),
+   
+    
     path('relatorio/',relatorio,name="relatorio"),
 
+    path('clientes/',clientes,name="clientes"),
     path("cliente_editar/<int:id>/",cliente_editar,name="cliente_editar"),
     path("cliente_remover/<int:id>/",cliente_remover,name="cliente_remover"),
 
-    # por enquanto vai ser assim talvez a gente mude pra id em numero
-  
+
+    path('funcionarios/',funcionarios,name="funcionarios"),
     path("funcionario_editar/<str:id>/",funcionario_editar,name="funcionario_editar"),
     path("funcionario_remover/<str:id>/",funcionario_remover,name="funcionario_remover"),
 
     path('perfil/',perfil,name="perfil"),
 
     path('pegar_estoque/',pegar_estoque,name="pegar_estoque"),
-
     path('pegar_relatorio/',relatorios_gerais,name="pegar_relatorio")
 
 ]
