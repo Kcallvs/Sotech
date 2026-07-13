@@ -210,13 +210,13 @@ def atualizar_status_pedido(request, id):
 def novo_pedido(request):
     lanches = Produto.objects.filter(categoria="lanche")
     bebidas = Produto.objects.filter(categoria="bebida")
-    form = ProdutoForm(request.POST or None)
+    form = ProdutoForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
         produto = form.save(commit=False)
         produto.disponibilidade = "Disponível"  
         produto.save()
-        return redirect("pedido")
+        return redirect("pedido")     
 
     context = {
         'lanches': lanches,

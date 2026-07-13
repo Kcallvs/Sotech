@@ -53,7 +53,7 @@ class Produto(models.Model):
     preco = models.FloatField("Preço")
     disponibilidade = models.CharField("Disponibilidade",max_length=45)
     estoque = models.ForeignKey(Estoque,on_delete=models.SET_NULL,null=True, blank=True,)
-    
+    foto_pedido = models.ImageField(upload_to='novo_pedido/', null=True, blank=True)
      
     def __str__(self):
         return self.nome
