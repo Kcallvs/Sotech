@@ -9,18 +9,25 @@
     --text: #2C3E50;       /* Texto Principal */
     --border: #DCE4E6;     /* Cor de Bordas Sutis */
 }
-
 .logo {
     padding: 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 4px;
     background: rgba(0, 0, 0, 0.2);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.logo img {
+.logo-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.logo-main img {
     width: 25px;
     height: auto;
     filter:
@@ -28,13 +35,40 @@
         drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
-.logo span {
+.logo-main span {
     color: #ffffff;
-    font-family: 'Rajdhani', Rajdhani-serif;
+    font-family: 'Exo 2', sans-serif;
     font-size: 28px;
     font-weight: 700;
 }
 
 .tech {
    color: #60a5fa;
+}
+
+.sub {
+    color: var(--white);
+    font-size: 12px;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    margin: 0;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.nav-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 12px;
+    margin-top: auto;
 }
