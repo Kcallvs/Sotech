@@ -45,5 +45,20 @@ class FuncionarioForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'cargo', 'turno', 'cpf', 'telefone']
 
         
+class FuncionarioPerfilForm(forms.ModelForm):
+    class Meta:
+        model = Funcionario
+        fields = ['first_name', 'last_name', 'telefone', 'foto']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'placeholder': 'Nome'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Sobrenome'}),
+            'telefone': forms.TextInput(attrs={'placeholder': '(00) 00000-0000'}),
+        }
 
-        
+class FuncionarioFotoForm(forms.ModelForm):
+    class Meta:
+        model = Funcionario
+        fields = ['foto']
+        widgets = {
+            'foto': forms.FileInput(),
+        }

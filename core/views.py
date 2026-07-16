@@ -4,10 +4,12 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, render,redirect
 from .models import Cliente,Funcionario, Pagamento, Pedido,Produto,Estoque
-from .forms import ClienteForm, FuncionarioForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm
+from .forms import ClienteForm, FuncionarioForm,ProdutoForm,FuncionarioFormCadastro,EstoqueForm,FuncionarioPerfilForm,FuncionarioFotoForm
 from django.db.models import Sum,Q,Count,F,FloatField,Min
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
 from django.db.models.functions import Coalesce, ExtractHour
 
 def inicio(request):
@@ -324,7 +326,59 @@ def cliente_editar(request,id):
 
 @login_required
 def perfil(request):
-    return render(request,"html/perfil.html")
+    funcionario = request.user
+
+    dados_form = FuncionarioPerfilForm(instance=funcionario)
+    foto_form = FuncionarioFotoForm(instance=funcionario)
+    senha_form = PasswordChangeForm(user=funcionario)
+
+    if request.method == 'POST':
+
+        if 'salvar_dados' in request.POST:
+            dados_form = FuncionarioPerfilForm(request.POST, instance=funcionario)
+            if dados_form.is_valid():
+                dados_form.save()
+                messages.success(request, 'Dados atualizados com sucesso.')
+                return redirect('perfil')
+
+        elif 'salvar_foto' in request.POST:
+            foto_form = FuncionarioFotoForm(request.POST, request.FILES, instance=funcionario)
+            if foto_form.is_valid():
+                foto_form.save()
+                messages.success(request, 'Foto atualizada com sucesso.')
+                return redirect('perfil')
+
+        elif 'salvar_senha' in request.POST:
+            senha_form = PasswordChangeForm(user=funcionario, data=request.POST)
+            if senha_form.is_valid():
+                user = senha_form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Senha atualizada com sucesso.')
+                return redirect('perfil')
+
+    return render(request, 'html/perfil.html', {
+        'funcionario': funcionario,
+        'dados_form': dados_form,
+        'foto_form': foto_form,
+        'senha_form': senha_form,
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @login_required
 def historico(request):

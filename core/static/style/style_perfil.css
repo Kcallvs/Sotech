@@ -1,0 +1,304 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Exo 2', sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar nav ul {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.sidebar nav ul li a {
+    display: block;
+    padding: 15px 25px;
+    text-decoration: none;
+    color: #BDC3C7;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.sidebar nav ul li a i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.sidebar nav ul li.active a,
+.sidebar nav ul li a:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+    padding-left: 30px;
+}
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.main-header h1,
+.main-header h2 {
+    color: var(--primary);
+    font-size: 1.6rem;
+}
+
+/* Card padrão (mesmo visual de .table-card) */
+.table-card {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+/* ===== Perfil — específico ===== */
+
+.perfil-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.perfil-resumo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.avatar-wrap {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--white);
+    font-size: 34px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.cargo-badge {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--secondary);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.perfil-nome {
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 6px 0 2px 0;
+}
+
+.perfil-turno {
+    color: #7f8c8d;
+    font-size: 13px;
+    margin: 0 0 20px 0;
+}
+
+.perfil-meta {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+
+.perfil-meta li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    font-size: 13px;
+    padding: 6px 0;
+}
+
+.perfil-meta i {
+    color: var(--secondary);
+    width: 16px;
+    text-align: center;
+}
+
+.perfil-main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.card-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+.card-header h3 {
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-header i {
+    color: var(--secondary);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.form-group input {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--secondary);
+    background: var(--white);
+}
+
+.form-group input:disabled {
+    color: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* ===== Upload de foto de perfil (adicionar ao style_perfil.css) ===== */
+
+#id_foto {
+    display: none;
+}
+
+.avatar-label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+}
+
+.avatar-img {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+.avatar-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.45);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.avatar-label:hover .avatar-overlay {
+    opacity: 1;
+}
+
+.alert-msg {
+    background: var(--success);
+    color: var(--white);
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.form-errors {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+}
+
+.form-errors li {
+    color: var(--danger);
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+@media (max-width: 900px) {
+    .perfil-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

@@ -6,6 +6,7 @@ class Funcionario(AbstractUser):
     turno = models.CharField("Turno", max_length=30)
     cpf = models.CharField("CPF", max_length=14)
     telefone = models.CharField("Telefone", max_length=16, default="")
+    foto = models.ImageField(upload_to='funcionarios/',blank=True,null=True,verbose_name='Foto de perfil')
 
     def __str__(self):
         return self.username
